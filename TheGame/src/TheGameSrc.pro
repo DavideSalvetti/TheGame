@@ -5,10 +5,17 @@ QT += quick
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        entity/archer.cpp \
+        entity/character.cpp \
+        entity/characterfactory.cpp \
+        entity/dynamicentity.cpp \
         entity/entity.cpp \
+        entity/magician.cpp \
+        entity/swordsaman.cpp \
         game.cpp \
         main.cpp \
-        map/map.cpp
+        map/map.cpp \
+        map/tile.cpp
 
 RESOURCES += qml.qrc
 
@@ -27,6 +34,14 @@ SUBDIRS += \
     src/TheGameSrc.pro
 
 HEADERS += \
+    entity/CharacterFactoryIF.h \
+    entity/archer.h \
+    entity/character.h \
+    entity/characterfactory.h \
+    entity/dynamicentity.h \
     entity/entity.h \
+    entity/magician.h \
+    entity/swordsaman.h \
     game.h \
-    map/map.h
+    map/map.h \
+    map/tile.h

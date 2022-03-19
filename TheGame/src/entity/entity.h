@@ -11,6 +11,10 @@ public:
 
 signals:
 
+protected:
+    int x;
+    int y;
+
 };
 
 #endif // ENTITY_H
