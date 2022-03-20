@@ -3,17 +3,24 @@
 
 #include <QObject>
 
+enum Owner{
+    NONE = 0,
+    PLAYER_1,
+    PLAYER_2
+};
+
 class Entity : public QObject
 {
     Q_OBJECT
 public:
     explicit Entity(QObject *parent = nullptr);
-
-signals:
+    void setPlayerOwner(Owner owner);
+    Owner getPlayerOwner();
 
 protected:
     int x;
     int y;
+    Owner playerOwner;
 
 };
 

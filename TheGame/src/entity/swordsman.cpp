@@ -1,6 +1,6 @@
-#include "swordsaman.h"
+#include "swordsman.h"
 
-Swordsaman::Swordsaman(QObject *parent)
+Swordsman::Swordsman(QObject *parent)
     : Character{parent}
 {
     lifePoints = 10;

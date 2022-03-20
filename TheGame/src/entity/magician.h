@@ -7,6 +7,11 @@ class Magician : public Character
 {
 public:
     explicit Magician(QObject *parent = nullptr);
+
+    bool magicAttack(Character *enemy);
+
+private:
+    int magicPoints;
 };
 
 #endif // MAGICIAN_H

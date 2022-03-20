@@ -26,3 +26,9 @@ void Tile::setFree(bool free)
 {
     this->free = free;
 }
+
+void Tile::addCharacter(Character *character)
+{
+    if (this->character)
+        this->character = character;
+}

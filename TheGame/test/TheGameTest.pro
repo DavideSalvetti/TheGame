@@ -1,4 +1,4 @@
-QT       += core gui testlib
+QT       += qml core gui testlib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -11,10 +11,11 @@ CONFIG += c++11
 SOURCES += \
     ../src/entity/archer.cpp \
     ../src/entity/character.cpp \
+    ../src/entity/characterfactory.cpp \
     ../src/entity/dynamicentity.cpp \
     ../src/entity/entity.cpp \
     ../src/entity/magician.cpp \
-    ../src/entity/swordsaman.cpp \
+    ../src/entity/Swordsman.cpp \
     ../src/game.cpp \
     ../src/map/map.cpp \
     ../src/map/tile.cpp \
@@ -25,12 +26,14 @@ SOURCES += \
     testtile.cpp
 
 HEADERS += \
+    ../src/entity/CharacterFactoryIF.h \
     ../src/entity/archer.h \
     ../src/entity/character.h \
+    ../src/entity/characterfactory.h \
     ../src/entity/dynamicentity.h \
     ../src/entity/entity.h \
     ../src/entity/magician.h \
-    ../src/entity/swordsaman.h \
+    ../src/entity/Swordsman.h \
     ../src/game.h \
     ../src/map/map.h \
     ../src/map/tile.h \

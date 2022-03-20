@@ -10,7 +10,7 @@ Game::Game(QObject *parent)
       roundNum(1),
       roundPlayer(1)
 {
-    map.reset(new Map(32,32));
+    map.reset(new Map(8,8));
 }
 
 Game & Game::getInstance()
@@ -27,6 +27,11 @@ int Game::getRoundNum()
 int Game::getRoundPlayer()
 {
     return roundPlayer;
+}
+
+Map *Game::getMap()
+{
+    return map.data();
 }
 
 void Game::nextPlayer()

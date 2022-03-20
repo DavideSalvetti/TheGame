@@ -1,12 +1,12 @@
-#ifndef SWORDSAMAN_H
-#define SWORDSAMAN_H
+#ifndef SWORDSMAN_H
+#define SWORDSMAN_H
 
 #include "character.h"
 
-class Swordsaman : public Character
+class Swordsman : public Character
 {
 public:
-    explicit Swordsaman(QObject *parent = nullptr);
+    explicit Swordsman(QObject *parent = nullptr);
 };
 
-#endif // SWORDSAMAN_H
+#endif // SWORDSMAN_H

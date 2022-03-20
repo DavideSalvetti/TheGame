@@ -13,6 +13,9 @@ bool Character::attack(Character *enemy)
     if (this == enemy)
         return false;
 
+    if (this->getPlayerOwner() == enemy->getPlayerOwner())
+        return false;
+
     int damage = 1;
     if (this->attackPoints >= enemy->defPoints)
         damage = this->attackPoints;

@@ -7,11 +7,13 @@
 class Game : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(Map *map_ui READ getMap CONSTANT)
 public:
     static Game& getInstance();
 
     int getRoundNum();
     int getRoundPlayer();
+    Map *getMap();
 
     void nextPlayer();
 

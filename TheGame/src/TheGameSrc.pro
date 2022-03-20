@@ -1,4 +1,4 @@
-QT += quick
+QT += qml quick
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -11,7 +11,7 @@ SOURCES += \
         entity/dynamicentity.cpp \
         entity/entity.cpp \
         entity/magician.cpp \
-        entity/swordsaman.cpp \
+        entity/swordsman.cpp \
         game.cpp \
         main.cpp \
         map/map.cpp \
@@ -41,7 +41,7 @@ HEADERS += \
     entity/dynamicentity.h \
     entity/entity.h \
     entity/magician.h \
-    entity/swordsaman.h \
+    entity/swordsman.h \
     game.h \
     map/map.h \
     map/tile.h

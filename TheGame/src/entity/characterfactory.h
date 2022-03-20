@@ -13,6 +13,8 @@ public:
     Character * createMagician();
     Character * createWarrior();
 
+    CharacterFactory(CharacterFactory const&) = delete;
+    void operator=(CharacterFactory const&) = delete;
 private:
     CharacterFactory();
 };

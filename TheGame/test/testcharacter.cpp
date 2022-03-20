@@ -1,12 +1,12 @@
 #include "testcharacter.h"
 #include <QTest>
 
-#include "../src/entity/swordsaman.h"
+#include "../src/entity/swordsman.h"
 
 void TestCharacter::swordsmanAttack()
 {
-    QScopedPointer<Character> swordsman1(new Swordsaman());
-    QScopedPointer<Character> swordsman2(new Swordsaman());
+    QScopedPointer<Character> swordsman1(new Swordsman());
+    QScopedPointer<Character> swordsman2(new Swordsman());
 
     swordsman1->attack(swordsman2.data());
 
