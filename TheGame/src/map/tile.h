@@ -9,7 +9,7 @@
 class Tile : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(Character character READ getCharacter NOTIFY characterChanged)
+    Q_PROPERTY(Character *character READ getCharacter NOTIFY characterChanged)
 public:
     explicit Tile(QObject *parent = nullptr);
     ~Tile();
@@ -18,13 +18,18 @@ public:
     void setSolid(bool solid);
     void setFree(bool free);
     void addCharacter(Character *character);
+    Character *getCharacter();
+
+signals:
+    void characterChanged();
 
 
 private:
     bool solid {false};
     bool free {true};
 
-    QPointer<Character> character {nullptr};
+//    QPointer<Character> character {nullptr};
+    Character *character {nullptr};
 };
 
 #endif // TILE_H

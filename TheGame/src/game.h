@@ -7,7 +7,7 @@
 class Game : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(Map *map_ui READ getMap CONSTANT)
+    Q_PROPERTY (Map *map_ui READ getMap CONSTANT)
 public:
     static Game& getInstance();
 
@@ -29,6 +29,7 @@ private:
      * It should be fine and easier to use the parent-child
      * relations offered by Qt. */
     QScopedPointer<Map> map;
+
 
 };
 

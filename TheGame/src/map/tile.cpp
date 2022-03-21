@@ -29,6 +29,18 @@ void Tile::setFree(bool free)
 
 void Tile::addCharacter(Character *character)
 {
-    if (this->character)
+    if (character != nullptr)
         this->character = character;
+
+    emit characterChanged();
+}
+
+Character *Tile::getCharacter()
+{
+    if (character) {
+        //qDebug() << character.data()->getImageSrc();
+        return character;
+    }
+
+    return nullptr;
 }

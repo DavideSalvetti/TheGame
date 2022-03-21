@@ -7,17 +7,39 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
-    Grid {
+    Flickable {
         anchors.fill: parent
-        columns: 8
-        Repeater {
+        contentHeight: grid.height
+        contentWidth: grid.width
+
+        Grid {
+            id: grid
+            columns: 8
+            Repeater {
                 model: game.map_ui.tiles
-            Rectangle {
-                width: 20
-                height: 20
-                border.color: "black"
-                border.width: 1
+                Rectangle {
+                    width: 64
+                    height: 64
+                    border.color: "black"
+                    border.width: 1
+
+                    Image {
+                        id: characterImage
+                        source: model.character != null ?
+                                    model.character.imageSrc : "";
+                        anchors.fill: parent
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+
+                            }
+                        }
+
+                    }
+                }
             }
         }
+
     }
 }

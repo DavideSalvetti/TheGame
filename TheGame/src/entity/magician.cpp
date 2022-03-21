@@ -7,6 +7,7 @@ Magician::Magician(QObject *parent)
     attackPoints = 5;
     defPoints = 2;
     magicPoints = 7;
+    imageSrc = ":/img/wizard.png";
 }
 
 bool Magician::magicAttack(Character *enemy)

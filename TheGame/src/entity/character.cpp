@@ -30,14 +30,21 @@ int Character::getLifePoints()
     return lifePoints;
 }
 
+QString Character::getImageSrc()
+{
+    return imageSrc;
+}
+
 void Character::inflictDamage(int damage)
 {
     qDebug() << "Damage:" << damage;
     if (lifePoints - damage <= 0) {
         lifePoints = 0;
         this->deleteLater();
-    } else
+    } else {
         lifePoints -= damage;
+        emit lifePointsChanged();
+    }
 
     qDebug() << "LifePoints:" << lifePoints;
 }
