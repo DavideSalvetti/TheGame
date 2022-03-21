@@ -39,6 +39,14 @@ void Game::nextPlayer()
     if (roundPlayer == 2) {
         roundPlayer = 1;
         roundNum++;
+        emit roundNumChanged();
     } else
         roundPlayer++;
+
+    emit roundPlayerChanged();
+}
+
+void Game::setSelectedEntity(Entity *entity)
+{
+    selectedEntity = entity;
 }

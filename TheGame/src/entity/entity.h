@@ -12,6 +12,7 @@ enum Owner{
 class Entity : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int owner READ getPlayerOwner CONSTANT)
 public:
     explicit Entity(QObject *parent = nullptr);
     void setPlayerOwner(Owner owner);
