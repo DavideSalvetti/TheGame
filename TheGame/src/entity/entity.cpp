@@ -16,3 +16,13 @@ Owner Entity::getPlayerOwner()
 {
     return playerOwner;
 }
+
+int Entity::getX()
+{
+    return x;
+}
+
+int Entity::getY()
+{
+    return y;
+}

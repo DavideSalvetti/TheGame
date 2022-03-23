@@ -46,6 +46,7 @@ Window {
                     height: 64
                     border.color: "black"
                     border.width: 1
+                    color: model.free ? "blue" : "green"
 
                     Rectangle {
                         width: parent.width - 8
@@ -106,6 +107,11 @@ Window {
         height: 40;
         anchors.bottom: parent.bottom
 
-
+        Button {
+            text: qsTr("End Turn")
+            onClicked: {
+                game.endTurn()
+            }
+        }
     }
 }

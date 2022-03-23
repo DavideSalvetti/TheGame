@@ -18,6 +18,9 @@ public:
     void setPlayerOwner(Owner owner);
     Owner getPlayerOwner();
 
+    int getX();
+    int getY();
+
 protected:
     int x;
     int y;

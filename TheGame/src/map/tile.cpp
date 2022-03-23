@@ -14,7 +14,12 @@ Tile::~Tile()
 
 bool Tile::canMoveOnTile()
 {
-    return free && !solid;
+    return !solid && !character;
+}
+
+bool Tile::isFree()
+{
+    return free;
 }
 
 void Tile::setSolid(bool solid)
@@ -25,6 +30,7 @@ void Tile::setSolid(bool solid)
 void Tile::setFree(bool free)
 {
     this->free = free;
+    emit freeChanged();
 }
 
 void Tile::addCharacter(Character *character)

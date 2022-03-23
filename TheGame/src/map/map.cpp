@@ -45,3 +45,34 @@ void Map::populateField()
     charactersPlayer2.append(swordsman);
     tilesMatrix[height - 1][width - 1]->addCharacter(swordsman);
 }
+
+/*!
+ * \brief Set the color of the available tiles the character can move on to blue.
+ */
+void Map::availableTileToMoveOn(Character *character)
+{
+    if (!character)
+        return;
+
+    int x = character->getX();
+    int y = character->getY();
+
+    int maxRange = 2;
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+
+            if (i == x && j == y)
+                tilesMatrix[i][j]->setFree(false);
+
+            if (!tilesMatrix[i][j]->canMoveOnTile())
+                tilesMatrix[i][j]->setFree(false);
+            else if (abs(x - i) < maxRange && abs(y - j) < maxRange) {
+                tilesMatrix[i][j]->setFree(true);
+                qDebug() << "Tile" << i << j << " is free.";
+            } else
+                tilesMatrix[i][j]->setFree(false);
+        }
+    }
+}
+
+

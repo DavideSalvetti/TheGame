@@ -15,6 +15,7 @@ public:
     ~Map();
 
     QQmlListProperty<Tile> getTiles();
+    void availableTileToMoveOn(Character *character);
 
 signals:
 

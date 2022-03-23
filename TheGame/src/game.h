@@ -20,6 +20,7 @@ public:
     void nextPlayer();
 
     Q_INVOKABLE void setSelectedEntity(Entity *entity);
+    Q_INVOKABLE void endTurn();
 
     Game(Game const&) = delete;
     void operator=(Game const&) = delete;

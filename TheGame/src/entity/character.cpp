@@ -25,6 +25,16 @@ bool Character::attack(Character *enemy)
     return true;
 }
 
+bool Character::canAttack()
+{
+    return numAttacksAvailable > 0;
+}
+
+bool Character::canMove()
+{
+    return numMovesAvailable > 0;
+}
+
 int Character::getLifePoints()
 {
     return lifePoints;
