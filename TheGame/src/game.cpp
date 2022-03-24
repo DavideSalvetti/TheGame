@@ -86,9 +86,7 @@ void Game::tileClicked(Tile *tile)
 
         if (character->canMove()) {
             qDebug() << "Can Move";
-            map->availableTileToMoveOn(character);
+            //map->availableTileToMoveOn(character);
         }
     }
-
-
 }
