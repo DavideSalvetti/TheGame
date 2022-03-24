@@ -61,15 +61,20 @@ void Game::nextPlayer()
 /*!
  * \brief Handle of the click on the map.
  */
-void Game::setSelectedEntity(Entity *entity)
+void Game::tileClicked(Tile *tile)
 {
+    Entity *entity = tile->getCharacter();
+
     if (entity == nullptr) {
         selectedEntity = nullptr;
         return;
     }
 
-    if (entity->getPlayerOwner() != roundPlayer)
+    if (entity->getPlayerOwner() != roundPlayer) {
+        qDebug() << "Entity owner:" << entity->getPlayerOwner()
+                 << " Round Player:" << roundPlayer;
         return;
+    }
 
     selectedEntity = entity;
 

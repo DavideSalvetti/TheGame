@@ -1,8 +1,10 @@
 #include "tile.h"
 #include <QDebug>
 
-Tile::Tile(QObject *parent)
-    : QObject{parent}
+Tile::Tile(int x, int y, QObject *parent)
+    : QObject{parent},
+      x(x),
+      y(y)
 {
 
 }
@@ -10,6 +12,16 @@ Tile::Tile(QObject *parent)
 Tile::~Tile()
 {
     //    qDebug() << "Deleting tile object.";
+}
+
+int Tile::getX()
+{
+    return x;
+}
+
+int Tile::getY()
+{
+    return y;
 }
 
 bool Tile::canMoveOnTile()
@@ -35,8 +47,10 @@ void Tile::setFree(bool free)
 
 void Tile::addCharacter(Character *character)
 {
-    if (character != nullptr)
+    if (character != nullptr) {
         this->character = character;
+        this->character->move(x, y);
+    }
 
     emit characterChanged();
 }

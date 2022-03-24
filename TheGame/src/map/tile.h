@@ -12,15 +12,18 @@ class Tile : public QObject
     Q_PROPERTY (Character *character READ getCharacter NOTIFY characterChanged)
     Q_PROPERTY (bool free READ isFree NOTIFY freeChanged)
 public:
-    explicit Tile(QObject *parent = nullptr);
+    explicit Tile(int x, int y, QObject *parent = nullptr);
     ~Tile();
 
+    int getX();
+    int getY();
     bool canMoveOnTile();
     bool isFree();
     void setSolid(bool solid);
     void setFree(bool free);
     void addCharacter(Character *character);
     Character *getCharacter();
+
 
 signals:
     void characterChanged();
@@ -30,9 +33,10 @@ signals:
 private:
     bool solid {false};
     bool free {false};
+    int x {-1};
+    int y {-1};
 
-//    QPointer<Character> character {nullptr};
-    Character *character {nullptr};
+    QPointer<Character> character {nullptr};
 };
 
 #endif // TILE_H

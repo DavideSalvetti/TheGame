@@ -64,14 +64,6 @@ Window {
                                 left: parent.left
                                 right: parent.right
                             }
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: {
-                                    game.setSelectedEntity(model.character)
-                                }
-                            }
-
                         }
 
                         Rectangle {
@@ -93,6 +85,13 @@ Window {
                                 }
 
                                 return "white"
+                            }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                game.tileClicked(modelData)
                             }
                         }
                     }

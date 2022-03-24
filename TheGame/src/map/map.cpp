@@ -11,7 +11,7 @@ Map::Map(int width, int height, QObject *parent)
     for (int i = 0; i < this->width; i++) {
         QVector<Tile*> tempVector;
         for (int j = 0; j < this->height; j++) {
-            Tile *tile = new Tile(this);
+            Tile *tile = new Tile(i, j, this);
             tempVector.append(tile);
             tilesList.append(tile);
         }
