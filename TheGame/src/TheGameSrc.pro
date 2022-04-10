@@ -5,6 +5,7 @@ QT += qml quick
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        command.cpp \
         entity/archer.cpp \
         entity/character.cpp \
         entity/characterfactory.cpp \
@@ -18,10 +19,12 @@ SOURCES += \
         map/tile.cpp
 
 RESOURCES += qml.qrc \
+    assets.qrc \
+    components.qrc \
     image.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
+QML_IMPORT_PATH = $$PWD
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
@@ -35,6 +38,7 @@ SUBDIRS += \
     src/TheGameSrc.pro
 
 HEADERS += \
+    command.h \
     entity/CharacterFactoryIF.h \
     entity/archer.h \
     entity/character.h \

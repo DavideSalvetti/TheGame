@@ -8,6 +8,7 @@
 #include "map/map.h"
 #include "map/tile.h"
 #include "entity/character.h"
+#include "command.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,11 +21,15 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
+    engine.addImportPath("qrc:/");
+
     engine.rootContext()->setContextProperty("game", &Game::getInstance());
 
     qmlRegisterUncreatableType<Map>("com.thegame.map", 1, 0, "Map", "Cannot create this object.");
     qmlRegisterUncreatableType<Tile>("com.thegame.tile", 1, 0, "Tile", "Cannot create this object.");
     qmlRegisterUncreatableType<Character>("com.thegame.character", 1, 0, "Character", "Cannot create this object.");
+
+    qmlRegisterType<Command>("com.thegame.command", 1, 0, "Command");
 
     qRegisterMetaType<Character*>("Character*");
 

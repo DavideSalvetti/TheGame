@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/components">
+        <file alias="CommandBar.qml">components/CommandBar.qml</file>
+        <file alias="qmldir">components/qmldir</file>
+    </qresource>
+</RCC>

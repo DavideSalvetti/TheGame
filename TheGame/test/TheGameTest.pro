@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    ../src/command.cpp \
     ../src/entity/archer.cpp \
     ../src/entity/character.cpp \
     ../src/entity/characterfactory.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
     testtile.cpp
 
 HEADERS += \
+    ../src/command.h \
     ../src/entity/CharacterFactoryIF.h \
     ../src/entity/archer.h \
     ../src/entity/character.h \

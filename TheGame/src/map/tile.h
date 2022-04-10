@@ -22,6 +22,7 @@ public:
     void setSolid(bool solid);
     void setFree(bool free);
     void addCharacter(Character *character);
+    void removeCharacter();
     Character *getCharacter();
 
 

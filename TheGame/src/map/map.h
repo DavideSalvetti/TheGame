@@ -16,6 +16,8 @@ public:
 
     QQmlListProperty<Tile> getTiles();
     void availableTileToMoveOn(Character *character);
+    void resetTiles();
+    void moveCharacterToTile(Tile *tile, Character *character);
 
 signals:
 

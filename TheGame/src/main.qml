@@ -1,10 +1,12 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
+import components 1.0
+import assets 1.0
 
 Window {
-    width: 600
-    height: 600
+    width: 800
+    height: 800
     visible: true
     title: qsTr("The Game")
 
@@ -27,7 +29,7 @@ Window {
     Flickable {
         anchors {
             top: header.bottom
-            bottom: footer.top
+            bottom: commandBar.top
             left: parent.left
             right: parent.right
             leftMargin: (parent.width - grid.width) / 2
@@ -52,6 +54,7 @@ Window {
                         width: parent.width - 8
                         height: parent.height - 8
                         anchors.centerIn: parent
+                        color: "transparent"
 
                         visible: model.character != null
                         Image {
@@ -87,12 +90,12 @@ Window {
                                 return "white"
                             }
                         }
+                    }
 
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                game.tileClicked(modelData)
-                            }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            game.tileClicked(modelData)
                         }
                     }
 
@@ -101,16 +104,17 @@ Window {
         }
     }
 
-    Row {
-        id: footer
-        height: 40;
-        anchors.bottom: parent.bottom
+    CommandBar {
+        id: commandBar
 
-        Button {
-            text: qsTr("End Turn")
-            onClicked: {
-                game.endTurn()
-            }
+        anchors {
+            left: parent.left
+            bottom: parent.bottom
+            right: parent.right
         }
+        height: Style.heightCommandBar
+
+        commandList: game.commandBar
     }
+
 }

@@ -12,6 +12,17 @@ Game::Game(QObject *parent)
       roundPlayer(1)
 {
     map.reset(new Map(8,8));
+
+
+    moveCommand = new Command("qrc:/img/location.png", tr("Move"), this);
+    moveCommand->setCanExecute(false);
+    connect(moveCommand, &Command::executed, this, &Game::moveCommandClicked);
+    commandBar.append(moveCommand);
+
+    nextTurnCommand = new Command("qrc:/img/slash.png", tr("End Turn"), this);
+    nextTurnCommand->setCanExecute(true);
+    connect(nextTurnCommand, &Command::executed, this, &Game::endTurn);
+    commandBar.append(nextTurnCommand);
 }
 
 Game & Game::getInstance()
@@ -35,11 +46,19 @@ Map *Game::getMap()
     return map.data();
 }
 
+QQmlListProperty<Command> Game::getCommandBar()
+{
+    return QQmlListProperty<Command>(this, &commandBar);
+}
+
 /*!
  * \brief End turn and initialization of properties for the next one.
  */
 void Game::endTurn()
 {
+    status = Idle;
+    map->resetTiles();
+
     nextPlayer();
 }
 
@@ -59,14 +78,51 @@ void Game::nextPlayer()
 }
 
 /*!
+ * \brief Move Command Clicked.
+ */
+void Game::moveCommandClicked()
+{
+    qDebug() << "Move command clicked!";
+    if (selectedEntity) {
+        status = Move;
+
+        Character *character = dynamic_cast<Character*>(selectedEntity.data());
+        map->availableTileToMoveOn(character);
+    }
+}
+
+
+/*!
  * \brief Handle of the click on the map.
  */
 void Game::tileClicked(Tile *tile)
+{
+
+    switch (status) {
+    case Idle:
+        onIdleState(tile);
+        break;
+    case Move:
+        onMoveState(tile);
+        break;
+    case Attack:
+        break;
+    default:
+        break;
+    }
+
+}
+
+/*!
+ * \brief Handling of idle state clicks on the map.
+ */
+void Game::onIdleState(Tile *tile)
 {
     Entity *entity = tile->getCharacter();
 
     if (entity == nullptr) {
         selectedEntity = nullptr;
+        map->resetTiles();
         return;
     }
 
@@ -85,8 +141,25 @@ void Game::tileClicked(Tile *tile)
         }
 
         if (character->canMove()) {
+            moveCommand->setCanExecute(true);
             qDebug() << "Can Move";
-            //map->availableTileToMoveOn(character);
+        } else {
+            moveCommand->setCanExecute(true);
         }
+    }
+}
+
+/*!
+ * \brief Handling of Move state clicks on the map.
+ */
+void Game::onMoveState(Tile *tile)
+{
+    // verificare che abbia cliccato un tile libero
+    // se ho cliccato sposto l'oggetto.
+    // altrimenti reset della mappa e metto il can execute a false.
+    if (tile->isFree()) {
+        map->moveCharacterToTile(tile, dynamic_cast<Character*>(selectedEntity.data()));
+        map->resetTiles();
+        status = Idle;
     }
 }

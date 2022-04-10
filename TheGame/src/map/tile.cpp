@@ -55,6 +55,12 @@ void Tile::addCharacter(Character *character)
     emit characterChanged();
 }
 
+void Tile::removeCharacter() {
+    character = nullptr;
+
+    emit characterChanged();
+}
+
 Character *Tile::getCharacter()
 {
     if (character) {

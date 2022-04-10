@@ -74,5 +74,25 @@ void Map::availableTileToMoveOn(Character *character)
         }
     }
 }
+/*!
+ * \brief Reset the tile color to green.
+ */
+void Map::resetTiles()
+{
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            tilesMatrix[i][j]->setFree(false);
+        }
+    }
+}
+
+void Map::moveCharacterToTile(Tile *tile, Character *character) {
+
+    int oldX = character->getX();
+    int oldY = character->getY();
+
+    tilesMatrix[oldX][oldY]->removeCharacter();
+    tile->addCharacter(character);
+}
 
 
