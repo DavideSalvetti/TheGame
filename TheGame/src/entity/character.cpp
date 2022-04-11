@@ -2,6 +2,13 @@
 
 #include <QDebug>
 
+/*!
+ * \class Character
+ * \brief Abstract class that implements method common to every
+ * subclass. Specific method of subclasses, like resetProperties(),
+ * are pure virtual, so that the subclass must implement it.
+ */
+
 Character::Character(QObject *parent)
     : DynamicEntity{parent}
 {
@@ -43,6 +50,28 @@ int Character::getLifePoints()
 QString Character::getImageSrc()
 {
     return imageSrc;
+}
+
+void Character::decreaseMovesAvailable()
+{
+    if (numMovesAvailable > 0)
+        numMovesAvailable--;
+}
+
+void Character::decreaseAttackAvailable()
+{
+    if (numAttacksAvailable > 0)
+        numAttacksAvailable--;
+}
+
+int Character::getMoveRange() const
+{
+    return moveRange;
+}
+
+int Character::getAttackRange() const
+{
+    return attackRange;
 }
 
 void Character::inflictDamage(int damage)

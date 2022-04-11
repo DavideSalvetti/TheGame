@@ -16,8 +16,14 @@ public:
 
     QQmlListProperty<Tile> getTiles();
     void availableTileToMoveOn(Character *character);
+    void availableCharacterToAttack(const Character &character);
+    bool canAttackSomebody(const Character &character);
+
     void resetTiles();
+    void resetCharactersProperties();
     void moveCharacterToTile(Tile *tile, Character *character);
+
+
 
 signals:
 
@@ -33,7 +39,7 @@ private:
     QVector<Character*> charactersPlayer1;
     QVector<Character*> charactersPlayer2;
 
-    void populateField();
+    void populateMap();
 };
 
 #endif // MAP_H

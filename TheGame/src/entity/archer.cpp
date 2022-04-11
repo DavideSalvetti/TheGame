@@ -12,3 +12,9 @@ Archer::Archer(QObject *parent)
     numMovesAvailable = 1;
     imageSrc = ":/img/bow.png";
 }
+
+void Archer::resetProperties()
+{
+    numAttacksAvailable = 1;
+    numMovesAvailable = 1;
+}

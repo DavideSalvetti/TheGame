@@ -12,17 +12,17 @@ void Entity::setPlayerOwner(Owner owner)
     this->playerOwner = owner;
 }
 
-Owner Entity::getPlayerOwner()
+Owner Entity::getPlayerOwner() const
 {
     return playerOwner;
 }
 
-int Entity::getX()
+int Entity::getX() const
 {
     return x;
 }
 
-int Entity::getY()
+int Entity::getY() const
 {
     return y;
 }

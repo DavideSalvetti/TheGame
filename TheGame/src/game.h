@@ -40,6 +40,7 @@ public:
 
 private slots:
     void moveCommandClicked();
+    void attackCommandClicked();
 
 signals:
     void roundNumChanged();
@@ -60,14 +61,18 @@ private:
     QPointer<Entity> selectedEntity {nullptr};
 
     /* List of commands */
-    Command *moveCommand {nullptr};
     Command *nextTurnCommand {nullptr};
+    Command *moveCommand {nullptr};
+    Command *attackCommand {nullptr};
+    Command *healCommand {nullptr};
+
     QList<Command*> commandBar;
 
 
 
     void onIdleState(Tile *tile);
     void onMoveState(Tile *tile);
+    void checkPermittedActions();
 };
 
 #endif // GAME_H

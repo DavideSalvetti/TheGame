@@ -7,6 +7,9 @@ class Archer : public Character
 {
 public:
     explicit Archer(QObject *parent = nullptr);
+
+
+    void resetProperties();
 };
 
 #endif // ARCHER_H

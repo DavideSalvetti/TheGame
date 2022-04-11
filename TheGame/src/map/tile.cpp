@@ -14,12 +14,12 @@ Tile::~Tile()
     //    qDebug() << "Deleting tile object.";
 }
 
-int Tile::getX()
+int Tile::getX() const
 {
     return x;
 }
 
-int Tile::getY()
+int Tile::getY() const
 {
     return y;
 }
@@ -29,9 +29,14 @@ bool Tile::canMoveOnTile()
     return !solid && !character;
 }
 
-bool Tile::isFree()
+bool Tile::isFree() const
 {
     return free;
+}
+
+bool Tile::isUnderAttack() const
+{
+    return underAttack;
 }
 
 void Tile::setSolid(bool solid)
@@ -43,6 +48,15 @@ void Tile::setFree(bool free)
 {
     this->free = free;
     emit freeChanged();
+}
+
+void Tile::setUnderAttack(bool underAttack)
+{
+    if (this->underAttack == underAttack)
+        return;
+
+    this->underAttack = underAttack;
+    emit underAttackChanged();
 }
 
 void Tile::addCharacter(Character *character)
@@ -64,7 +78,6 @@ void Tile::removeCharacter() {
 Character *Tile::getCharacter()
 {
     if (character) {
-        //qDebug() << character.data()->getImageSrc();
         return character;
     }
 

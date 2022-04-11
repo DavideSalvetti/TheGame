@@ -7,6 +7,7 @@ class Swordsman : public Character
 {
 public:
     explicit Swordsman(QObject *parent = nullptr);
+    void resetProperties();
 };
 
 #endif // SWORDSMAN_H

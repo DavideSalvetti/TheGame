@@ -6,5 +6,7 @@
         <file alias="wizard.png">img/wizard.png</file>
         <file alias="location.png">img/location.png</file>
         <file alias="slash.png">img/slash.png</file>
+        <file alias="check.png">img/check.png</file>
+        <file alias="heart.png">img/heart.png</file>
     </qresource>
 </RCC>

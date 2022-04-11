@@ -5,8 +5,8 @@ import components 1.0
 import assets 1.0
 
 Window {
-    width: 800
-    height: 800
+    width: 700
+    height: 700
     visible: true
     title: qsTr("The Game")
 
@@ -48,7 +48,14 @@ Window {
                     height: 64
                     border.color: "black"
                     border.width: 1
-                    color: model.free ? "blue" : "green"
+                    color: getGroundColor()
+
+                    function getGroundColor() {
+                        if (model.free) return "blue"
+                        else if (model.underAttack) return "red"
+
+                        return "green"
+                    }
 
                     Rectangle {
                         width: parent.width - 8

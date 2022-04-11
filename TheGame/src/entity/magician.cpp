@@ -22,3 +22,9 @@ bool Magician::magicAttack(Character *enemy)
 
     return true;
 }
+
+void Magician::resetProperties()
+{
+    numAttacksAvailable = 1;
+    numMovesAvailable = 1;
+}

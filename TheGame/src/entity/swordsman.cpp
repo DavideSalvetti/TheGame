@@ -12,3 +12,9 @@ Swordsman::Swordsman(QObject *parent)
     numMovesAvailable = 1;
     imageSrc = "qrc:/img/swordsman.png";
 }
+
+void Swordsman::resetProperties()
+{
+    numAttacksAvailable = 1;
+    numMovesAvailable = 1;
+}

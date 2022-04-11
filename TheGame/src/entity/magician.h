@@ -10,6 +10,7 @@ public:
 
     bool magicAttack(Character *enemy);
 
+    void resetProperties();
 private:
     int magicPoints;
 };

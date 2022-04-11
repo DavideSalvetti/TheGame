@@ -19,6 +19,14 @@ public:
     int getLifePoints();
     QString getImageSrc();
 
+    void decreaseMovesAvailable();
+    void decreaseAttackAvailable();
+
+    int getMoveRange() const;
+    int getAttackRange() const;
+
+    void virtual resetProperties() = 0;
+
 
 signals:
     void lifePointsChanged();
@@ -32,9 +40,6 @@ protected:
     int numAttacksAvailable;
     int numMovesAvailable;
     QString imageSrc = "";
-
-
-
 };
 
 #endif // CHARACTER_H

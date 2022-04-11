@@ -19,7 +19,17 @@ Game::Game(QObject *parent)
     connect(moveCommand, &Command::executed, this, &Game::moveCommandClicked);
     commandBar.append(moveCommand);
 
-    nextTurnCommand = new Command("qrc:/img/slash.png", tr("End Turn"), this);
+    attackCommand = new Command("qrc:/img/slash.png", tr("Attack"), this);
+    attackCommand->setCanExecute(false);
+    connect(attackCommand, &Command::executed, this, &Game::attackCommandClicked);
+    commandBar.append(attackCommand);
+
+    healCommand = new Command("qrc:/img/heart.png", tr("Heal"), this);
+    healCommand->setCanExecute(false);
+    connect(healCommand, &Command::executed, this, &Game::endTurn);
+    commandBar.append(healCommand);
+
+    nextTurnCommand = new Command("qrc:/img/check.png", tr("End Turn"), this);
     nextTurnCommand->setCanExecute(true);
     connect(nextTurnCommand, &Command::executed, this, &Game::endTurn);
     commandBar.append(nextTurnCommand);
@@ -58,6 +68,8 @@ void Game::endTurn()
 {
     status = Idle;
     map->resetTiles();
+    map->resetCharactersProperties();
+
 
     nextPlayer();
 }
@@ -91,6 +103,19 @@ void Game::moveCommandClicked()
     }
 }
 
+/*!
+ * \brief Game::attackCommandClicked
+ */
+void Game::attackCommandClicked() {
+    qDebug() << "Attack command clicked!";
+    if (selectedEntity) {
+        status = Attack;
+
+        Character *character = dynamic_cast<Character*>(selectedEntity.data());
+        map->availableCharacterToAttack(*character);
+    }
+}
+
 
 /*!
  * \brief Handle of the click on the map.
@@ -111,6 +136,7 @@ void Game::tileClicked(Tile *tile)
         break;
     }
 
+    checkPermittedActions();
 }
 
 /*!
@@ -133,20 +159,6 @@ void Game::onIdleState(Tile *tile)
     }
 
     selectedEntity = entity;
-
-    if (dynamic_cast<Character*>(entity)) {
-        Character *character = dynamic_cast<Character*>(entity);
-        if (character->canAttack()) {
-            qDebug() << "Can Attack";
-        }
-
-        if (character->canMove()) {
-            moveCommand->setCanExecute(true);
-            qDebug() << "Can Move";
-        } else {
-            moveCommand->setCanExecute(true);
-        }
-    }
 }
 
 /*!
@@ -154,12 +166,36 @@ void Game::onIdleState(Tile *tile)
  */
 void Game::onMoveState(Tile *tile)
 {
-    // verificare che abbia cliccato un tile libero
-    // se ho cliccato sposto l'oggetto.
-    // altrimenti reset della mappa e metto il can execute a false.
     if (tile->isFree()) {
-        map->moveCharacterToTile(tile, dynamic_cast<Character*>(selectedEntity.data()));
+        Character *character = dynamic_cast<Character*>(selectedEntity.data());
+        map->moveCharacterToTile(tile, character);
         map->resetTiles();
         status = Idle;
+    }
+}
+
+/*!
+ * \brief Game::checkPermittedActions
+ */
+void Game::checkPermittedActions()
+{
+    if (!selectedEntity) return;
+
+    if (dynamic_cast<Character*>(selectedEntity.data())) {
+        Character *character = dynamic_cast<Character*>(selectedEntity.data());
+        attackCommand->setCanExecute(false);
+        if (character->canAttack()) {
+            if (map->canAttackSomebody(*character)) {
+                qDebug() << "Can Attack";
+                attackCommand->setCanExecute(true);
+            }
+        }
+
+        if (character->canMove()) {
+            moveCommand->setCanExecute(true);
+            qDebug() << "Can Move";
+        } else {
+            moveCommand->setCanExecute(false);
+        }
     }
 }

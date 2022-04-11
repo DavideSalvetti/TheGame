@@ -16,10 +16,10 @@ class Entity : public QObject
 public:
     explicit Entity(QObject *parent = nullptr);
     void setPlayerOwner(Owner owner);
-    Owner getPlayerOwner();
+    Owner getPlayerOwner() const;
 
-    int getX();
-    int getY();
+    int getX() const;
+    int getY() const;
 
 protected:
     int x;
