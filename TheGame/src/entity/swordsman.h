@@ -7,6 +7,8 @@ class Swordsman : public Character
 {
 public:
     explicit Swordsman(QObject *parent = nullptr);
+
+    int getMaxLifePoints() const;
     void resetProperties();
 };
 

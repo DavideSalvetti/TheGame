@@ -9,6 +9,7 @@ public:
     explicit Archer(QObject *parent = nullptr);
 
 
+    int getMaxLifePoints() const;
     void resetProperties();
 };
 

@@ -28,10 +28,23 @@ bool Character::attack(Character *enemy)
         damage = this->attackPoints;
 
     this->decreaseAttackAvailable();
+    this->decreaseMovesAvailable();
 
     enemy->inflictDamage(damage);
 
     return true;
+}
+
+void Character::heal()
+{
+    if (canHeal()) {
+        if (getLifePoints() + 3 > getMaxLifePoints())
+            lifePoints += getMaxLifePoints();
+        else lifePoints += 3;
+
+        numMovesAvailable = 0;
+        numAttacksAvailable = 0;
+    }
 }
 
 bool Character::canAttack() const
@@ -46,7 +59,8 @@ bool Character::canMove() const
 
 bool Character::canHeal() const
 {
-    return numMovesAvailable > 0 && numAttacksAvailable > 0;
+    return numMovesAvailable > 0 && numAttacksAvailable > 0
+            && getLifePoints() < getMaxLifePoints();
 }
 
 int Character::getLifePoints() const
@@ -86,7 +100,7 @@ void Character::inflictDamage(int damage)
     qDebug() << "Damage:" << damage;
     if (lifePoints - damage <= 0) {
         lifePoints = 0;
-        emit destroyed();
+        emit characterDestroyed();
     } else {
         lifePoints -= damage;
         emit lifePointsChanged();

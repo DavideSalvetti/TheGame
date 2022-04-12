@@ -8,5 +8,6 @@
         <file alias="slash.png">img/slash.png</file>
         <file alias="check.png">img/check.png</file>
         <file alias="heart.png">img/heart.png</file>
+        <file alias="mountain.png">img/mountain.png</file>
     </qresource>
 </RCC>

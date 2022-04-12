@@ -39,6 +39,11 @@ bool Tile::isUnderAttack() const
     return underAttack;
 }
 
+bool Tile::isSolid() const
+{
+    return solid;
+}
+
 void Tile::setSolid(bool solid)
 {
     this->solid = solid;

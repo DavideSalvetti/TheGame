@@ -8,3 +8,4 @@
 <a href="https://www.flaticon.com/free-icons/attack" title="attack icons">Attack icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/character" title="character icons">Character icons created by Smashicons - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/tick" title="tick icons">Tick icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/mountain" title="mountain icons">Mountain icons created by Freepik - Flaticon</a>

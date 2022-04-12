@@ -13,7 +13,6 @@ Game::Game(QObject *parent)
 {
     map.reset(new Map(8,8));
 
-
     moveCommand = new Command("qrc:/img/location.png", tr("Move"), this);
     moveCommand->setCanExecute(false);
     connect(moveCommand, &Command::executed, this, &Game::moveCommandClicked);
@@ -26,7 +25,7 @@ Game::Game(QObject *parent)
 
     healCommand = new Command("qrc:/img/heart.png", tr("Heal"), this);
     healCommand->setCanExecute(false);
-    connect(healCommand, &Command::executed, this, &Game::endTurn);
+    connect(healCommand, &Command::executed, this, &Game::healCommandClicked);
     commandBar.append(healCommand);
 
     nextTurnCommand = new Command("qrc:/img/check.png", tr("End Turn"), this);
@@ -66,10 +65,15 @@ QQmlListProperty<Command> Game::getCommandBar()
  */
 void Game::endTurn()
 {
+
     status = Idle;
     map->resetTiles();
     map->resetCharactersProperties();
 
+    selectedEntity = nullptr;
+    moveCommand->setCanExecute(false);
+    attackCommand->setCanExecute(false);
+    healCommand->setCanExecute(false);
 
     nextPlayer();
 }
@@ -114,6 +118,16 @@ void Game::attackCommandClicked() {
         Character *character = dynamic_cast<Character*>(selectedEntity.data());
         map->availableCharacterToAttack(*character);
     }
+}
+
+void Game::healCommandClicked() {
+    qDebug() << "Heal command clicked!";
+    if (selectedEntity) {
+        Character *character = dynamic_cast<Character*>(selectedEntity.data());
+        character->heal();
+    }
+
+    checkPermittedActions();
 }
 
 
@@ -170,19 +184,24 @@ void Game::onMoveState(Tile *tile)
     if (tile->isFree()) {
         Character *character = dynamic_cast<Character*>(selectedEntity.data());
         map->moveCharacterToTile(tile, character);
-        map->resetTiles();
-        status = Idle;
     }
+
+    map->resetTiles();
+    status = Idle;
 }
 
+/*!
+ * \brief Handling od Attack state clicks on the map.
+ */
 void Game::onAttackState(Tile *tile)
 {
     if (tile->isUnderAttack()) {
         Character *character = dynamic_cast<Character*>(selectedEntity.data());
         character->attack(tile->getCharacter());
-        map->resetTiles();
-        status = Idle;
     }
+
+    map->resetTiles();
+    status = Idle;
 }
 
 /*!
@@ -190,10 +209,16 @@ void Game::onAttackState(Tile *tile)
  */
 void Game::checkPermittedActions()
 {
-    if (!selectedEntity) return;
+    if (!selectedEntity) {
+        moveCommand->setCanExecute(false);
+        attackCommand->setCanExecute(false);
+        healCommand->setCanExecute(false);
+        return;
+    }
 
     if (dynamic_cast<Character*>(selectedEntity.data())) {
         Character *character = dynamic_cast<Character*>(selectedEntity.data());
+
         attackCommand->setCanExecute(false);
         if (character->canAttack()) {
             if (map->canAttackSomebody(*character)) {
@@ -207,8 +232,14 @@ void Game::checkPermittedActions()
         if (character->canMove()) {
             moveCommand->setCanExecute(true);
             qDebug() << "Can Move";
-        } else {
+        } else
             moveCommand->setCanExecute(false);
-        }
+
+
+        if (character->canHeal()) {
+            healCommand->setCanExecute(true);
+            qDebug() << "Can Heal";
+        } else
+            healCommand->setCanExecute(false);
     }
 }

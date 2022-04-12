@@ -10,7 +10,9 @@ public:
 
     bool magicAttack(Character *enemy);
 
+    int getMaxLifePoints() const;
     void resetProperties();
+
 private:
     int magicPoints;
 };

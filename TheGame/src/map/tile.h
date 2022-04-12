@@ -12,6 +12,7 @@ class Tile : public QObject
     Q_PROPERTY (Character *character READ getCharacter NOTIFY characterChanged)
     Q_PROPERTY (bool free READ isFree NOTIFY freeChanged)
     Q_PROPERTY (bool underAttack READ isUnderAttack NOTIFY underAttackChanged)
+    Q_PROPERTY (bool solid READ isSolid CONSTANT)
 public:
     explicit Tile(int x, int y, QObject *parent = nullptr);
     ~Tile();
@@ -21,6 +22,7 @@ public:
     bool canMoveOnTile();
     bool isFree() const;
     bool isUnderAttack() const;
+    bool isSolid() const;
 
 
     void setSolid(bool solid);

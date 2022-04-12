@@ -1,16 +1,23 @@
 #include "swordsman.h"
 
+#define MAX_SWORDSMAN_LIFEPOINTS 10
+
 Swordsman::Swordsman(QObject *parent)
     : Character{parent}
 {
-    lifePoints = 10;
+    lifePoints = MAX_SWORDSMAN_LIFEPOINTS;
     attackPoints = 4;
     defPoints = 2;
-    moveRange = 2;
+    moveRange = 1;
     attackRange = 1;
     numAttacksAvailable = 1;
     numMovesAvailable = 1;
     imageSrc = "qrc:/img/swordsman.png";
+}
+
+int Swordsman::getMaxLifePoints() const
+{
+    return MAX_SWORDSMAN_LIFEPOINTS;
 }
 
 void Swordsman::resetProperties()

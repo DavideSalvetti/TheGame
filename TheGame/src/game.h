@@ -41,7 +41,7 @@ public:
 private slots:
     void moveCommandClicked();
     void attackCommandClicked();
-
+    void healCommandClicked();
 
 signals:
     void roundNumChanged();

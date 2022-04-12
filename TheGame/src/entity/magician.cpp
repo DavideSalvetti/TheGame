@@ -1,9 +1,11 @@
 #include "magician.h"
 
+#define MAX_MAGICIAN_LIFEPOINTS 6
+
 Magician::Magician(QObject *parent)
     : Character{parent}
 {
-    lifePoints = 6;
+    lifePoints = MAX_MAGICIAN_LIFEPOINTS;
     attackPoints = 5;
     defPoints = 2;
     magicPoints = 7;
@@ -11,7 +13,7 @@ Magician::Magician(QObject *parent)
     attackRange = 3;
     numAttacksAvailable = 1;
     numMovesAvailable = 1;
-    imageSrc = ":/img/wizard.png";
+    imageSrc = "qrc:/img/wizard.png";
 }
 
 bool Magician::magicAttack(Character *enemy)
@@ -21,6 +23,11 @@ bool Magician::magicAttack(Character *enemy)
 
 
     return true;
+}
+
+int Magician::getMaxLifePoints() const
+{
+    return MAX_MAGICIAN_LIFEPOINTS;
 }
 
 void Magician::resetProperties()

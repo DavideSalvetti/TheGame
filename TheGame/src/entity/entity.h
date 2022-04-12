@@ -15,6 +15,7 @@ class Entity : public QObject
     Q_PROPERTY(int owner READ getPlayerOwner CONSTANT)
 public:
     explicit Entity(QObject *parent = nullptr);
+
     void setPlayerOwner(Owner owner);
     Owner getPlayerOwner() const;
 

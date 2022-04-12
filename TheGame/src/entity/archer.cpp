@@ -1,16 +1,23 @@
 #include "archer.h"
 
+#define MAX_ARCHER_LIFEPOINTS 10
+
 Archer::Archer(QObject *parent)
     : Character{parent}
 {
-    lifePoints = 10;
+    lifePoints = MAX_ARCHER_LIFEPOINTS;
     attackPoints = 3;
     defPoints = 1;
     moveRange = 2;
     attackRange = 3;
     numAttacksAvailable = 1;
     numMovesAvailable = 1;
-    imageSrc = ":/img/bow.png";
+    imageSrc = "qrc:/img/bow.png";
+}
+
+int Archer::getMaxLifePoints() const
+{
+    return MAX_ARCHER_LIFEPOINTS;
 }
 
 void Archer::resetProperties()

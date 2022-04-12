@@ -23,8 +23,13 @@ public:
     void resetCharactersProperties();
     void moveCharacterToTile(Tile *tile, Character *character);
 
+
 private slots:
     void characterDestroyed();
+
+signals:
+    void winner(Owner winner);
+
 
 private:
     int width;

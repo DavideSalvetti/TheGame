@@ -57,6 +57,13 @@ Window {
                         return "green"
                     }
 
+                    Image {
+                        anchors.fill: parent
+                        anchors.margins: 8
+                        visible: solid
+                        source: "qrc:/img/mountain.png"
+                    }
+
                     Rectangle {
                         width: parent.width - 8
                         height: parent.height - 8
