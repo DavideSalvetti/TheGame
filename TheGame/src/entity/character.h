@@ -12,12 +12,14 @@ public:
     explicit Character(QObject *parent = nullptr);
 
     bool attack(Character *enemy);
-    bool canAttack();
-    bool canMove();
+    bool canAttack() const;
+    bool canMove() const;
+    bool canHeal() const;
 
     void inflictDamage(int damage);
-    int getLifePoints();
-    QString getImageSrc();
+
+    int getLifePoints() const;
+    QString getImageSrc() const;
 
     void decreaseMovesAvailable();
     void decreaseAttackAvailable();
@@ -30,6 +32,7 @@ public:
 
 signals:
     void lifePointsChanged();
+    void characterDestroyed();
 
 protected:
     int lifePoints;

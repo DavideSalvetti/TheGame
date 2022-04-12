@@ -42,6 +42,7 @@ private slots:
     void moveCommandClicked();
     void attackCommandClicked();
 
+
 signals:
     void roundNumChanged();
     void roundPlayerChanged();
@@ -72,6 +73,7 @@ private:
 
     void onIdleState(Tile *tile);
     void onMoveState(Tile *tile);
+    void onAttackState(Tile *tile);
     void checkPermittedActions();
 };
 

@@ -23,9 +23,8 @@ public:
     void resetCharactersProperties();
     void moveCharacterToTile(Tile *tile, Character *character);
 
-
-
-signals:
+private slots:
+    void characterDestroyed();
 
 private:
     int width;

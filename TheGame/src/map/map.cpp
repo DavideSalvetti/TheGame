@@ -47,6 +47,39 @@ void Map::populateMap()
 }
 
 /*!
+ * \brief A character has been destroyed. Need to remove the pointer from the array.
+ */
+void Map::characterDestroyed()
+{
+    Character *character = dynamic_cast<Character*>(sender());
+
+    // Remove Character from Tile
+    int oldX = character->getX();
+    int oldY = character->getY();
+
+    tilesMatrix[oldX][oldY]->removeCharacter();
+
+
+    // Remove Character from vector
+    if (character->getPlayerOwner() == PLAYER_1) {
+        for (int i = 0; i < charactersPlayer1.size(); i++) {
+            if (charactersPlayer1.at(i) == character) {
+                charactersPlayer1.remove(i);
+                break;
+            }
+        }
+    } else {
+        for (int i = 0; i < charactersPlayer2.size(); i++) {
+            if (charactersPlayer2.at(i) == character) {
+                charactersPlayer2.remove(i);
+                break;
+            }
+        }
+    }
+
+}
+
+/*!
  * \brief Set the color of the available tiles the character can move on to blue.
  */
 void Map::availableTileToMoveOn(Character *character)

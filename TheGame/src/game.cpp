@@ -131,6 +131,7 @@ void Game::tileClicked(Tile *tile)
         onMoveState(tile);
         break;
     case Attack:
+        onAttackState(tile);
         break;
     default:
         break;
@@ -174,6 +175,16 @@ void Game::onMoveState(Tile *tile)
     }
 }
 
+void Game::onAttackState(Tile *tile)
+{
+    if (tile->isUnderAttack()) {
+        Character *character = dynamic_cast<Character*>(selectedEntity.data());
+        character->attack(tile->getCharacter());
+        map->resetTiles();
+        status = Idle;
+    }
+}
+
 /*!
  * \brief Game::checkPermittedActions
  */
@@ -188,8 +199,10 @@ void Game::checkPermittedActions()
             if (map->canAttackSomebody(*character)) {
                 qDebug() << "Can Attack";
                 attackCommand->setCanExecute(true);
-            }
-        }
+            } else
+                attackCommand->setCanExecute(false);
+        } else
+            attackCommand->setCanExecute(false);
 
         if (character->canMove()) {
             moveCommand->setCanExecute(true);

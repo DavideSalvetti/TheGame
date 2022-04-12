@@ -27,27 +27,34 @@ bool Character::attack(Character *enemy)
     if (this->attackPoints >= enemy->defPoints)
         damage = this->attackPoints;
 
+    this->decreaseAttackAvailable();
+
     enemy->inflictDamage(damage);
 
     return true;
 }
 
-bool Character::canAttack()
+bool Character::canAttack() const
 {
     return numAttacksAvailable > 0;
 }
 
-bool Character::canMove()
+bool Character::canMove() const
 {
     return numMovesAvailable > 0;
 }
 
-int Character::getLifePoints()
+bool Character::canHeal() const
+{
+    return numMovesAvailable > 0 && numAttacksAvailable > 0;
+}
+
+int Character::getLifePoints() const
 {
     return lifePoints;
 }
 
-QString Character::getImageSrc()
+QString Character::getImageSrc() const
 {
     return imageSrc;
 }
@@ -79,7 +86,7 @@ void Character::inflictDamage(int damage)
     qDebug() << "Damage:" << damage;
     if (lifePoints - damage <= 0) {
         lifePoints = 0;
-        this->deleteLater();
+        emit destroyed();
     } else {
         lifePoints -= damage;
         emit lifePointsChanged();
