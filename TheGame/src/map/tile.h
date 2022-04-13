@@ -14,7 +14,7 @@ class Tile : public QObject
     Q_PROPERTY (bool underAttack READ isUnderAttack NOTIFY underAttackChanged)
     Q_PROPERTY (bool solid READ isSolid CONSTANT)
 public:
-    explicit Tile(int x, int y, QObject *parent = nullptr);
+    explicit Tile(int x = 0, int y = 0, QObject *parent = nullptr);
     ~Tile();
 
     int getX() const;

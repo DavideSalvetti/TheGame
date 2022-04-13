@@ -1,2 +1,5 @@
 module components
 CommandBar 1.0 CommandBar.qml
+CommandButton 1.0 CommandButton.qml
+Header 1.0 Header.qml
+Character 1.0 Character.qml

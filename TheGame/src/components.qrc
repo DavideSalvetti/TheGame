@@ -2,5 +2,8 @@
     <qresource prefix="/components">
         <file alias="CommandBar.qml">components/CommandBar.qml</file>
         <file alias="qmldir">components/qmldir</file>
+        <file alias="CommandButton.qml">components/CommandButton.qml</file>
+        <file alias="Header.qml">components/Header.qml</file>
+        <file alias="Character.qml">components/Character.qml</file>
     </qresource>
 </RCC>

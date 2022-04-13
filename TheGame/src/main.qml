@@ -4,26 +4,24 @@ import QtQuick.Controls 2.15
 import components 1.0
 import assets 1.0
 
+
 Window {
     width: 700
     height: 700
     visible: true
     title: qsTr("The Game")
 
-    Row {
+    color: Style.colourBackground
+
+    Header {
         id: header
-        height: 40
-        anchors.top: parent.top
-
-        Label {
-            id: round
-            text: qsTr("Round") + ": " + game.roundNum
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
         }
 
-        Label {
-            id: player
-            text: qsTr("Player") + ": " + game.roundPlayer
-        }
+        height: Style.heightHeader
     }
 
     Flickable {
@@ -32,9 +30,11 @@ Window {
             bottom: commandBar.top
             left: parent.left
             right: parent.right
+            topMargin: 10
             leftMargin: (parent.width - grid.width) / 2
         }
 
+        clip: true
         contentHeight: grid.height
         contentWidth: grid.width
         Grid {
@@ -43,6 +43,7 @@ Window {
             columns: 8
             Repeater {
                 model: game.map_ui.tiles
+
                 Rectangle {
                     width: 64
                     height: 64
@@ -64,46 +65,9 @@ Window {
                         source: "qrc:/img/mountain.png"
                     }
 
-                    Rectangle {
-                        width: parent.width - 8
-                        height: parent.height - 8
-                        anchors.centerIn: parent
-                        color: "transparent"
-
-                        visible: model.character != null
-                        Image {
-                            id: characterImage
-                            source: model.character != null ?
-                                        model.character.imageSrc : "";
-                            anchors {
-                                top: parent.top
-                                bottom: rectOwner.top
-                                left: parent.left
-                                right: parent.right
-                            }
-                        }
-
-                        Rectangle {
-                            id: rectOwner
-                            height: 5
-                            width: parent.width
-                            color: getPlayerColor()
-                            anchors.bottom: parent.bottom
-
-                            function getPlayerColor() {
-
-                                if (model.character != null) {
-                                    if (model.character.owner == 0)
-                                        return "gray"
-                                    else if (model.character.owner == 1)
-                                        return "red"
-                                    else if (model.character.owner == 2)
-                                        return "blue"
-                                }
-
-                                return "white"
-                            }
-                        }
+                    Character {
+                        visible: model.character !== null
+                        character: model.character
                     }
 
                     MouseArea {

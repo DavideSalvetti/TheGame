@@ -39,8 +39,11 @@ void Character::heal()
 {
     if (canHeal()) {
         if (getLifePoints() + 3 > getMaxLifePoints())
-            lifePoints += getMaxLifePoints();
-        else lifePoints += 3;
+            lifePoints = getMaxLifePoints();
+        else
+            lifePoints += 3;
+
+        emit lifePointsChanged();
 
         numMovesAvailable = 0;
         numAttacksAvailable = 0;

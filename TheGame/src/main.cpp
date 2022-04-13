@@ -26,9 +26,9 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("game", &Game::getInstance());
 
     qmlRegisterUncreatableType<Map>("com.thegame.map", 1, 0, "Map", "Cannot create this object.");
-    qmlRegisterUncreatableType<Tile>("com.thegame.tile", 1, 0, "Tile", "Cannot create this object.");
     qmlRegisterUncreatableType<Character>("com.thegame.character", 1, 0, "Character", "Cannot create this object.");
 
+    qmlRegisterType<Tile>("com.thegame.tile", 1, 0, "Tile");
     qmlRegisterType<Command>("com.thegame.command", 1, 0, "Command");
 
     qRegisterMetaType<Character*>("Character*");
