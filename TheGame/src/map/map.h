@@ -24,9 +24,6 @@ public:
     void moveCharacterToTile(Tile *tile, Character *character);
 
 
-private slots:
-    void characterDestroyed();
-
 signals:
     void winner(Owner winner);
 
@@ -39,11 +36,6 @@ private:
      * When parent is deleted (Map), the children will be destroyed (Tile). */
     QVector<QVector<Tile*>> tilesMatrix;
     QList<Tile *> tilesList;
-
-    QVector<Character*> charactersPlayer1;
-    QVector<Character*> charactersPlayer2;
-
-    void populateMap();
 };
 
 #endif // MAP_H

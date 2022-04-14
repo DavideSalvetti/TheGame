@@ -1,6 +1,8 @@
 #include "game.h"
 #include <QDebug>
 
+#include "entity/characterfactory.h"
+
 /*!
  * \class Game
  * \details Singleton
@@ -11,7 +13,7 @@ Game::Game(QObject *parent)
       roundNum(1),
       roundPlayer(1)
 {
-    map.reset(new Map(8,8));
+
 
     moveCommand = new Command("qrc:/img/location.png", tr("Move"), this);
     moveCommand->setCanExecute(false);
@@ -32,6 +34,12 @@ Game::Game(QObject *parent)
     nextTurnCommand->setCanExecute(true);
     connect(nextTurnCommand, &Command::executed, this, &Game::endTurn);
     commandBar.append(nextTurnCommand);
+
+    mapHeigth = 8;
+    mapWidth = 8;
+
+    charactersModel = new CharactersModel(this);
+    initGame();
 }
 
 Game & Game::getInstance()
@@ -40,19 +48,77 @@ Game & Game::getInstance()
     return instance;
 }
 
-int Game::getRoundNum()
+void Game::initGame()
+{
+    map.reset(new Map(mapWidth,mapHeigth));
+
+    Character *swordsman = CharacterFactory::getInstance().createSwordsman();
+    swordsman->setParent(this);
+    swordsman->setPlayerOwner(PLAYER_1);
+    swordsman->move(1, 1);
+    charactersModel->addCharacter(swordsman);
+    connect(swordsman, &Character::characterDestroyed, charactersModel,
+            &CharactersModel::removeAt);
+
+    Character *archer = CharacterFactory::getInstance().createArcher();
+    archer->setParent(this);
+    archer->setPlayerOwner(PLAYER_1);
+    archer->move(2, 1);
+    charactersModel->addCharacter(archer);
+    connect(archer, &Character::characterDestroyed, charactersModel,
+            &CharactersModel::removeAt);
+
+    Character *magician = CharacterFactory::getInstance().createMagician();
+    magician->setParent(this);
+    magician->setPlayerOwner(PLAYER_1);
+    magician->move(3, 1);
+    charactersModel->addCharacter(magician);
+    connect(magician, &Character::characterDestroyed, charactersModel,
+            &CharactersModel::removeAt);
+
+    swordsman = CharacterFactory::getInstance().createSwordsman();
+    swordsman->setParent(this);
+    swordsman->setPlayerOwner(PLAYER_2);
+    swordsman->move(mapWidth, mapHeigth);
+    charactersModel->addCharacter(swordsman);
+    connect(swordsman, &Character::characterDestroyed, charactersModel,
+            &CharactersModel::removeAt);
+
+    archer = CharacterFactory::getInstance().createArcher();
+    archer->setParent(this);
+    archer->setPlayerOwner(PLAYER_2);
+    archer->move(mapWidth - 1, mapHeigth);
+    charactersModel->addCharacter(archer);
+    connect(archer, &Character::characterDestroyed, charactersModel,
+            &CharactersModel::removeAt);
+
+    magician = CharacterFactory::getInstance().createMagician();
+    magician->setParent(this);
+    magician->setPlayerOwner(PLAYER_2);
+    magician->move(mapWidth - 2, mapHeigth);
+    charactersModel->addCharacter(magician);
+    connect(magician, &Character::characterDestroyed, charactersModel,
+            &CharactersModel::removeAt);
+}
+
+int Game::getRoundNum() const
 {
     return roundNum;
 }
 
-int Game::getRoundPlayer()
+int Game::getRoundPlayer() const
 {
     return roundPlayer;
 }
 
-Map *Game::getMap()
+Map *Game::getMap() const
 {
     return map.data();
+}
+
+CharactersModel *Game::getCharacters() const
+{
+    return charactersModel;
 }
 
 QQmlListProperty<Command> Game::getCommandBar()
@@ -68,7 +134,7 @@ void Game::endTurn()
 
     status = Idle;
     map->resetTiles();
-    map->resetCharactersProperties();
+//    map->resetCharactersProperties();
 
     selectedEntity = nullptr;
     moveCommand->setCanExecute(false);
@@ -130,12 +196,42 @@ void Game::healCommandClicked() {
     checkPermittedActions();
 }
 
+/*!
+ * \brief Handling of the click on a character.
+ * \param x     x of the character clicked
+ * \param y     y of the character clicked
+ * \details x and y are useful properties to get a reference to the
+ * character clicked.
+ */
+void Game::characterClicked(int x, int y)
+{
+    qDebug() << "Character Clicked!";
+    Character *character = charactersModel->getCharacter(x, y);
+
+    switch (status) {
+    case Idle:
+        onIdleState(character);
+        break;
+//    case Move:
+//        onMoveState(tile);
+//        break;
+//    case Attack:
+//        onAttackState(tile);
+//        break;
+    default:
+        break;
+    }
+
+    checkPermittedActions();
+}
+
 
 /*!
  * \brief Handle of the click on the map.
  */
 void Game::tileClicked(Tile *tile)
 {
+    qDebug() << "Tile Clicked!";
 
     switch (status) {
     case Idle:
@@ -152,6 +248,23 @@ void Game::tileClicked(Tile *tile)
     }
 
     checkPermittedActions();
+}
+
+void Game::onIdleState(Character *character)
+{
+    if (character == nullptr) {
+        selectedEntity = nullptr;
+        map->resetTiles();
+        return;
+    }
+
+    if (character->getPlayerOwner() != roundPlayer) {
+        qDebug() << "Entity owner:" << character->getPlayerOwner()
+                 << " Round Player:" << roundPlayer;
+        return;
+    }
+
+    selectedEntity = character;
 }
 
 /*!

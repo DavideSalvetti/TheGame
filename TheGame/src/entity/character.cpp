@@ -103,7 +103,7 @@ void Character::inflictDamage(int damage)
     qDebug() << "Damage:" << damage;
     if (lifePoints - damage <= 0) {
         lifePoints = 0;
-        emit characterDestroyed();
+        emit characterDestroyed(getX(), getY());
     } else {
         lifePoints -= damage;
         emit lifePointsChanged();

@@ -9,6 +9,7 @@ SOURCES += \
         entity/archer.cpp \
         entity/character.cpp \
         entity/characterfactory.cpp \
+        entity/charactersmodel.cpp \
         entity/dynamicentity.cpp \
         entity/entity.cpp \
         entity/magician.cpp \
@@ -43,6 +44,7 @@ HEADERS += \
     entity/archer.h \
     entity/character.h \
     entity/characterfactory.h \
+    entity/charactersmodel.h \
     entity/dynamicentity.h \
     entity/entity.h \
     entity/magician.h \

@@ -33,7 +33,7 @@ public:
 
 signals:
     void lifePointsChanged();
-    void characterDestroyed();
+    void characterDestroyed(int x, int y);
 
 protected:
     int lifePoints;

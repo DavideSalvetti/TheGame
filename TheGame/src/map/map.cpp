@@ -26,7 +26,6 @@ Map::Map(int width, int height, QObject *parent)
     tilesMatrix[4][6]->setSolid(true);
     tilesMatrix[4][7]->setSolid(true);
 
-    populateMap();
 }
 
 Map::~Map()
@@ -37,94 +36,6 @@ Map::~Map()
 QQmlListProperty<Tile> Map::getTiles()
 {
     return QQmlListProperty<Tile>(this, &tilesList);
-}
-
-void Map::populateMap()
-{
-    // devi connettere la slot qui.
-    Character *swordsman = CharacterFactory::getInstance().createSwordsman();
-    swordsman->setParent(this);
-    swordsman->setPlayerOwner(PLAYER_1);
-    charactersPlayer1.append(swordsman);
-    tilesMatrix[0][0]->addCharacter(swordsman);
-    connect(swordsman, &Character::characterDestroyed, this, &Map::characterDestroyed);
-
-    Character *archer = CharacterFactory::getInstance().createArcher();
-    archer->setParent(this);
-    archer->setPlayerOwner(PLAYER_1);
-    charactersPlayer1.append(archer);
-    tilesMatrix[0][1]->addCharacter(archer);
-    connect(archer, &Character::characterDestroyed, this, &Map::characterDestroyed);
-
-    Character *magician = CharacterFactory::getInstance().createMagician();
-    magician->setParent(this);
-    magician->setPlayerOwner(PLAYER_1);
-    charactersPlayer1.append(magician);
-    tilesMatrix[0][2]->addCharacter(magician);
-    connect(magician, &Character::characterDestroyed, this, &Map::characterDestroyed);
-
-    swordsman = CharacterFactory::getInstance().createSwordsman();
-    swordsman->setParent(this);
-    swordsman->setPlayerOwner(PLAYER_2);
-    charactersPlayer2.append(swordsman);
-    tilesMatrix[height - 1][width - 1]->addCharacter(swordsman);
-    connect(swordsman, &Character::characterDestroyed, this, &Map::characterDestroyed);
-
-    archer = CharacterFactory::getInstance().createArcher();
-    archer->setParent(this);
-    archer->setPlayerOwner(PLAYER_2);
-    charactersPlayer2.append(archer);
-    tilesMatrix[height - 1][width - 2]->addCharacter(archer);
-    connect(archer, &Character::characterDestroyed, this, &Map::characterDestroyed);
-
-    magician = CharacterFactory::getInstance().createMagician();
-    magician->setParent(this);
-    magician->setPlayerOwner(PLAYER_2);
-    charactersPlayer2.append(magician);
-    tilesMatrix[height - 1][width - 3]->addCharacter(magician);
-    connect(magician, &Character::characterDestroyed, this, &Map::characterDestroyed);
-}
-
-/*!
- * \brief A character has been destroyed. Need to remove the pointer from the array.
- */
-void Map::characterDestroyed()
-{
-    Character *character = dynamic_cast<Character*>(sender());
-
-    // Remove Character from Tile
-    int oldX = character->getX();
-    int oldY = character->getY();
-
-    tilesMatrix[oldX][oldY]->removeCharacter();
-
-
-    // Remove Character from vector
-    if (character->getPlayerOwner() == PLAYER_1) {
-        for (int i = 0; i < charactersPlayer1.size(); i++) {
-            if (charactersPlayer1.at(i) == character) {
-                charactersPlayer1.remove(i);
-                break;
-            }
-        }
-    } else {
-        for (int i = 0; i < charactersPlayer2.size(); i++) {
-            if (charactersPlayer2.at(i) == character) {
-                charactersPlayer2.remove(i);
-                break;
-            }
-        }
-    }
-
-    // This is important to delete the object.
-    character->deleteLater();
-
-    // check if we still have some unit left in the lists
-    if (charactersPlayer1.size() == 0)
-        emit winner(PLAYER_2);
-    else if (charactersPlayer2.size() == 0)
-        emit winner(PLAYER_1);
-
 }
 
 /*!
@@ -245,19 +156,6 @@ void Map::resetTiles()
     }
 }
 
-/*!
- * \brief Map::resetCharactersProperties
- */
-void Map::resetCharactersProperties()
-{
-    for (int i = 0; i < charactersPlayer1.size(); i++ ) {
-        charactersPlayer1.at(i)->resetProperties();
-    }
-
-    for (int i = 0; i < charactersPlayer2.size(); i++ ) {
-        charactersPlayer2.at(i)->resetProperties();
-    }
-}
 
 /*!
  * \brief Move the character to the given tile.

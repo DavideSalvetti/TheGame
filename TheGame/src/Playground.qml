@@ -35,6 +35,7 @@ Item {
             id: grid
 
             columns: 8
+            rows: 8
             Repeater {
                 model: game.map_ui.tiles
 
@@ -73,6 +74,64 @@ Item {
 
                 }
             }
+
+            Repeater {
+                model: game.characters
+                delegate: Item {
+
+
+                    height: grid.width / 8
+                    width: height
+
+                    x: (model.xPos - 1) * width
+                    y: (model.yPos - 1) * height
+
+                    Rectangle {
+                        id: container
+                        anchors {
+                            fill: parent
+                            margins: 5
+                        }
+                        color: "transparent"
+
+                        Text {
+                            id: lifepoints
+                            anchors {
+                                right: parent.right
+                                top: parent.top
+                            }
+
+                            text: lifePoints
+                            color: Style.colourCommandBarFont
+
+                        }
+
+                        Rectangle {
+                            width: 10
+                            height: 10
+                            radius: 5
+                            color: owner === 1 ? "red" : "blue"
+                        }
+
+                        Image {
+                            id: characterImage
+                            source: imageSrc
+                            anchors.fill: parent
+
+
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+
+                        onClicked: {
+                            game.characterClicked(model.xPos, model.yPos)
+                        }
+                    }
+                }
+            }
+
         }
     }
 
