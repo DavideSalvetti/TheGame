@@ -13,86 +13,68 @@ Window {
 
     color: Style.colourBackground
 
-    Header {
-        id: header
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
 
-        height: Style.heightHeader
-    }
+    StackView {
+        id: stack
+        initialItem: view
+        anchors.fill: parent
 
-    Flickable {
-        anchors {
-            top: header.bottom
-            bottom: commandBar.top
-            left: parent.left
-            right: parent.right
-            topMargin: 10
-            leftMargin: (parent.width - grid.width) / 2
-        }
+        Component {
+            id: view
 
-        clip: true
-        contentHeight: grid.height
-        contentWidth: grid.width
-        Grid {
-            id: grid
+            Rectangle {
+                id: backgroundRectangle
+                anchors.fill: parent
 
-            columns: 8
-            Repeater {
-                model: game.map_ui.tiles
 
-                Rectangle {
-                    width: 64
-                    height: 64
-                    border.color: "black"
-                    border.width: 1
-                    color: getGroundColor()
+                Image {
+                    anchors.bottom: parent.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    source: "qrc:/img/mountain.png"
+                    height: 512
+                    width: 512
+                }
 
-                    function getGroundColor() {
-                        if (model.free) return "blue"
-                        else if (model.underAttack) return "red"
-
-                        return "green"
+                Column {
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: 10
+                    Label {
+                        text: qsTr("Choose a map:")
                     }
 
-                    Image {
-                        anchors.fill: parent
-                        anchors.margins: 8
-                        visible: solid
-                        source: "qrc:/img/mountain.png"
-                    }
+                    Row {
+                        spacing: 10
+                        Button {
+                            text: qsTr("Small (8x8)")
+                        }
 
-                    Character {
-                        visible: model.character !== null
-                        character: model.character
-                    }
+                        Button {
+                            text: qsTr("Medium (12x12)")
+                        }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            game.tileClicked(modelData)
+                        Button {
+                            text: qsTr("Large (16x16)")
                         }
                     }
+                }
 
+                MouseArea {
+
+                    anchors.fill: parent
+                    Text {
+                        text: stack.depth
+                        color: "white"
+                        anchors.fill: parent
+                    }
+                    onClicked:  {
+                        console.log("Qml CLicked")
+                        stack.push("qrc:/Playground.qml")
+                    }
                 }
             }
+
+
         }
     }
-
-    CommandBar {
-        id: commandBar
-
-        anchors {
-            left: parent.left
-            bottom: parent.bottom
-            right: parent.right
-        }
-        height: Style.heightCommandBar
-
-        commandList: game.commandBar
-    }
-
 }

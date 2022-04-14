@@ -22,9 +22,9 @@ Item {
             anchors {
                 top: parent.top
                 bottom: rectLifePoints.top
-                left: parent.left
-                right: parent.right
             }
+
+            width: parent.width
         }
 
         Text {
@@ -36,6 +36,7 @@ Item {
 
             text: character != null ? character.lifePoints : ""
             color: Style.colourCommandBarFont
+
         }
 
         Rectangle {
