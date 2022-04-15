@@ -14,8 +14,7 @@ class Game : public QObject
     Q_PROPERTY (int roundNum READ getRoundNum NOTIFY roundNumChanged)
     Q_PROPERTY (int roundPlayer READ getRoundPlayer NOTIFY roundPlayerChanged)
     Q_PROPERTY (QQmlListProperty<Command> commandBar READ getCommandBar CONSTANT)
-    Q_PROPERTY (QQmlListProperty<Character> charactersList READ getCharactersList NOTIFY characterListChanged)
-    Q_PROPERTY(CharactersModel* characters READ getCharacters CONSTANT)
+    //Q_PROPERTY (QQmlListProperty<Character> charactersList READ getCharactersList NOTIFY characterListChanged)
 
 public:
     static Game& getInstance();
@@ -25,9 +24,7 @@ public:
     int getRoundNum() const;
     int getRoundPlayer() const;
     Map *getMap() const;
-    CharactersModel *getCharacters() const;
     QQmlListProperty<Command> getCommandBar();
-    QQmlListProperty<Character> getCharactersList();
 
     void nextPlayer();
 
@@ -41,17 +38,16 @@ public:
     Game(Game const&) = delete;
     void operator=(Game const&) = delete;
 
-
-
 private slots:
     void moveCommandClicked();
     void attackCommandClicked();
-    void healCommandClicked();
+    void healCommandClicked(); 
+    void endGame(Owner winner);
 
 signals:
     void roundNumChanged();
     void roundPlayerChanged();
-    void characterListChanged();
+    void gameFinished(Owner winner);
 
 private:
     Game(QObject *parent = nullptr);
@@ -69,11 +65,7 @@ private:
     int roundPlayer;
     Action status {Idle};
 
-    /* I used smart pointers only for learning purposes.
-     * It should be fine and easier to use the parent-child
-     * relations offered by Qt. */
-    QScopedPointer<Map> map;
-    CharactersModel *charactersModel {nullptr};
+    Map *map {nullptr};
 
     QPointer<Entity> selectedEntity {nullptr};
 
@@ -84,7 +76,6 @@ private:
     Command *healCommand {nullptr};
 
     QList<Command*> commandBar;
-    QList<Character*> characters;
 
     void onIdleState(Tile *tile);
     void onMoveState(Tile *tile);
@@ -95,7 +86,6 @@ private:
     void onAttackState(Character *character);
 
     void checkPermittedActions();
-    void removeCharacter(int x, int y);
 };
 
 #endif // GAME_H

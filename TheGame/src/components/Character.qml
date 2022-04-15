@@ -21,11 +21,20 @@ Item {
         Image {
             id: characterImage
             source: character.imageSrc
-            anchors.fill: parent
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+            }
+            x: 0
+            width: parent.width
+
         }
 
         Text {
             id: lifepoints
+
+            property real previousText: 0
+
             anchors {
                 right: parent.right
                 top: parent.top
@@ -34,6 +43,17 @@ Item {
             text: character.lifePoints
             color: Style.colourCommandBarFont
 
+            onTextChanged: {
+                if (previousText > character.lifePoints) {
+                    lifePointsAnimation.running = true
+                }
+
+                previousText = character.lifePoints
+            }
+
+            Component.onCompleted: {
+                previousText = character.lifePoints
+            }
         }
 
         Rectangle {
@@ -50,6 +70,14 @@ Item {
 
     Behavior on y {
         NumberAnimation {duration: 200; easing.type: Easing.OutQuad }
+    }
+
+    SequentialAnimation {
+        id: lifePointsAnimation
+        NumberAnimation {target: characterImage; property: "x"; duration: 100; from: 0; to: 5}
+        NumberAnimation {target: characterImage; property: "x"; duration: 100; from: 5; to: -5}
+        NumberAnimation {target: characterImage; property: "x"; duration: 100; from: -5; to: 5}
+        NumberAnimation {target: characterImage; property: "x"; duration: 100; from: 5; to: 0}
     }
 
     MouseArea {

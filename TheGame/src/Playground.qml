@@ -7,6 +7,18 @@ import assets 1.0
 
 Item {
 
+
+    Connections {
+        target: game
+
+        function onGameFinished(winner) {
+            console.log("The winner is:" + winner)
+            winnerRect.visible = true
+            showWinnerRect.running = true
+        }
+    }
+
+
     Header {
         id: header
         anchors {
@@ -70,7 +82,7 @@ Item {
             }
 
             Repeater {
-                model: game.charactersList
+                model: game.map_ui.charactersList
                 delegate: Character {
 
 
@@ -97,5 +109,26 @@ Item {
         height: Style.heightCommandBar
 
         commandList: game.commandBar
+    }
+
+
+    Rectangle {
+        id: winnerRect
+        anchors.fill: parent
+        visible: false
+        color: "black"
+        opacity: 0
+
+        SequentialAnimation {
+            id: showWinnerRect
+            NumberAnimation { target: winnerRect; property: "opacity"; from: 0; to: 0.6; duration: 3000}
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                console.log("MouseArea clicked")
+            }
+        }
     }
 }

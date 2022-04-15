@@ -13,6 +13,13 @@ Window {
 
     color: Style.colourBackground
 
+    Connections {
+        target: game
+
+        function onGameFinished(winner) {
+            console.log("The winner is:" + winner)
+        }
+    }
 
     StackView {
         id: stack

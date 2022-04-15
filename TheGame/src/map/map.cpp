@@ -26,16 +26,81 @@ Map::Map(int width, int height, QObject *parent)
     tilesMatrix[4][6]->setSolid(true);
     tilesMatrix[4][7]->setSolid(true);
 
+    populateMap();
 }
 
 Map::~Map()
 {
     qDebug() << "Deleting map object.";
+
+    qDeleteAll(characters.begin(), characters.end());
+}
+
+void Map::populateMap()
+{
+    Character *swordsman = CharacterFactory::getInstance().createSwordsman();
+    swordsman->setParent(this);
+    swordsman->setPlayerOwner(PLAYER_1);
+    swordsman->move(0, 0);
+    characters.append(swordsman);
+    tilesMatrix[0][0]->setEntityPresent(true);
+    connect(swordsman, &Character::characterDestroyed, this,
+            &Map::removeCharacter);
+
+    Character *archer = CharacterFactory::getInstance().createArcher();
+    archer->setParent(this);
+    archer->setPlayerOwner(PLAYER_1);
+    archer->move(1, 0);
+    characters.append(archer);
+    tilesMatrix[0][1]->setEntityPresent(true);
+    connect(archer, &Character::characterDestroyed, this,
+            &Map::removeCharacter);
+
+    Character *magician = CharacterFactory::getInstance().createMagician();
+    magician->setParent(this);
+    magician->setPlayerOwner(PLAYER_1);
+    magician->move(2, 0);
+    characters.append(magician);
+    tilesMatrix[0][2]->setEntityPresent(true);
+    connect(magician, &Character::characterDestroyed, this,
+            &Map::removeCharacter);
+
+    swordsman = CharacterFactory::getInstance().createSwordsman();
+    swordsman->setParent(this);
+    swordsman->setPlayerOwner(PLAYER_2);
+    swordsman->move(width - 1, height - 1);
+    characters.append(swordsman);
+    tilesMatrix[width - 1][height - 1]->setEntityPresent(true);
+    connect(swordsman, &Character::characterDestroyed, this,
+            &Map::removeCharacter);
+
+    archer = CharacterFactory::getInstance().createArcher();
+    archer->setParent(this);
+    archer->setPlayerOwner(PLAYER_2);
+    archer->move(width - 2, height - 1);
+    characters.append(archer);
+    tilesMatrix[width - 1][height - 2]->setEntityPresent(true);
+    connect(archer, &Character::characterDestroyed, this,
+            &Map::removeCharacter);
+
+    magician = CharacterFactory::getInstance().createMagician();
+    magician->setParent(this);
+    magician->setPlayerOwner(PLAYER_2);
+    magician->move(width - 3, height - 1);
+    characters.append(magician);
+    tilesMatrix[width - 1][height - 3]->setEntityPresent(true);
+    connect(magician, &Character::characterDestroyed, this,
+            &Map::removeCharacter);
 }
 
 QQmlListProperty<Tile> Map::getTiles()
 {
     return QQmlListProperty<Tile>(this, &tilesList);
+}
+
+QQmlListProperty<Character> Map::getCharactersList()
+{
+    return QQmlListProperty<Character>(this, &characters);
 }
 
 /*!
@@ -74,7 +139,7 @@ void Map::availableTileToMoveOn(Character *character)
  * \brief Search for enemy that the passed character can attack and set
  *  the tile to underAttack.
  */
-void Map::availableCharacterToAttack(const Character &character, const QList<Character*> &characters)
+void Map::availableCharacterToAttack(const Character &character)
 {
     int x = character.getX();
     int y = character.getY();
@@ -124,7 +189,7 @@ void Map::availableCharacterToAttack(const Character &character, const QList<Cha
  * \param character
  * \return True if there is at least one enemy to attack, false otherwise
  */
-bool Map::canAttackSomebody(const Character &character, const QList<Character*> &characters)
+bool Map::canAttackSomebody(const Character &character)
 {
     int x = character.getX();
     int y = character.getY();
@@ -185,7 +250,6 @@ void Map::resetTiles()
     }
 }
 
-
 /*!
  * \brief Move the character to the given tile.
  * \param tile      - Tile where the character needs to be moved
@@ -202,6 +266,46 @@ void Map::moveCharacterToTile(Tile *tile, Character *character) {
     tile->setEntityPresent(true);
 
     character->decreaseMovesAvailable();
+}
+
+void Map::resetProperties()
+{
+    foreach (Character *character, characters) {
+        character->resetProperties();
+    }
+}
+
+void Map::removeCharacter(int x, int y)
+{
+    for (int i = 0; i < characters.size(); i++) {
+        if (characters.at(i)->getX() == x && characters.at(i)->getY() == y) {
+            int x = characters.at(i)->getX();
+            int y = characters.at(i)->getY();
+
+            tilesMatrix[y][x]->setEntityPresent(false);
+            delete characters.takeAt(i);
+        }
+    }
+
+    emit characterListChanged();
+
+    int numCharactersPlayer1 = 0;
+    int numCharactersPlayer2 = 0;
+    foreach (Character *character, characters) {
+        if (character->getPlayerOwner() == PLAYER_1)
+            numCharactersPlayer1++;
+        if (character->getPlayerOwner() == PLAYER_2)
+            numCharactersPlayer2++;
+    }
+
+    if (numCharactersPlayer1 == 0) {
+        resetTiles();
+        emit winner(PLAYER_2);
+    }
+    if (numCharactersPlayer2 == 0) {
+        resetTiles();
+        emit winner(PLAYER_1);
+    }
 }
 
 

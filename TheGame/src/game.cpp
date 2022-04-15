@@ -38,7 +38,6 @@ Game::Game(QObject *parent)
     mapHeigth = 8;
     mapWidth = 8;
 
-    charactersModel = new CharactersModel(this);
     initGame();
 }
 
@@ -50,61 +49,17 @@ Game & Game::getInstance()
 
 void Game::initGame()
 {
-    map.reset(new Map(mapWidth,mapHeigth));
+    map = new Map(mapWidth, mapHeigth, this);
 
-    Character *swordsman = CharacterFactory::getInstance().createSwordsman();
-    swordsman->setParent(this);
-    swordsman->setPlayerOwner(PLAYER_1);
-    swordsman->move(0, 0);
-    characters.append(swordsman);
-    //    charactersModel->addCharacter(swordsman);
-    connect(swordsman, &Character::characterDestroyed, this,
-            &Game::removeCharacter);
+    connect(map, &Map::winner, this, &Game::endGame);
+}
 
-    Character *archer = CharacterFactory::getInstance().createArcher();
-    archer->setParent(this);
-    archer->setPlayerOwner(PLAYER_1);
-    archer->move(1, 0);
-    characters.append(archer);
-    //    charactersModel->addCharacter(archer);
-    connect(archer, &Character::characterDestroyed, this,
-            &Game::removeCharacter);
+void Game::endGame(Owner winner)
+{
+    qDebug() << "Winner:" << winner;
+    emit gameFinished(winner);
 
-    Character *magician = CharacterFactory::getInstance().createMagician();
-    magician->setParent(this);
-    magician->setPlayerOwner(PLAYER_1);
-    magician->move(2, 0);
-    characters.append(magician);
-    //    charactersModel->addCharacter(magician);
-    connect(magician, &Character::characterDestroyed, this,
-            &Game::removeCharacter);
-
-    swordsman = CharacterFactory::getInstance().createSwordsman();
-    swordsman->setParent(this);
-    swordsman->setPlayerOwner(PLAYER_2);
-    swordsman->move(mapWidth - 1, mapHeigth - 1);
-    characters.append(swordsman);
-    //    charactersModel->addCharacter(swordsman);
-    connect(swordsman, &Character::characterDestroyed, this,
-            &Game::removeCharacter);
-
-    archer = CharacterFactory::getInstance().createArcher();
-    archer->setParent(this);
-    archer->setPlayerOwner(PLAYER_2);
-    archer->move(mapWidth - 2, mapHeigth - 1);
-    characters.append(archer);
-    //    charactersModel->addCharacter(archer);
-    connect(archer, &Character::characterDestroyed, this,
-            &Game::removeCharacter);
-
-    magician = CharacterFactory::getInstance().createMagician();
-    magician->setParent(this);
-    magician->setPlayerOwner(PLAYER_2);
-    magician->move(mapWidth - 3, mapHeigth - 1);
-    characters.append(magician);
-    //    charactersModel->addCharacter(magician);
-    connect(magician, &Character::characterDestroyed, this,
-            &Game::removeCharacter);
+    delete map;
 }
 
 int Game::getRoundNum() const
@@ -119,22 +74,12 @@ int Game::getRoundPlayer() const
 
 Map *Game::getMap() const
 {
-    return map.data();
-}
-
-CharactersModel *Game::getCharacters() const
-{
-    return charactersModel;
+    return map;
 }
 
 QQmlListProperty<Command> Game::getCommandBar()
 {
     return QQmlListProperty<Command>(this, &commandBar);
-}
-
-QQmlListProperty<Character> Game::getCharactersList()
-{
-    return QQmlListProperty<Character>(this, &characters);
 }
 
 /*!
@@ -145,12 +90,7 @@ void Game::endTurn()
 
     status = Idle;
     map->resetTiles();
-
-    foreach (Character *character, characters) {
-        character->resetProperties();
-    }
-
-    charactersModel->resetProperties();
+    map->resetProperties();
 
     selectedEntity = nullptr;
     moveCommand->setCanExecute(false);
@@ -204,7 +144,7 @@ void Game::attackCommandClicked() {
         status = Attack;
 
         Character *character = dynamic_cast<Character*>(selectedEntity.data());
-        map->availableCharacterToAttack(*character, characters);
+        map->availableCharacterToAttack(*character);
     }
 }
 
@@ -355,7 +295,7 @@ void Game::checkPermittedActions()
 
         attackCommand->setCanExecute(false);
         if (character->canAttack()) {
-            if (map->canAttackSomebody(*character, characters)) {
+            if (map->canAttackSomebody(*character)) {
                 qDebug() << "Can Attack";
                 attackCommand->setCanExecute(true);
             } else
@@ -376,17 +316,4 @@ void Game::checkPermittedActions()
         } else
             healCommand->setCanExecute(false);
     }
-}
-
-void Game::removeCharacter(int x, int y)
-{
-    for (int i = 0; i < characters.size(); i++) {
-        if (characters.at(i)->getX() == x && characters.at(i)->getY() == y) {
-            // qui bisogna togliere EntityPresent al tile a cui appartiene
-            // il character da eliminare
-            delete characters.takeAt(i);
-        }
-    }
-
-    emit characterListChanged();
 }
