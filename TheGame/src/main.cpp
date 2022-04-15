@@ -7,6 +7,7 @@
 #include  "game.h"
 #include "map/map.h"
 #include "map/tile.h"
+#include "entity/dynamicentity.h"
 #include "entity/character.h"
 #include "command.h"
 #include "entity/charactersmodel.h"

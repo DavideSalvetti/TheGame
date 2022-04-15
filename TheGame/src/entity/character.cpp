@@ -111,3 +111,29 @@ void Character::inflictDamage(int damage)
 
     qDebug() << "LifePoints:" << lifePoints;
 }
+
+void Character::setX(int x)
+{
+    if (this->x == x) return;
+
+    this->x = x;
+    emit xPosChanged();
+}
+
+void Character::setY(int y)
+{
+    if (this->y == y) return;
+
+    this->y = y;
+    emit yPosChanged();
+}
+
+int Character::getXPos() const
+{
+    return x;
+}
+
+int Character::getYPos() const
+{
+    return y;
+}

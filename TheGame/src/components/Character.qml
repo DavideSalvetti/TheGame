@@ -11,20 +11,17 @@ Item {
 
     Rectangle {
         id: container
-        width: parent.width - 8
-        height: parent.height - 8
-        anchors.centerIn: parent
+        anchors {
+            fill: parent
+            margins: 5
+        }
         color: "transparent"
+
 
         Image {
             id: characterImage
-            source: character != null ? character.imageSrc : ""
-            anchors {
-                top: parent.top
-                bottom: rectLifePoints.top
-            }
-
-            width: parent.width
+            source: character.imageSrc
+            anchors.fill: parent
         }
 
         Text {
@@ -34,31 +31,32 @@ Item {
                 top: parent.top
             }
 
-            text: character != null ? character.lifePoints : ""
+            text: character.lifePoints
             color: Style.colourCommandBarFont
 
         }
 
         Rectangle {
-            id: rectLifePoints
-            height: 5
-            width: parent.width
-            color: getPlayerColor()
-            anchors.bottom: parent.bottom
+            width: 10
+            height: 10
+            radius: 5
+            color: character.owner === 1 ? "red" : "blue"
+        }
+    }
 
-            function getPlayerColor() {
+    Behavior on x {
+        NumberAnimation {duration: 200; easing.type: Easing.OutQuad }
+    }
 
-                if (character != null) {
-                    if (character.owner == 0)
-                        return "gray"
-                    else if (character.owner == 1)
-                        return "red"
-                    else if (character.owner == 2)
-                        return "blue"
-                }
+    Behavior on y {
+        NumberAnimation {duration: 200; easing.type: Easing.OutQuad }
+    }
 
-                return "white"
-            }
+    MouseArea {
+        anchors.fill: parent
+
+        onClicked: {
+            game.characterClicked(character)
         }
     }
 }

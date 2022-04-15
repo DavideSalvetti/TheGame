@@ -14,6 +14,7 @@ class Game : public QObject
     Q_PROPERTY (int roundNum READ getRoundNum NOTIFY roundNumChanged)
     Q_PROPERTY (int roundPlayer READ getRoundPlayer NOTIFY roundPlayerChanged)
     Q_PROPERTY (QQmlListProperty<Command> commandBar READ getCommandBar CONSTANT)
+    Q_PROPERTY (QQmlListProperty<Character> charactersList READ getCharactersList NOTIFY characterListChanged)
     Q_PROPERTY(CharactersModel* characters READ getCharacters CONSTANT)
 
 public:
@@ -26,11 +27,12 @@ public:
     Map *getMap() const;
     CharactersModel *getCharacters() const;
     QQmlListProperty<Command> getCommandBar();
+    QQmlListProperty<Character> getCharactersList();
 
     void nextPlayer();
 
     Q_INVOKABLE void tileClicked(Tile *tile);
-    Q_INVOKABLE void characterClicked(int x, int y);
+    Q_INVOKABLE void characterClicked(Character *character);
     Q_INVOKABLE void endTurn();
 
 
@@ -49,6 +51,7 @@ private slots:
 signals:
     void roundNumChanged();
     void roundPlayerChanged();
+    void characterListChanged();
 
 private:
     Game(QObject *parent = nullptr);
@@ -81,6 +84,7 @@ private:
     Command *healCommand {nullptr};
 
     QList<Command*> commandBar;
+    QList<Character*> characters;
 
     void onIdleState(Tile *tile);
     void onMoveState(Tile *tile);
@@ -91,6 +95,7 @@ private:
     void onAttackState(Character *character);
 
     void checkPermittedActions();
+    void removeCharacter(int x, int y);
 };
 
 #endif // GAME_H

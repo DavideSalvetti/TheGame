@@ -24,9 +24,9 @@ int Tile::getY() const
     return y;
 }
 
-bool Tile::canMoveOnTile()
+bool Tile::canMoveOnTile() const
 {
-    return !solid && !character;
+    return !solid && !entityPresent;
 }
 
 bool Tile::isFree() const
@@ -42,6 +42,11 @@ bool Tile::isUnderAttack() const
 bool Tile::isSolid() const
 {
     return solid;
+}
+
+bool Tile::isEntityPresent() const
+{
+    return entityPresent;
 }
 
 void Tile::setSolid(bool solid)
@@ -64,27 +69,10 @@ void Tile::setUnderAttack(bool underAttack)
     emit underAttackChanged();
 }
 
-void Tile::addCharacter(Character *character)
+void Tile::setEntityPresent(bool entityPresent)
 {
-    if (character != nullptr) {
-        this->character = character;
-        this->character->move(x, y);
-    }
+    if (this->entityPresent == entityPresent)
+        return;
 
-    emit characterChanged();
-}
-
-void Tile::removeCharacter() {
-    character = nullptr;
-
-    emit characterChanged();
-}
-
-Character *Tile::getCharacter()
-{
-    if (character) {
-        return character;
-    }
-
-    return nullptr;
+    this->entityPresent = entityPresent;
 }

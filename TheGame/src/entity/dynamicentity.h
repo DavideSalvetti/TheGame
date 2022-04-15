@@ -5,9 +5,14 @@
 
 class DynamicEntity : public Entity
 {
+    Q_OBJECT
 public:
     explicit DynamicEntity(QObject *parent = nullptr);
     void move(int x, int y);
+
+
+signals:
+
 };
 
 #endif // DYNAMICENTITY_H

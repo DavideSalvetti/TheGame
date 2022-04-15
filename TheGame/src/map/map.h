@@ -5,6 +5,7 @@
 #include <QQmlListProperty>
 #include "tile.h"
 #include "../entity/character.h"
+#include "../entity/charactersmodel.h"
 
 class Map : public QObject
 {
@@ -16,12 +17,16 @@ public:
 
     QQmlListProperty<Tile> getTiles();
     void availableTileToMoveOn(Character *character);
-    void availableCharacterToAttack(const Character &character);
-    bool canAttackSomebody(const Character &character);
+    void availableCharacterToAttack(const Character &character,
+                                    const QList<Character *> &characters);
+    bool canAttackSomebody(const Character &character,
+                           const QList<Character *> &charactersModel);
+    bool isTileUnderAttack(int x, int y) const;
 
     void resetTiles();
     void resetCharactersProperties();
     void moveCharacterToTile(Tile *tile, Character *character);
+
 
 
 signals:

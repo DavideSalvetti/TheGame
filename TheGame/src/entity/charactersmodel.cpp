@@ -52,10 +52,17 @@ void CharactersModel::addCharacter(Character* newCharacter)
     endInsertRows();
 }
 
+void CharactersModel::resetProperties()
+{
+    foreach (Character *character, characters) {
+        character->resetProperties();
+    }
+}
+
 /*!
  * \brief Search for character using xPos and yPos.
  */
-Character *CharactersModel::getCharacter(int xPos, int yPos)
+Character *CharactersModel::getCharacter(int xPos, int yPos) const
 {
     foreach (Character *character, characters) {
         if (character->getX() == xPos && character->getY() == yPos)
@@ -96,3 +103,28 @@ QVariant CharactersModel::data(const QModelIndex& index, int role) const {
 
     return QVariant();
 }
+
+bool CharactersModel::setData(const QModelIndex &index,
+                              const QVariant &value, int role)
+{
+    if (index.row() < 0 || index.row() >= characters.count())
+        return false;
+
+    Character *character = characters[index.row()];
+    if (role == XPosRole) {
+        character->setX(value.toInt());
+        emit dataChanged(index, index);
+        return true;
+    }
+    else if (role == YPosRole) {
+        character->setY(value.toInt());
+        emit dataChanged(index, index);
+        return true;
+    }
+    else if (role == LifePoints) {
+        emit dataChanged(index, index);
+        return true;
+    }
+    return false;
+}
+
