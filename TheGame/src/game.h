@@ -4,13 +4,12 @@
 #include <QObject>
 #include "map/map.h"
 #include "command.h"
-#include "entity/charactersmodel.h"
 #include "entity/swordsman.h"
 
 class Game : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY (Map *map_ui READ getMap CONSTANT)
+    Q_PROPERTY (Map *map_ui READ getMap NOTIFY mapHasChanged)
     Q_PROPERTY (int roundNum READ getRoundNum NOTIFY roundNumChanged)
     Q_PROPERTY (int roundPlayer READ getRoundPlayer NOTIFY roundPlayerChanged)
     Q_PROPERTY (QQmlListProperty<Command> commandBar READ getCommandBar CONSTANT)
@@ -19,7 +18,7 @@ class Game : public QObject
 public:
     static Game& getInstance();
 
-    void initGame();
+    Q_INVOKABLE void initGame(int width, int heigth);
 
     int getRoundNum() const;
     int getRoundPlayer() const;
@@ -42,12 +41,13 @@ private slots:
     void moveCommandClicked();
     void attackCommandClicked();
     void healCommandClicked(); 
-    void endGame(Owner winner);
+    void endGame(int winner);
 
 signals:
     void roundNumChanged();
     void roundPlayerChanged();
-    void gameFinished(Owner winner);
+    void gameFinished(int  winner);
+    void mapHasChanged();
 
 private:
     Game(QObject *parent = nullptr);

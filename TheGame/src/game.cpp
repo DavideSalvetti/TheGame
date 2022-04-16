@@ -1,7 +1,6 @@
 #include "game.h"
 #include <QDebug>
 
-#include "entity/characterfactory.h"
 
 /*!
  * \class Game
@@ -35,10 +34,6 @@ Game::Game(QObject *parent)
     connect(nextTurnCommand, &Command::executed, this, &Game::endTurn);
     commandBar.append(nextTurnCommand);
 
-    mapHeigth = 8;
-    mapWidth = 8;
-
-    initGame();
 }
 
 Game & Game::getInstance()
@@ -47,14 +42,19 @@ Game & Game::getInstance()
     return instance;
 }
 
-void Game::initGame()
+void Game::initGame(int width, int heigth)
 {
+    mapHeigth = heigth;
+    mapWidth = width;
+
     map = new Map(mapWidth, mapHeigth, this);
 
     connect(map, &Map::winner, this, &Game::endGame);
+
+    emit mapHasChanged();
 }
 
-void Game::endGame(Owner winner)
+void Game::endGame(int winner)
 {
     qDebug() << "Winner:" << winner;
     emit gameFinished(winner);
@@ -120,8 +120,6 @@ void Game::nextPlayer()
  */
 void Game::moveCommandClicked()
 {
-    qDebug() << "Move command clicked!";
-
     if (status != Move) map->resetTiles();
 
     if (selectedEntity) {
@@ -136,8 +134,6 @@ void Game::moveCommandClicked()
  * \brief Game::attackCommandClicked
  */
 void Game::attackCommandClicked() {
-    qDebug() << "Attack command clicked!";
-
     if (status != Attack) map->resetTiles();
 
     if (selectedEntity) {
@@ -167,16 +163,13 @@ void Game::healCommandClicked() {
  */
 void Game::characterClicked(Character *character)
 {
-    qDebug() << "Character Clicked!";
-    //    Character *character = charactersModel->getCharacter(x, y);
-
     switch (status) {
     case Idle:
         onIdleState(character);
         break;
-        //    case Move:
-        //        onMoveState(tile);
-        //        break;
+    case Move:
+        onMoveState(character);
+        break;
     case Attack:
         onAttackState(character);
         break;
@@ -193,8 +186,6 @@ void Game::characterClicked(Character *character)
  */
 void Game::tileClicked(Tile *tile)
 {
-    qDebug() << "Tile Clicked!";
-
     switch (status) {
     case Idle:
         onIdleState(tile);
@@ -237,6 +228,13 @@ void Game::onIdleState(Tile *tile)
     Q_UNUSED(tile)
     selectedEntity = nullptr;
     map->resetTiles();
+}
+
+void Game::onMoveState(Character *character)
+{
+    Q_UNUSED(character)
+    map->resetTiles();
+    status = Idle;
 }
 
 /*!
@@ -296,7 +294,6 @@ void Game::checkPermittedActions()
         attackCommand->setCanExecute(false);
         if (character->canAttack()) {
             if (map->canAttackSomebody(*character)) {
-                qDebug() << "Can Attack";
                 attackCommand->setCanExecute(true);
             } else
                 attackCommand->setCanExecute(false);
@@ -305,14 +302,12 @@ void Game::checkPermittedActions()
 
         if (character->canMove()) {
             moveCommand->setCanExecute(true);
-            qDebug() << "Can Move";
         } else
             moveCommand->setCanExecute(false);
 
 
         if (character->canHeal()) {
             healCommand->setCanExecute(true);
-            qDebug() << "Can Heal";
         } else
             healCommand->setCanExecute(false);
     }

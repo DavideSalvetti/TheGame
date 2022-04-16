@@ -8,6 +8,17 @@ Map::Map(int width, int height, QObject *parent)
       width(width),
       height(height)
 {
+    if (width == 8) {
+        tileWidth = 64;
+        tileHeight = 64;
+    } else if (width == 12) {
+        tileWidth = 56;
+        tileHeight = 56;
+    } else if (width == 16) {
+        tileWidth = 48;
+        tileHeight = 48;
+    }
+
     for (int i = 0; i < this->width; i++) {
         QVector<Tile*> tempVector;
         for (int j = 0; j < this->height; j++) {
@@ -128,7 +139,6 @@ void Map::availableTileToMoveOn(Character *character)
                 tilesMatrix[j][i]->setFree(false);
             else if (abs(x - i) <= maxRange && abs(y - j) <= maxRange) {
                 tilesMatrix[j][i]->setFree(true);
-                qDebug() << "Tile" << i << j << " is free.";
             } else
                 tilesMatrix[j][i]->setFree(false);
         }
@@ -214,15 +224,12 @@ bool Map::canAttackSomebody(const Character &character)
             }
 
             if (enemy == nullptr) {
-                qDebug() << "Tile " << i << j << " - No Character";
                 continue;
             }
 
             if (enemy->getPlayerOwner() != character.getPlayerOwner()) {
-                qDebug() << "Tile " << i << j << " - Enemy";
                 if (abs(x - i) <= maxRange && abs(y - j) <= maxRange) {
                     canAttack = true;
-                    qDebug() << "Tile " << i << j << " - Enemy in range!";
                     break;
                 }
             }
@@ -262,12 +269,15 @@ void Map::moveCharacterToTile(Tile *tile, Character *character) {
 
     character->setX(tile->getX());
     character->setY(tile->getY());
-    tilesMatrix[oldX][oldY]->setEntityPresent(false);
+    tilesMatrix[oldY][oldX]->setEntityPresent(false);
     tile->setEntityPresent(true);
 
     character->decreaseMovesAvailable();
 }
 
+/*!
+ * \brief Reset the properties of each character at the end of the turn.
+ */
 void Map::resetProperties()
 {
     foreach (Character *character, characters) {
@@ -275,6 +285,31 @@ void Map::resetProperties()
     }
 }
 
+int Map::getMapWidth() const
+{
+    return width;
+}
+
+int Map::getMapHeight() const
+{
+    return height;
+}
+
+int Map::getTileWidth() const
+{
+    return tileWidth;
+}
+
+int Map::getTileHeight() const
+{
+    return tileHeight;
+}
+
+/*!
+ * \brief A character has been destroyed. Remove it from the List and delete it.
+ * \param x - x coordinate where the character to remove is
+ * \param y - y coordinate where the character to remove is
+ */
 void Map::removeCharacter(int x, int y)
 {
     for (int i = 0; i < characters.size(); i++) {
@@ -289,6 +324,7 @@ void Map::removeCharacter(int x, int y)
 
     emit characterListChanged();
 
+    /* Check if players have other characters, otherwise the game has finished */
     int numCharactersPlayer1 = 0;
     int numCharactersPlayer2 = 0;
     foreach (Character *character, characters) {

@@ -10,7 +10,6 @@
 #include "entity/dynamicentity.h"
 #include "entity/character.h"
 #include "command.h"
-#include "entity/charactersmodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -32,10 +31,8 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<Tile>("com.thegame.tile", 1, 0, "Tile");
     qmlRegisterType<Command>("com.thegame.command", 1, 0, "Command");
-    qmlRegisterType<CharactersModel>("com.thegame.charactersmodel", 1, 0, "CharactersModel");
 
     qRegisterMetaType<Character*>("Character*");
-    qRegisterMetaType<CharactersModel*>("CharactersModel*");
 
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));

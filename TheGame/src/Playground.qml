@@ -14,6 +14,15 @@ Item {
         function onGameFinished(winner) {
             console.log("The winner is:" + winner)
             winnerRect.visible = true
+
+            if (winner === 1) {
+                labelWinner.text = "Player 1"
+                winnerInternRect.gradient = Gradient.LoveKiss
+            } else {
+                labelWinner.text = "Player 2"
+                winnerInternRect.gradient = Gradient.FlyHigh
+            }
+
             showWinnerRect.running = true
         }
     }
@@ -46,14 +55,14 @@ Item {
         Grid {
             id: grid
 
-            columns: 8
-            rows: 8
+            columns: game.map_ui.mapHeight
+            rows: game.map_ui.mapWidth
             Repeater {
                 model: game.map_ui.tiles
 
                 Rectangle {
-                    width: 64
-                    height: 64
+                    width: game.map_ui.tileWidth
+                    height: game.map_ui.tileHeight
                     border.color: "black"
                     border.width: 1
                     color: getGroundColor()
@@ -86,7 +95,7 @@ Item {
                 delegate: Character {
 
 
-                    height: grid.width / 8
+                    height: grid.width / game.map_ui.mapWidth
                     width: height
 
                     x: (modelData.xPos) * width
@@ -121,13 +130,48 @@ Item {
 
         SequentialAnimation {
             id: showWinnerRect
-            NumberAnimation { target: winnerRect; property: "opacity"; from: 0; to: 0.6; duration: 3000}
+            NumberAnimation { target: winnerRect; property: "opacity"; from: 0; to: 0.7; duration: 3000}
+            NumberAnimation {
+                target: labelWinner;
+                property: "x";
+                from: - 100; to: winnerRect.width/2 - labelWinner.width/2;
+                duration: 500;
+                easing.type: Easing.OutBounce
+            }
+        }
+
+        Rectangle {
+            id: winnerInternRect
+            anchors {
+                left: parent.left
+                right: parent.right
+                verticalCenter: parent.verticalCenter
+            }
+
+            height: parent.height / 4
+
+
+            Label {
+                id: labelWinner
+                anchors.verticalCenter: parent.verticalCenter
+                color: "white"
+                font {
+                    pointSize: 24
+                    bold: true
+                    italic: true
+                }
+
+                opacity: 1
+
+                x: -200
+            }
         }
 
         MouseArea {
             anchors.fill: parent
             onClicked: {
                 console.log("MouseArea clicked")
+                stack.pop()
             }
         }
     }

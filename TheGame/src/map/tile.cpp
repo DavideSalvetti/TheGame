@@ -11,7 +11,7 @@ Tile::Tile(int x, int y, QObject *parent)
 
 Tile::~Tile()
 {
-    //    qDebug() << "Deleting tile object.";
+    qDebug() << "Deleting tile object.";
 }
 
 int Tile::getX() const

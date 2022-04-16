@@ -15,6 +15,11 @@ Character::Character(QObject *parent)
 
 }
 
+Character::~Character()
+{
+    qDebug() << "Character Destroyed";
+}
+
 bool Character::attack(Character *enemy)
 {
     if (this == enemy)
@@ -100,7 +105,6 @@ int Character::getAttackRange() const
 
 void Character::inflictDamage(int damage)
 {
-    qDebug() << "Damage:" << damage;
     if (lifePoints - damage <= 0) {
         lifePoints = 0;
         emit characterDestroyed(getX(), getY());
@@ -108,8 +112,6 @@ void Character::inflictDamage(int damage)
         lifePoints -= damage;
         emit lifePointsChanged();
     }
-
-    qDebug() << "LifePoints:" << lifePoints;
 }
 
 void Character::setX(int x)

@@ -12,6 +12,7 @@ class Character : public DynamicEntity
     Q_PROPERTY(int yPos READ getYPos NOTIFY yPosChanged)
 public:
     explicit Character(QObject *parent = nullptr);
+    virtual ~Character();
 
     bool attack(Character *enemy);
     void heal();

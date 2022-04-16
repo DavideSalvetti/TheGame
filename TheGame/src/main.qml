@@ -34,54 +34,147 @@ Window {
                 anchors.fill: parent
 
 
+                Rectangle {
+                    anchors {
+                        bottom: parent.bottom
+                        left: parent.left
+                        right: parent.right
+                    }
+
+                    height: parent.width / 3
+                    color:  "#00FF00"
+                }
+
+                Rectangle {
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        right: parent.right
+                    }
+
+                    height: parent.width / 3 * 2
+                    gradient: Gradient.LightBlue
+                }
+
+
+                Image {
+                    id: sun
+                    anchors {
+                        top: parent.top
+                        right: parent.right
+                        margins: 10
+                    }
+
+                    width: 80
+                    height: 80
+
+                    source: "qrc:/img/sun.png"
+
+
+                    RotationAnimator {
+                        target: sun
+                        from: 0
+                        to: 360
+                        duration: 5000
+                        running: true
+                        loops: Animation.Infinite
+                    }
+                }
+
+
                 Image {
                     anchors.bottom: parent.bottom
+                    anchors.bottomMargin: - 20
                     anchors.horizontalCenter: parent.horizontalCenter
                     source: "qrc:/img/mountain.png"
                     height: 512
                     width: 512
                 }
 
-                Column {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    spacing: 10
-                    Label {
-                        text: qsTr("Choose a map:")
-                    }
+                Image {
+                    id: swordsman
+                    x: 0
+                    y: parent.height - height
 
-                    Row {
-                        spacing: 10
-                        Button {
-                            text: qsTr("Small (8x8)")
-                        }
+                    width: 64
+                    height: 64
 
-                        Button {
-                            text: qsTr("Medium (12x12)")
-                        }
-
-                        Button {
-                            text: qsTr("Large (16x16)")
-                        }
-                    }
+                    source: "qrc:/img/swordsman.png"
                 }
 
-                MouseArea {
 
-                    anchors.fill: parent
-                    Text {
-                        text: stack.depth
-                        color: "white"
-                        anchors.fill: parent
+                Rectangle {
+                    anchors {
+                        top: parent.top
+                        left: parent.left
+                        right: parent.right
+                        topMargin: 10
+                        leftMargin: parent.width / 5
+                        rightMargin: parent.width / 5
                     }
-                    onClicked:  {
-                        console.log("Qml CLicked")
-                        stack.push("qrc:/Playground.qml")
+
+                    height: parent.height / 4
+
+                    color: "#aaffffff"
+                    radius: 10
+
+                    Column {
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: parent.width
+                        spacing: 10
+
+                        Label {
+                            text: qsTr("Choose the size of the map:")
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            font {
+                                bold: true
+                                pointSize: 16
+                            }
+                        }
+
+                        Row {
+                            spacing: 10
+                            width: parent.width
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            leftPadding: 5
+                            MButton {
+
+                                text: qsTr("Small (8x8)")
+                                onClicked: {
+                                    game.initGame(8, 8)
+                                    stack.push("qrc:/Playground.qml")
+                                }
+
+                                width: parent.width / 3 - 10
+                                font.bold: true
+                            }
+
+                            MButton {
+                                text: qsTr("Medium (12x12)")
+                                onClicked: {
+                                    game.initGame(12, 12)
+                                    stack.push("qrc:/Playground.qml")
+                                }
+
+                                width: parent.width / 3 - 10
+                                font.bold: true
+                            }
+
+                            MButton {
+                                text: qsTr("Large (16x16)")
+                                onClicked: {
+                                    game.initGame(16, 16)
+                                    stack.push("qrc:/Playground.qml")
+                                }
+
+                                width: parent.width / 3 - 10
+                                font.bold: true
+                            }
+                        }
                     }
                 }
             }
-
-
         }
     }
 }
