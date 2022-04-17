@@ -1,4 +1,5 @@
 #include "dynamicentity.h"
+#include <QDebug>
 
 DynamicEntity::DynamicEntity(QObject *parent)
     : Entity{parent}
@@ -6,9 +7,7 @@ DynamicEntity::DynamicEntity(QObject *parent)
 
 }
 
-void DynamicEntity::move(int x, int y)
+DynamicEntity::~DynamicEntity()
 {
-    this->x = x;
-    this->y = y;
+    qDebug() << "DynamicEntity Destroyed";
 }
-

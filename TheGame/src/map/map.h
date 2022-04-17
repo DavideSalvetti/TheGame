@@ -22,6 +22,7 @@ public:
 
     QQmlListProperty<Tile> getTiles();
     QQmlListProperty<Character> getCharactersList();
+    QList<Character *> getCharacters();
 
     void availableTileToMoveOn(Character *character);
     void availableCharacterToAttack(const Character &character);
@@ -38,6 +39,7 @@ public:
     int getMapHeight() const;
     int getTileWidth() const;
     int getTileHeight() const;
+
 
 signals:
     void winner(int winner);

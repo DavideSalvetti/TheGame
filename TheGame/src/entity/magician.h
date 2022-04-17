@@ -7,6 +7,7 @@ class Magician : public Character
 {
 public:
     explicit Magician(QObject *parent = nullptr);
+    ~Magician();
 
     bool magicAttack(Character *enemy);
 

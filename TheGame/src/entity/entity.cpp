@@ -1,10 +1,16 @@
 #include "entity.h"
+#include <QDebug>
 
 Entity::Entity(QObject *parent)
     : QObject{parent},
       playerOwner(NONE)
 {
 
+}
+
+Entity::~Entity()
+{
+    qDebug() << "Entity destroyed";
 }
 
 void Entity::setPlayerOwner(Owner owner)

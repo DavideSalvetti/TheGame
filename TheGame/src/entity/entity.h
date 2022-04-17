@@ -15,10 +15,11 @@ class Entity : public QObject
     Q_PROPERTY(int owner READ getPlayerOwner CONSTANT)
 public:
     explicit Entity(QObject *parent = nullptr);
+    virtual ~Entity();
 
     void setPlayerOwner(Owner owner);
-    Owner getPlayerOwner() const;
 
+    Owner getPlayerOwner() const;
     int getX() const;
     int getY() const;
 

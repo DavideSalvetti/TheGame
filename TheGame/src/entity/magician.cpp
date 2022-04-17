@@ -1,5 +1,7 @@
 #include "magician.h"
 
+#include <QDebug>
+
 #define MAX_MAGICIAN_LIFEPOINTS 6
 
 Magician::Magician(QObject *parent)
@@ -14,6 +16,11 @@ Magician::Magician(QObject *parent)
     numAttacksAvailable = 1;
     numMovesAvailable = 1;
     imageSrc = "qrc:/img/wizard.png";
+}
+
+Magician::~Magician()
+{
+    qDebug() << "Magician Destroyed";
 }
 
 bool Magician::magicAttack(Character *enemy)

@@ -12,7 +12,6 @@ Item {
         target: game
 
         function onGameFinished(winner) {
-            console.log("The winner is:" + winner)
             winnerRect.visible = true
 
             if (winner === 1) {
@@ -150,6 +149,17 @@ Item {
 
             height: parent.height / 4
 
+            Label {
+                text: qsTr("The winner is:")
+                color: "white"
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+                font {
+                    pointSize: 24
+                    bold: true
+                    italic: true
+                }
+            }
 
             Label {
                 id: labelWinner

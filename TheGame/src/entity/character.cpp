@@ -130,6 +130,12 @@ void Character::setY(int y)
     emit yPosChanged();
 }
 
+void Character::move(int x, int y)
+{
+    setX(x);
+    setY(y);
+}
+
 int Character::getXPos() const
 {
     return x;

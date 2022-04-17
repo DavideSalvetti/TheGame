@@ -5,6 +5,7 @@
 #include "map/map.h"
 #include "command.h"
 #include "entity/swordsman.h"
+#include "entity/magician.h"
 
 class Game : public QObject
 {
@@ -40,9 +41,9 @@ public:
 private slots:
     void moveCommandClicked();
     void attackCommandClicked();
+    void magicAttackCommandClicked();
     void healCommandClicked(); 
     void endGame(int winner);
-
 signals:
     void roundNumChanged();
     void roundPlayerChanged();
@@ -73,6 +74,7 @@ private:
     Command *nextTurnCommand {nullptr};
     Command *moveCommand {nullptr};
     Command *attackCommand {nullptr};
+    Command *magicAttackCommand {nullptr};
     Command *healCommand {nullptr};
 
     QList<Command*> commandBar;

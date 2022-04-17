@@ -7,7 +7,7 @@ class Archer : public Character
 {
 public:
     explicit Archer(QObject *parent = nullptr);
-
+    ~Archer();
 
     int getMaxLifePoints() const;
     void resetProperties();

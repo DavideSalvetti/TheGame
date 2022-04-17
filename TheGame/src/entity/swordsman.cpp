@@ -1,5 +1,7 @@
 #include "swordsman.h"
 
+#include <QDebug>
+
 #define MAX_SWORDSMAN_LIFEPOINTS 10
 
 Swordsman::Swordsman(QObject *parent)
@@ -13,6 +15,11 @@ Swordsman::Swordsman(QObject *parent)
     numAttacksAvailable = 1;
     numMovesAvailable = 1;
     imageSrc = "qrc:/img/swordsman.png";
+}
+
+Swordsman::~Swordsman()
+{
+    qDebug() << "Swordsman Destroyed";
 }
 
 int Swordsman::getMaxLifePoints() const

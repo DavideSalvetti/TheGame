@@ -1,4 +1,5 @@
 #include "archer.h"
+#include <QDebug>
 
 #define MAX_ARCHER_LIFEPOINTS 10
 
@@ -13,6 +14,11 @@ Archer::Archer(QObject *parent)
     numAttacksAvailable = 1;
     numMovesAvailable = 1;
     imageSrc = "qrc:/img/bow.png";
+}
+
+Archer::~Archer()
+{
+    qDebug() << "Archer Destroyed";
 }
 
 int Archer::getMaxLifePoints() const

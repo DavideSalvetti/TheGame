@@ -23,15 +23,17 @@ public:
 
     void setX(int x);
     void setY(int y);
+    void move(int x, int y);
+
     int getXPos() const;
     int getYPos() const;
-
-    void inflictDamage(int damage);
 
     QString getImageSrc() const;
     int getLifePoints() const;
     int getMoveRange() const;
     int getAttackRange() const;
+
+    void inflictDamage(int damage);
 
     void decreaseMovesAvailable();
     void decreaseAttackAvailable();

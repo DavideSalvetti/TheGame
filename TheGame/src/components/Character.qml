@@ -9,6 +9,8 @@ Item {
     width: parent.width
     height: parent.height
 
+    visible: character != null
+
     Rectangle {
         id: container
         anchors {
@@ -20,7 +22,7 @@ Item {
 
         Image {
             id: characterImage
-            source: character.imageSrc
+            source: character == null ? "" : character.imageSrc
             anchors {
                 top: parent.top
                 bottom: parent.bottom
@@ -40,15 +42,17 @@ Item {
                 top: parent.top
             }
 
-            text: character.lifePoints
+            text: character == null ? 0 : character.lifePoints
             color: Style.colourCommandBarFont
 
             onTextChanged: {
-                if (previousText > character.lifePoints) {
-                    lifePointsAnimation.running = true
-                }
+                if (character != null) {
+                    if (previousText > character.lifePoints) {
+                        lifePointsAnimation.running = true
+                    }
 
-                previousText = character.lifePoints
+                    previousText = character.lifePoints
+                }
             }
 
             Component.onCompleted: {
@@ -60,7 +64,7 @@ Item {
             width: 10
             height: 10
             radius: 5
-            color: character.owner === 1 ? "red" : "blue"
+            color: (character == null ? "white" : (character.owner === 1 ? "red" : "blue"))
         }
     }
 

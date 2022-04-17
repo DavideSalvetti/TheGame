@@ -1,7 +1,9 @@
 #include "map.h"
 
 #include <QDebug>
+#include <QRandomGenerator>
 #include "../entity/characterfactory.h"
+#include <random>
 
 Map::Map(int width, int height, QObject *parent)
     : QObject{parent},
@@ -29,14 +31,6 @@ Map::Map(int width, int height, QObject *parent)
         tilesMatrix.append(tempVector);
     }
 
-    // set the solid tiles
-    tilesMatrix[3][0]->setSolid(true);
-    tilesMatrix[3][1]->setSolid(true);
-    tilesMatrix[3][2]->setSolid(true);
-    tilesMatrix[4][5]->setSolid(true);
-    tilesMatrix[4][6]->setSolid(true);
-    tilesMatrix[4][7]->setSolid(true);
-
     populateMap();
 }
 
@@ -46,7 +40,9 @@ Map::~Map()
 
     qDeleteAll(characters.begin(), characters.end());
 }
-
+/*!
+ * \brief Add characters to the map and define solid tiles.
+ */
 void Map::populateMap()
 {
     Character *swordsman = CharacterFactory::getInstance().createSwordsman();
@@ -102,6 +98,30 @@ void Map::populateMap()
     tilesMatrix[width - 1][height - 3]->setEntityPresent(true);
     connect(magician, &Character::characterDestroyed, this,
             &Map::removeCharacter);
+
+    /* Select some solid tiles to display based on the size of the map */
+    int numSolidTiles = 0;
+    if (getMapWidth() <= 8) numSolidTiles = 8;
+    else if (getMapWidth() <= 12) numSolidTiles = 16;
+    else numSolidTiles = 22;
+
+    std::uniform_int_distribution<int> yDist(2, getMapWidth() - 1 - 2);
+    std::uniform_int_distribution<int> xDist(0, getMapWidth() - 1);
+    for (int i = 0; i < numSolidTiles; i++) {
+        bool alreadySolid = false;
+        do {
+            alreadySolid = false;
+            int x = xDist(*QRandomGenerator::global());
+            int y = yDist(*QRandomGenerator::global());
+
+            if (tilesMatrix[y][x]->isSolid()) {
+                alreadySolid = true;
+            } else {
+                tilesMatrix[y][x]->setSolid(true);
+            }
+        } while (alreadySolid);
+    }
+
 }
 
 QQmlListProperty<Tile> Map::getTiles()
@@ -112,6 +132,11 @@ QQmlListProperty<Tile> Map::getTiles()
 QQmlListProperty<Character> Map::getCharactersList()
 {
     return QQmlListProperty<Character>(this, &characters);
+}
+
+QList<Character*> Map::getCharacters()
+{
+    return characters;
 }
 
 /*!

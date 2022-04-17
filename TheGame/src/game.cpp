@@ -24,6 +24,11 @@ Game::Game(QObject *parent)
     connect(attackCommand, &Command::executed, this, &Game::attackCommandClicked);
     commandBar.append(attackCommand);
 
+    magicAttackCommand = new Command("qrc:/img/slash.png", tr("Attack"), this);
+    magicAttackCommand->setCanExecute(false);
+    connect(magicAttackCommand, &Command::executed, this, &Game::magicAttackCommandClicked);
+    commandBar.append(magicAttackCommand);
+
     healCommand = new Command("qrc:/img/heart.png", tr("Heal"), this);
     healCommand->setCanExecute(false);
     connect(healCommand, &Command::executed, this, &Game::healCommandClicked);
@@ -56,7 +61,6 @@ void Game::initGame(int width, int heigth)
 
 void Game::endGame(int winner)
 {
-    qDebug() << "Winner:" << winner;
     emit gameFinished(winner);
 
     delete map;
@@ -142,6 +146,29 @@ void Game::attackCommandClicked() {
         Character *character = dynamic_cast<Character*>(selectedEntity.data());
         map->availableCharacterToAttack(*character);
     }
+}
+
+/*!
+ * \brief  Special attack that can only be executed by Magicians.
+ * \details All enemies loose 2 lifepoints.
+ */
+void Game::magicAttackCommandClicked()
+{
+    map->resetTiles();
+    if (selectedEntity) {
+
+        foreach (Character *character, map->getCharacters()) {
+            if (character->getPlayerOwner() != selectedEntity->getPlayerOwner()) {
+                character->inflictDamage(2);
+            }
+        }
+
+        Character *character = dynamic_cast<Character*>(selectedEntity.data());
+        character->decreaseAttackAvailable();
+        character->decreaseMovesAvailable();
+    }
+
+    checkPermittedActions();
 }
 
 void Game::healCommandClicked() {
@@ -310,5 +337,19 @@ void Game::checkPermittedActions()
             healCommand->setCanExecute(true);
         } else
             healCommand->setCanExecute(false);
+
+        /* check if the selected character is a magician */
+        if (dynamic_cast<Magician*>(selectedEntity.data())) {
+            Magician *magician = dynamic_cast<Magician*>(selectedEntity.data());
+
+            magicAttackCommand->setCanExecute(false);
+            if (magician->canAttack()) {
+                if (map->canAttackSomebody(*character)) {
+                    magicAttackCommand->setCanExecute(true);
+                } else
+                    magicAttackCommand->setCanExecute(false);
+            } else
+                magicAttackCommand->setCanExecute(false);
+        }
     }
 }
