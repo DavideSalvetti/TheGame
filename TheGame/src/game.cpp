@@ -109,6 +109,21 @@ void Game::endTurn()
 }
 
 /*!
+ * \brief Add a new unit to the game.
+ */
+void Game::addUnit(int itemSelected)
+{
+    if (selectedEntity) {
+        Castle *castle = dynamic_cast<Castle*>(selectedEntity.data());
+        map->addCharacter(castle->getX(), castle->getY(),
+                          static_cast<Owner>(roundPlayer), itemSelected);
+        castle->reduceNumStars(itemSelected);
+    }
+
+    checkPermittedActions();
+}
+
+/*!
  * \brief Select the next player turn.
  */
 void Game::nextPlayer()

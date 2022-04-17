@@ -32,6 +32,7 @@ public:
     Q_INVOKABLE void characterClicked(Character *character);
     Q_INVOKABLE void castleClicked(Castle *castle);
     Q_INVOKABLE void endTurn();
+    Q_INVOKABLE void addUnit(int itemSelected);
 
 
     /* copy-constructor and copy-assigment operator must be

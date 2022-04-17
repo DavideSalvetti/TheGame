@@ -26,6 +26,7 @@ Item {
         }
 
         function onCreateUnitClicked(numStars) {
+            addPanel.starAvailable = numStars
             addPanel.visible = true
         }
     }
@@ -100,20 +101,6 @@ Item {
                 }
             }
 
-            Repeater {
-                model: game.map_ui.charactersList
-                delegate: Character {
-
-
-                    height: grid.width / game.map_ui.mapWidth
-                    width: height
-
-                    x: (modelData.xPos) * width
-                    y: (modelData.yPos) * height
-
-                    character: modelData
-                }
-            }
 
             Repeater {
                 model: game.map_ui.castleList
@@ -164,6 +151,22 @@ Item {
                             game.castleClicked(modelData)
                         }
                     }
+                }
+            }
+
+
+            Repeater {
+                model: game.map_ui.charactersList
+                delegate: Character {
+
+
+                    height: grid.width / game.map_ui.mapWidth
+                    width: height
+
+                    x: (modelData.xPos) * width
+                    y: (modelData.yPos) * height
+
+                    character: modelData
                 }
             }
         }

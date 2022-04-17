@@ -330,6 +330,36 @@ void Map::resetProperties()
     }
 }
 
+/*!
+ * \brief Create a new character and add it to the list of characters of the
+ * current player.
+ * \param x
+ * \param y
+ * \param player
+ * \param itemSelected
+ */
+void Map::addCharacter(int x, int y, Owner player, int itemSelected)
+{
+    Character *character = nullptr;
+    if (itemSelected == 1)
+        character = CharacterFactory::getInstance().createSwordsman();
+    else if (itemSelected == 2)
+        character = CharacterFactory::getInstance().createArcher();
+    else if (itemSelected == 3)
+        character = CharacterFactory::getInstance().createMagician();
+
+    if (character) {
+        character->move(x, y);
+        character->setPlayerOwner(player);
+        character->decreaseMovesAvailable();
+        character->decreaseAttackAvailable();
+        characters.append(character);
+    }
+
+    emit characterListChanged();
+
+}
+
 int Map::getMapWidth() const
 {
     return width;

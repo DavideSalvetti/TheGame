@@ -36,6 +36,7 @@ public:
     void resetCharactersProperties();
     void moveCharacterToTile(Tile *tile, Character *character);
     void resetProperties();
+    void addCharacter(int x, int y, Owner player, int itemSelected);
 
     int getMapWidth() const;
     int getMapHeight() const;

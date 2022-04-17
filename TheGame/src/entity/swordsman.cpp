@@ -9,8 +9,8 @@ Swordsman::Swordsman(QObject *parent)
 {
     lifePoints = MAX_SWORDSMAN_LIFEPOINTS;
     attackPoints = 4;
-    defPoints = 2;
-    moveRange = 1;
+    defPoints = 3;
+    moveRange = 2;
     attackRange = 1;
     numAttacksAvailable = 1;
     numMovesAvailable = 1;

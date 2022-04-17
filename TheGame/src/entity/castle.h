@@ -15,6 +15,7 @@ public:
     virtual void setPlayerOwner(Owner owner);
 
     void incrementNumStars();
+    void reduceNumStars(int itemCreated);
 
     QString getImageSrc() const;
     int getNumStars() const;

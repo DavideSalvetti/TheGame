@@ -27,6 +27,18 @@ void Castle::incrementNumStars()
     emit numStarsChanged();
 }
 
+void Castle::reduceNumStars(int itemCreated)
+{
+    if (itemCreated == 1)
+        numStars -= 2;
+    else if (itemCreated == 2)
+        numStars -= 2;
+    else if (itemCreated == 3)
+        numStars -= 4;
+
+    emit numStarsChanged();
+}
+
 QString Castle::getImageSrc() const
 {
     return imageSrc;

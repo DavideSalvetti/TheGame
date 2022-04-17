@@ -10,7 +10,7 @@ Archer::Archer(QObject *parent)
     attackPoints = 3;
     defPoints = 1;
     moveRange = 2;
-    attackRange = 3;
+    attackRange = 2;
     numAttacksAvailable = 1;
     numMovesAvailable = 1;
     imageSrc = "qrc:/img/bow.png";
