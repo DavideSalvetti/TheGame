@@ -13,6 +13,10 @@ Game::Game(QObject *parent)
       roundPlayer(1)
 {
 
+    createCommand = new Command("qrc:/img/swords.png", tr("Add Unit"), this);
+    createCommand->setCanExecute(false);
+    connect(createCommand, &Command::executed, this, &Game::createCommandClicked);
+    commandBar.append(createCommand);
 
     moveCommand = new Command("qrc:/img/location.png", tr("Move"), this);
     moveCommand->setCanExecute(false);
@@ -127,6 +131,19 @@ void Game::nextPlayer()
     emit roundPlayerChanged();
 }
 
+
+/*!
+ * \brief Create command clicked.
+ */
+void Game::createCommandClicked()
+{
+    qDebug() << "Create Command Clicked";
+    if (selectedEntity) {
+        Castle *castle = dynamic_cast<Castle*>(selectedEntity.data());
+        emit createUnitClicked(castle->getNumStars());
+    }
+}
+
 /*!
  * \brief Move Command Clicked.
  */
@@ -143,7 +160,7 @@ void Game::moveCommandClicked()
 }
 
 /*!
- * \brief Game::attackCommandClicked
+ * \brief Attack Command Clicked.
  */
 void Game::attackCommandClicked() {
     if (status != Attack) map->resetTiles();
@@ -332,13 +349,14 @@ void Game::onAttackState(Tile *tile)
  */
 void Game::checkPermittedActions()
 {
-    if (!selectedEntity) {
-        moveCommand->setCanExecute(false);
-        attackCommand->setCanExecute(false);
-        healCommand->setCanExecute(false);
-        magicAttackCommand->setCanExecute(false);
+    moveCommand->setCanExecute(false);
+    attackCommand->setCanExecute(false);
+    healCommand->setCanExecute(false);
+    magicAttackCommand->setCanExecute(false);
+    createCommand->setCanExecute(false);
+
+    if (!selectedEntity)
         return;
-    }
 
     if (dynamic_cast<Character*>(selectedEntity.data())) {
         Character *character = dynamic_cast<Character*>(selectedEntity.data());
@@ -377,6 +395,11 @@ void Game::checkPermittedActions()
                 magicAttackCommand->setCanExecute(false);
         }
     } else if (dynamic_cast<Castle*>(selectedEntity.data())) {
-        qDebug() << "It's a castle!";
+        Castle *castle = dynamic_cast<Castle*>(selectedEntity.data());
+        if (castle->getNumStars() > 0) {
+            if (!map->isCharacterOnTile(castle->getX(), castle->getY())) {
+                createCommand->setCanExecute(true);
+            }
+        }
     }
 }

@@ -13,6 +13,7 @@
         <file alias="castle.png">img/castle.png</file>
         <file alias="castle_b.png">img/castle_b.png</file>
         <file alias="magician.png">img/magician.png</file>
-        <file>img/favourite.png</file>
+        <file alias="favourite.png">img/favourite.png</file>
+        <file alias="swords.png">img/swords.png</file>
     </qresource>
 </RCC>

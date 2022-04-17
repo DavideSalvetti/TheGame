@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/panels">
+        <file alias="AddUnitPanel.qml">panels/AddUnitPanel.qml</file>
+        <file alias="qmldir">panels/qmldir</file>
+    </qresource>
+</RCC>

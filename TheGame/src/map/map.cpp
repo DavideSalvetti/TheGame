@@ -389,5 +389,10 @@ void Map::removeCharacter(int x, int y)
     }
 }
 
+bool Map::isCharacterOnTile(int x, int y)  const
+{
+    return tilesMatrix[y][x]->isEntityPresent();
+}
+
 
 

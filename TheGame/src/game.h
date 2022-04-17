@@ -44,12 +44,14 @@ private slots:
     void attackCommandClicked();
     void magicAttackCommandClicked();
     void healCommandClicked(); 
+    void createCommandClicked();
     void endGame(int winner);
 signals:
     void roundNumChanged();
     void roundPlayerChanged();
     void gameFinished(int  winner);
     void mapHasChanged();
+    void createUnitClicked(int numStars);
 
 private:
     Game(QObject *parent = nullptr);
@@ -77,6 +79,7 @@ private:
     Command *attackCommand {nullptr};
     Command *magicAttackCommand {nullptr};
     Command *healCommand {nullptr};
+    Command *createCommand {nullptr};
 
     QList<Command*> commandBar;
 

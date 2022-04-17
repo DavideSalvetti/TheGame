@@ -3,7 +3,7 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import components 1.0
 import assets 1.0
-
+import panels 1.0
 
 Item {
 
@@ -24,6 +24,17 @@ Item {
 
             showWinnerRect.running = true
         }
+
+        function onCreateUnitClicked(numStars) {
+            addPanel.visible = true
+        }
+    }
+
+    AddUnitPanel {
+        id: addPanel
+
+        visible: false
+
     }
 
 
@@ -123,7 +134,26 @@ Item {
                             source: modelData.imageSrc
                             anchors {
                                 fill: parent
-                                margins: 10
+                                margins: 5
+                            }
+                        }
+
+                        Image {
+                            id: starImage
+                            anchors {
+                                top: parent.top
+                                right: parent.right
+                                margins: 2
+                            }
+
+                            source: "qrc:/img/favourite.png"
+
+                            width: parent.width / 4
+                            height: parent.width / 4
+
+                            Label {
+                                anchors.centerIn: parent
+                                text: modelData.numStars
                             }
                         }
                     }

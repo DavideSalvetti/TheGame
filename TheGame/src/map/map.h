@@ -41,8 +41,7 @@ public:
     int getMapHeight() const;
     int getTileWidth() const;
     int getTileHeight() const;
-
-
+    bool isCharacterOnTile(int x, int y) const;
 signals:
     void winner(int winner);
     void characterListChanged();

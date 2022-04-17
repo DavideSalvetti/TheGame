@@ -4,8 +4,10 @@ import com.thegame.command 1.0
 
 Item {
     property Command command
-    width: Style.widthCommandButton
+    width: command.ui_canExecute ? Style.widthCommandButton : 0
     height: Style.heightCommandButton
+
+    visible: command.ui_canExecute
 
     Rectangle {
         id: background
