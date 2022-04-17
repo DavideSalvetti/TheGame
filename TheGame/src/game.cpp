@@ -24,7 +24,7 @@ Game::Game(QObject *parent)
     connect(attackCommand, &Command::executed, this, &Game::attackCommandClicked);
     commandBar.append(attackCommand);
 
-    magicAttackCommand = new Command("qrc:/img/slash.png", tr("Attack"), this);
+    magicAttackCommand = new Command("qrc:/img/magician.png", tr("Spell"), this);
     magicAttackCommand->setCanExecute(false);
     connect(magicAttackCommand, &Command::executed, this, &Game::magicAttackCommandClicked);
     commandBar.append(magicAttackCommand);
@@ -116,6 +116,14 @@ void Game::nextPlayer()
     } else
         roundPlayer++;
 
+    /* now that I changed the player turn, I increment the star of its castles */
+    foreach (Castle *castle, map->getCastles()) {
+        if (castle->getPlayerOwner() == roundPlayer) {
+            castle->incrementNumStars();
+        }
+    }
+
+
     emit roundPlayerChanged();
 }
 
@@ -178,6 +186,22 @@ void Game::healCommandClicked() {
         character->heal();
     }
 
+    checkPermittedActions();
+}
+
+/*!
+ * \brief Handling of the click on a castle
+ */
+void Game::castleClicked(Castle *castle)
+{
+    if (castle == nullptr) return;
+
+    if (castle->getPlayerOwner() == roundPlayer) {
+        selectedEntity = castle;
+    }
+
+    status = Idle;
+    map->resetTiles();
     checkPermittedActions();
 }
 
@@ -312,6 +336,7 @@ void Game::checkPermittedActions()
         moveCommand->setCanExecute(false);
         attackCommand->setCanExecute(false);
         healCommand->setCanExecute(false);
+        magicAttackCommand->setCanExecute(false);
         return;
     }
 
@@ -338,11 +363,11 @@ void Game::checkPermittedActions()
         } else
             healCommand->setCanExecute(false);
 
+        magicAttackCommand->setCanExecute(false);
         /* check if the selected character is a magician */
         if (dynamic_cast<Magician*>(selectedEntity.data())) {
             Magician *magician = dynamic_cast<Magician*>(selectedEntity.data());
 
-            magicAttackCommand->setCanExecute(false);
             if (magician->canAttack()) {
                 if (map->canAttackSomebody(*character)) {
                     magicAttackCommand->setCanExecute(true);
@@ -351,5 +376,7 @@ void Game::checkPermittedActions()
             } else
                 magicAttackCommand->setCanExecute(false);
         }
+    } else if (dynamic_cast<Castle*>(selectedEntity.data())) {
+        qDebug() << "It's a castle!";
     }
 }

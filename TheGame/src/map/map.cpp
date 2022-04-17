@@ -41,10 +41,11 @@ Map::~Map()
     qDeleteAll(characters.begin(), characters.end());
 }
 /*!
- * \brief Add characters to the map and define solid tiles.
+ * \brief Add characters to the map, castles, and define solid tiles.
  */
 void Map::populateMap()
 {
+    /* add characters to the map */
     Character *swordsman = CharacterFactory::getInstance().createSwordsman();
     swordsman->setParent(this);
     swordsman->setPlayerOwner(PLAYER_1);
@@ -99,6 +100,15 @@ void Map::populateMap()
     connect(magician, &Character::characterDestroyed, this,
             &Map::removeCharacter);
 
+    /* add castles to the map */
+    Castle *castle_player1 = new Castle(getMapWidth() - 1, 0, this);
+    castle_player1->setPlayerOwner(PLAYER_1);
+    castleList.append(castle_player1);
+
+    Castle *castle_player2 = new Castle(0, getMapWidth() - 1, this);
+    castle_player2->setPlayerOwner(PLAYER_2);
+    castleList.append(castle_player2);
+
     /* Select some solid tiles to display based on the size of the map */
     int numSolidTiles = 0;
     if (getMapWidth() <= 8) numSolidTiles = 8;
@@ -134,9 +144,19 @@ QQmlListProperty<Character> Map::getCharactersList()
     return QQmlListProperty<Character>(this, &characters);
 }
 
+QQmlListProperty<Castle> Map::getCastlesList()
+{
+    return QQmlListProperty<Castle>(this, &castleList);
+}
+
 QList<Character*> Map::getCharacters()
 {
     return characters;
+}
+
+QList<Castle *> Map::getCastles()
+{
+    return castleList;
 }
 
 /*!

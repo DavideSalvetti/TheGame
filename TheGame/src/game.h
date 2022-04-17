@@ -30,6 +30,7 @@ public:
 
     Q_INVOKABLE void tileClicked(Tile *tile);
     Q_INVOKABLE void characterClicked(Character *character);
+    Q_INVOKABLE void castleClicked(Castle *castle);
     Q_INVOKABLE void endTurn();
 
 

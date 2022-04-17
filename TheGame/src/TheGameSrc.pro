@@ -7,11 +7,13 @@ QT += qml quick
 SOURCES += \
         command.cpp \
         entity/archer.cpp \
+        entity/castle.cpp \
         entity/character.cpp \
         entity/characterfactory.cpp \
         entity/dynamicentity.cpp \
         entity/entity.cpp \
         entity/magician.cpp \
+        entity/staticentity.cpp \
         entity/swordsman.cpp \
         game.cpp \
         main.cpp \
@@ -41,11 +43,13 @@ HEADERS += \
     command.h \
     entity/CharacterFactoryIF.h \
     entity/archer.h \
+    entity/castle.h \
     entity/character.h \
     entity/characterfactory.h \
     entity/dynamicentity.h \
     entity/entity.h \
     entity/magician.h \
+    entity/staticentity.h \
     entity/swordsman.h \
     game.h \
     map/map.h \

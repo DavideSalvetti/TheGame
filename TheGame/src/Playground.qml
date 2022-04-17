@@ -103,6 +103,39 @@ Item {
                     character: modelData
                 }
             }
+
+            Repeater {
+                model: game.map_ui.castleList
+                delegate: Item {
+
+                    height: grid.width / game.map_ui.mapWidth
+                    width: height
+
+                    x: (modelData.xPos) * width
+                    y: (modelData.yPos) * height
+
+                    Rectangle {
+                        anchors.fill: parent
+                        color: "transparent"
+
+                        Image {
+                            id: castleImage
+                            source: modelData.imageSrc
+                            anchors {
+                                fill: parent
+                                margins: 10
+                            }
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            game.castleClicked(modelData)
+                        }
+                    }
+                }
+            }
         }
     }
 

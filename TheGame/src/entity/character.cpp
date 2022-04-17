@@ -136,12 +136,4 @@ void Character::move(int x, int y)
     setY(y);
 }
 
-int Character::getXPos() const
-{
-    return x;
-}
 
-int Character::getYPos() const
-{
-    return y;
-}

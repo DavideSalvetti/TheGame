@@ -11,12 +11,14 @@ CONFIG += c++11
 SOURCES += \
     ../src/command.cpp \
     ../src/entity/archer.cpp \
+    ../src/entity/castle.cpp \
     ../src/entity/character.cpp \
     ../src/entity/characterfactory.cpp \
     ../src/entity/dynamicentity.cpp \
     ../src/entity/entity.cpp \
     ../src/entity/magician.cpp \
     ../src/entity/Swordsman.cpp \
+    ../src/entity/staticentity.cpp \
     ../src/game.cpp \
     ../src/map/map.cpp \
     ../src/map/tile.cpp \
@@ -30,12 +32,14 @@ HEADERS += \
     ../src/command.h \
     ../src/entity/CharacterFactoryIF.h \
     ../src/entity/archer.h \
+    ../src/entity/castle.h \
     ../src/entity/character.h \
     ../src/entity/characterfactory.h \
     ../src/entity/dynamicentity.h \
     ../src/entity/entity.h \
     ../src/entity/magician.h \
     ../src/entity/Swordsman.h \
+    ../src/entity/staticentity.h \
     ../src/game.h \
     ../src/map/map.h \
     ../src/map/tile.h \

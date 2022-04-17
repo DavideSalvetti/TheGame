@@ -9,6 +9,7 @@
 #include "map/tile.h"
 #include "entity/dynamicentity.h"
 #include "entity/character.h"
+#include "entity/castle.h"
 #include "command.h"
 
 int main(int argc, char *argv[])
@@ -28,6 +29,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterUncreatableType<Map>("com.thegame.map", 1, 0, "Map", "Cannot create this object.");
     qmlRegisterUncreatableType<Character>("com.thegame.character", 1, 0, "Character", "Cannot create this object.");
+    qmlRegisterUncreatableType<Castle>("com.thegame.castle", 1, 0, "Castle", "Cannot create this object.");
 
     qmlRegisterType<Tile>("com.thegame.tile", 1, 0, "Tile");
     qmlRegisterType<Command>("com.thegame.command", 1, 0, "Command");
