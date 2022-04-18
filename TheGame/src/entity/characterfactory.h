@@ -12,6 +12,7 @@ public:
     Character * createArcher();
     Character * createMagician();
     Character * createWarrior();
+    Character * createNinja();
 
     CharacterFactory(CharacterFactory const&) = delete;
     void operator=(CharacterFactory const&) = delete;

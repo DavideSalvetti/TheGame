@@ -15,5 +15,6 @@
         <file alias="magician.png">img/magician.png</file>
         <file alias="favourite.png">img/favourite.png</file>
         <file alias="swords.png">img/swords.png</file>
+        <file alias="ninja.png">img/ninja.png</file>
     </qresource>
 </RCC>

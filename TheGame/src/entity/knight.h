@@ -3,7 +3,7 @@
 
 #include "character.h"
 
-class Knight : public Character
+class Knight : public virtual Character
 {
 public:
     explicit Knight(QObject *parent = nullptr);

@@ -37,6 +37,10 @@ void Castle::reduceNumStars(int itemCreated)
         numStars -= 4;
     else if (itemCreated == 4)
         numStars -= 5;
+    else if (itemCreated == 5)
+        numStars -= 6;
+    else
+        qFatal("Must implement new unit.");
 
     emit numStarsChanged();
 }

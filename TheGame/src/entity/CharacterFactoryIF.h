@@ -10,6 +10,7 @@ public:
     virtual Character * createArcher() = 0;
     virtual Character * createMagician() = 0;
     virtual Character * createWarrior() = 0;
+    virtual Character * createNinja() = 0;
 
 };
 

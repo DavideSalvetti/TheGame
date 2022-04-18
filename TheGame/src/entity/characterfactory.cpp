@@ -3,7 +3,7 @@
 #include "archer.h"
 #include "magician.h"
 #include "knight.h"
-
+#include "ninja.h"
 
 CharacterFactory & CharacterFactory::getInstance()
 {
@@ -30,6 +30,12 @@ Character *CharacterFactory::createWarrior()
 {
     return new Knight();
 }
+
+Character *CharacterFactory::createNinja()
+{
+    return new Ninja();
+}
+
 
 CharacterFactory::CharacterFactory()
 {

@@ -14,7 +14,7 @@ Popup {
 
     x: Math.round((parent.width - width) / 2)
     y: Math.round((parent.height - height) / 2)
-    width: parent.width / 2
+    width: parent.width / 3 * 2
     height: columnId.implicitHeight + 30
 
     contentItem:  Column {
@@ -42,6 +42,7 @@ Popup {
                 ListElement {img: "qrc:/img/bow.png"; star: 2; index: 2}
                 ListElement {img: "qrc:/img/wizard.png"; star: 4; index: 3}
                 ListElement {img: "qrc:/img/knight.png"; star: 5; index: 4}
+                ListElement {img: "qrc:/img/ninja.png"; star: 6; index: 5}
             }
 
 
@@ -57,8 +58,8 @@ Popup {
                     radius: 10
 
                     border {
-                        width: 3
-                        color: characterRow.itemSelected == index ? "#00ccff" : "gray"
+                        width: characterRow.itemSelected == index ? 4 : 3
+                        color: characterRow.itemSelected == index ? "blue" : "gray"
                     }
 
                     Image {

@@ -19,6 +19,7 @@ SOURCES += \
     ../src/entity/knight.cpp \
     ../src/entity/magician.cpp \
     ../src/entity/Swordsman.cpp \
+    ../src/entity/ninja.cpp \
     ../src/entity/staticentity.cpp \
     ../src/game.cpp \
     ../src/map/map.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     ../src/entity/knight.h \
     ../src/entity/magician.h \
     ../src/entity/Swordsman.h \
+    ../src/entity/ninja.h \
     ../src/entity/staticentity.h \
     ../src/game.h \
     ../src/map/map.h \

@@ -14,6 +14,7 @@ SOURCES += \
         entity/entity.cpp \
         entity/knight.cpp \
         entity/magician.cpp \
+        entity/ninja.cpp \
         entity/staticentity.cpp \
         entity/swordsman.cpp \
         game.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     entity/entity.h \
     entity/knight.h \
     entity/magician.h \
+    entity/ninja.h \
     entity/staticentity.h \
     entity/swordsman.h \
     game.h \

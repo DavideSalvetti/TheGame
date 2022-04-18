@@ -350,6 +350,8 @@ void Map::addCharacter(int x, int y, Owner player, int itemSelected)
         character = CharacterFactory::getInstance().createMagician();
     else if (itemSelected == 4)
         character = CharacterFactory::getInstance().createWarrior();
+    else if (itemSelected == 5)
+        character = CharacterFactory::getInstance().createNinja();
     else
         qFatal("Must implement new characters.");
 
