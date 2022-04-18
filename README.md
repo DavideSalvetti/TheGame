@@ -15,3 +15,4 @@
 <a href="https://www.flaticon.com/free-icons/star" title="star icons">Star icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/plus" title="plus icons">Plus icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/attack" title="attack icons">Attack icons created by Smashicons - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/ninja" title="ninja icons">Ninja icons created by max.icons - Flaticon</a>

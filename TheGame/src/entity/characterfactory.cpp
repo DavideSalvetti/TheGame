@@ -2,6 +2,7 @@
 #include "swordsman.h"
 #include "archer.h"
 #include "magician.h"
+#include "knight.h"
 
 
 CharacterFactory & CharacterFactory::getInstance()
@@ -27,7 +28,7 @@ Character *CharacterFactory::createMagician()
 
 Character *CharacterFactory::createWarrior()
 {
-    return new Swordsman();
+    return new Knight();
 }
 
 CharacterFactory::CharacterFactory()

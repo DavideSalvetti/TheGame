@@ -12,6 +12,7 @@ SOURCES += \
         entity/characterfactory.cpp \
         entity/dynamicentity.cpp \
         entity/entity.cpp \
+        entity/knight.cpp \
         entity/magician.cpp \
         entity/staticentity.cpp \
         entity/swordsman.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
     entity/characterfactory.h \
     entity/dynamicentity.h \
     entity/entity.h \
+    entity/knight.h \
     entity/magician.h \
     entity/staticentity.h \
     entity/swordsman.h \

@@ -16,6 +16,7 @@ SOURCES += \
     ../src/entity/characterfactory.cpp \
     ../src/entity/dynamicentity.cpp \
     ../src/entity/entity.cpp \
+    ../src/entity/knight.cpp \
     ../src/entity/magician.cpp \
     ../src/entity/Swordsman.cpp \
     ../src/entity/staticentity.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     ../src/entity/characterfactory.h \
     ../src/entity/dynamicentity.h \
     ../src/entity/entity.h \
+    ../src/entity/knight.h \
     ../src/entity/magician.h \
     ../src/entity/Swordsman.h \
     ../src/entity/staticentity.h \

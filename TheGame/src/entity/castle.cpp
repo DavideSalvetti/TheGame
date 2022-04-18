@@ -35,6 +35,8 @@ void Castle::reduceNumStars(int itemCreated)
         numStars -= 2;
     else if (itemCreated == 3)
         numStars -= 4;
+    else if (itemCreated == 4)
+        numStars -= 5;
 
     emit numStarsChanged();
 }

@@ -103,6 +103,7 @@ void Map::populateMap()
     /* add castles to the map */
     Castle *castle_player1 = new Castle(getMapWidth() - 1, 0, this);
     castle_player1->setPlayerOwner(PLAYER_1);
+    castle_player1->incrementNumStars();
     castleList.append(castle_player1);
 
     Castle *castle_player2 = new Castle(0, getMapWidth() - 1, this);
@@ -347,6 +348,10 @@ void Map::addCharacter(int x, int y, Owner player, int itemSelected)
         character = CharacterFactory::getInstance().createArcher();
     else if (itemSelected == 3)
         character = CharacterFactory::getInstance().createMagician();
+    else if (itemSelected == 4)
+        character = CharacterFactory::getInstance().createWarrior();
+    else
+        qFatal("Must implement new characters.");
 
     if (character) {
         character->move(x, y);

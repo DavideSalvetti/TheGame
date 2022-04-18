@@ -41,6 +41,7 @@ Popup {
                 ListElement {img: "qrc:/img/swordsman.png"; star: 2; index: 1}
                 ListElement {img: "qrc:/img/bow.png"; star: 2; index: 2}
                 ListElement {img: "qrc:/img/wizard.png"; star: 4; index: 3}
+                ListElement {img: "qrc:/img/knight.png"; star: 5; index: 4}
             }
 
 
@@ -120,6 +121,7 @@ Popup {
             onClicked: {
                 if (characterRow.itemSelected != -1) {
                     game.addUnit(characterRow.itemSelected)
+                    characterRow.itemSelected = -1
                     close()
                 }
             }
