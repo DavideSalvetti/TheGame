@@ -27,7 +27,7 @@ public:
     QList<Character *> getCharacters();
     QList<Castle *> getCastles();
 
-    void availableTileToMoveOn(Character *character);
+    void availableTileToMoveOn(const Character &character);
     void availableCharacterToAttack(const Character &character);
     bool canAttackSomebody(const Character &character);
     bool isTileUnderAttack(int x, int y) const;

@@ -7,7 +7,7 @@ Knight::Knight(QObject *parent)
     : Character{parent}
 {
     lifePoints = MAX_KNIGHT_LIFEPOINTS;
-    attackPoints = 3;
+    attackPoints = 2;
     defPoints = 4;
     moveRange = 2;
     attackRange = 1;
@@ -18,7 +18,14 @@ Knight::Knight(QObject *parent)
 
 Knight::~Knight()
 {
-    qDebug() << "Swordsman Destroyed";
+    qDebug() << "Knight Destroyed";
+}
+
+void Knight::incrementAttackPoints()
+{
+    attackPoints++;
+    numAttacksAvailable = 0;
+    numMovesAvailable = 0;
 }
 
 int Knight::getMaxLifePoints() const
@@ -30,4 +37,10 @@ void Knight::resetProperties()
 {
     numAttacksAvailable = 1;
     numMovesAvailable = 1;
+}
+
+bool Knight::canIncrementAttackPoints()
+{
+    return numAttacksAvailable > 0 && numMovesAvailable > 0
+            && attackPoints < 10;
 }

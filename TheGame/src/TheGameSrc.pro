@@ -28,6 +28,7 @@ RESOURCES += qml.qrc \
     image.qrc \
     panels.qrc
 
+RC_ICONS = C:\Users\Davide\Desktop\TheGame\TheGame\TheGame\src\img\crown.ico
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH = $$PWD
 

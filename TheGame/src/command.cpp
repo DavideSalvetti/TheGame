@@ -14,7 +14,6 @@ Command::~Command()
 
 }
 
-
 QString& Command::getIcon()
 {
     return icon;
@@ -25,7 +24,7 @@ QString& Command::getDescription()
     return description;
 }
 
-bool Command::getCanExecute()
+bool Command::getCanExecute() const
 {
     return canExecute;
 }

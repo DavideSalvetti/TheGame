@@ -6,5 +6,7 @@
         <file alias="Header.qml">components/Header.qml</file>
         <file alias="Character.qml">components/Character.qml</file>
         <file alias="MButton.qml">components/MButton.qml</file>
+        <file alias="CharacterStats.qml">components/CharacterStats.qml</file>
+        <file alias="RectangleStat.qml">components/RectangleStat.qml</file>
     </qresource>
 </RCC>

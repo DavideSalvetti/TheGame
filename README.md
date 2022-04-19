@@ -16,3 +16,8 @@
 <a href="https://www.flaticon.com/free-icons/plus" title="plus icons">Plus icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/attack" title="attack icons">Attack icons created by Smashicons - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/ninja" title="ninja icons">Ninja icons created by max.icons - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/buff" title="buff icons">Buff icons created by Febrian Hidayat - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/blade" title="blade icons">Blade icons created by Smashicons - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/sword" title="sword icons">Sword icons created by surang - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/heart" title="heart icons">Heart icons created by Vlad Szirka - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/crown" title="crown icons">Crown icons created by Freepik - Flaticon</a>

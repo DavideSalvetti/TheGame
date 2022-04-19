@@ -10,7 +10,6 @@ Magician::Magician(QObject *parent)
     lifePoints = MAX_MAGICIAN_LIFEPOINTS;
     attackPoints = 5;
     defPoints = 2;
-    magicPoints = 7;
     moveRange = 1;
     attackRange = 2;
     numAttacksAvailable = 1;
@@ -23,13 +22,9 @@ Magician::~Magician()
     qDebug() << "Magician Destroyed";
 }
 
-bool Magician::magicAttack(Character *enemy)
+bool Magician::canMagicAttack() const
 {
-    if (this == enemy)
-        return false;
-
-
-    return true;
+    return numAttacksAvailable > 0;
 }
 
 int Magician::getMaxLifePoints() const

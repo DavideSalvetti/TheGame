@@ -11,7 +11,7 @@ Tile::Tile(int x, int y, QObject *parent)
 
 Tile::~Tile()
 {
-    qDebug() << "Deleting tile object.";
+    qDebug() << "Deleting tile object." << x << y;
 }
 
 int Tile::getX() const
@@ -24,6 +24,10 @@ int Tile::getY() const
     return y;
 }
 
+/*!
+ * \brief A character can move on Tile only if the tile is not solid
+ * and there are no other entities on it.
+ */
 bool Tile::canMoveOnTile() const
 {
     return !solid && !entityPresent;
@@ -49,18 +53,18 @@ bool Tile::isEntityPresent() const
     return entityPresent;
 }
 
-void Tile::setSolid(bool solid)
+void Tile::setSolid(const bool solid)
 {
     this->solid = solid;
 }
 
-void Tile::setFree(bool free)
+void Tile::setFree(const bool free)
 {
     this->free = free;
     emit freeChanged();
 }
 
-void Tile::setUnderAttack(bool underAttack)
+void Tile::setUnderAttack(const bool underAttack)
 {
     if (this->underAttack == underAttack)
         return;
@@ -69,7 +73,7 @@ void Tile::setUnderAttack(bool underAttack)
     emit underAttackChanged();
 }
 
-void Tile::setEntityPresent(bool entityPresent)
+void Tile::setEntityPresent(const bool entityPresent)
 {
     if (this->entityPresent == entityPresent)
         return;

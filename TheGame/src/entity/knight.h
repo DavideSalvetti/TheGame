@@ -7,11 +7,14 @@ class Knight : public virtual Character
 {
 public:
     explicit Knight(QObject *parent = nullptr);
-    ~Knight();
+    virtual ~Knight();
 
 
     int getMaxLifePoints() const;
     void resetProperties();
+
+    bool canIncrementAttackPoints();
+    void incrementAttackPoints();
 };
 
 #endif // KNIGHT_H

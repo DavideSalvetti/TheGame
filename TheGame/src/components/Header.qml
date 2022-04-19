@@ -10,6 +10,7 @@ Item {
         anchors {
             left: parent.left
             top: parent.top
+            leftMargin: 10
         }
 
         color: Style.colourHeaderFont
@@ -26,6 +27,7 @@ Item {
         anchors {
             right: parent.right
             top: parent.top
+            rightMargin: 10
         }
 
         color: game.roundPlayer == 1 ? Style.colourPlayer1 : Style.colourPlayer2

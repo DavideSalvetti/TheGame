@@ -16,5 +16,10 @@
         <file alias="favourite.png">img/favourite.png</file>
         <file alias="swords.png">img/swords.png</file>
         <file alias="ninja.png">img/ninja.png</file>
+        <file alias="level-up.png">img/level-up.png</file>
+        <file alias="game.png">img/game.png</file>
+        <file alias="heart_2.png">img/heart_2.png</file>
+        <file alias="sword.png">img/sword.png</file>
+        <file alias="crown.png">img/crown.png</file>
     </qresource>
 </RCC>

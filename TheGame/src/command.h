@@ -17,7 +17,7 @@ public:
 
     QString& getIcon();
     QString& getDescription();
-    bool getCanExecute();
+    bool getCanExecute() const;
 
     void setCanExecute(const bool canExecute);
 

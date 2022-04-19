@@ -7,6 +7,7 @@ class CharacterFactory : public CharacterFactoryIF
 {
 public:
     static CharacterFactory &getInstance();
+    ~CharacterFactory();
 
     Character * createSwordsman();
     Character * createArcher();

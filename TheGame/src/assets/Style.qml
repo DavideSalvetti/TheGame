@@ -8,7 +8,7 @@ Item {
     readonly property color colourPlayer2: "blue"
 
 
-    readonly property int pixelSizeNavigationBarText: 16
+    readonly property int pixelSizeNavigationBarText: 12
 
 
     readonly property color colourHeaderFont: "#ffffff"
@@ -21,7 +21,7 @@ Item {
     readonly property real heightCommandBar: heightCommandButton
 
 
-    readonly property real widthCommandButton: 90
+    readonly property real widthCommandButton: 80
     readonly property real heightCommandButton: widthCommandButton
     readonly property real iconMargins: 5
 

@@ -6,6 +6,7 @@
 #include "command.h"
 #include "entity/swordsman.h"
 #include "entity/magician.h"
+#include "entity/knight.h"
 
 class Game : public QObject
 {
@@ -14,10 +15,12 @@ class Game : public QObject
     Q_PROPERTY (int roundNum READ getRoundNum NOTIFY roundNumChanged)
     Q_PROPERTY (int roundPlayer READ getRoundPlayer NOTIFY roundPlayerChanged)
     Q_PROPERTY (QQmlListProperty<Command> commandBar READ getCommandBar CONSTANT)
-    //Q_PROPERTY (QQmlListProperty<Character> charactersList READ getCharactersList NOTIFY characterListChanged)
+    Q_PROPERTY (Character *selectedCharacter READ getSelectedCharacter NOTIFY selectedCharacterChanged)
 
 public:
     static Game& getInstance();
+    ~Game();
+
 
     Q_INVOKABLE void initGame(int width, int heigth);
 
@@ -25,6 +28,7 @@ public:
     int getRoundPlayer() const;
     Map *getMap() const;
     QQmlListProperty<Command> getCommandBar();
+    Character *getSelectedCharacter() const;
 
     void nextPlayer();
 
@@ -36,7 +40,9 @@ public:
 
 
     /* copy-constructor and copy-assigment operator must be
-       deleted so that nobody can copy the singleton */
+       deleted so that nobody can copy the singleton. Using
+       delete, the default definitions of these operations
+       are eliminated. */
     Game(Game const&) = delete;
     void operator=(Game const&) = delete;
 
@@ -44,19 +50,21 @@ private slots:
     void moveCommandClicked();
     void attackCommandClicked();
     void magicAttackCommandClicked();
+    void incrementAttackCommandClicked();
     void healCommandClicked(); 
     void createCommandClicked();
     void endGame(int winner);
+
 signals:
     void roundNumChanged();
     void roundPlayerChanged();
     void gameFinished(int  winner);
     void mapHasChanged();
     void createUnitClicked(int numStars);
+    void selectedCharacterChanged();
 
 private:
     Game(QObject *parent = nullptr);
-
 
     enum Action {
         Idle = 0,
@@ -72,6 +80,9 @@ private:
 
     Map *map {nullptr};
 
+    /* QPointer is a guarder pointer, so it never becomes a dangling pointer
+       because when the reference object is destroyed, it is autmatically
+       cleared (set to nullptr). I used it here for learning purposes. */
     QPointer<Entity> selectedEntity {nullptr};
 
     /* List of commands */
@@ -81,6 +92,7 @@ private:
     Command *magicAttackCommand {nullptr};
     Command *healCommand {nullptr};
     Command *createCommand {nullptr};
+    Command *incrementAttackCommand {nullptr};
 
     QList<Command*> commandBar;
 

@@ -25,10 +25,10 @@ public:
     bool isEntityPresent() const;
 
 
-    void setSolid(bool solid);
-    void setFree(bool free);
-    void setUnderAttack(bool underAttack);
-    void setEntityPresent(bool entityPresent);
+    void setSolid(const bool solid);
+    void setFree(const bool free);
+    void setUnderAttack(const bool underAttack);
+    void setEntityPresent(const bool entityPresent);
 
 signals:
     void freeChanged();

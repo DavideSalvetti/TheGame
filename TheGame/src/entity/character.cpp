@@ -76,6 +76,16 @@ int Character::getLifePoints() const
     return lifePoints;
 }
 
+int Character::getAttackPoints() const
+{
+    return attackPoints;
+}
+
+int Character::getDefPoints() const
+{
+    return defPoints;
+}
+
 QString Character::getImageSrc() const
 {
     return imageSrc;

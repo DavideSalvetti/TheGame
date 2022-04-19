@@ -4,7 +4,7 @@
 
 /*!
  * \class Game
- * \details Singleton
+ * \details Singleton for the management of the game.
  */
 
 Game::Game(QObject *parent)
@@ -12,6 +12,13 @@ Game::Game(QObject *parent)
       roundNum(1),
       roundPlayer(1)
 {
+
+    qDebug() << "Game Singleton Created!";
+
+    nextTurnCommand = new Command("qrc:/img/check.png", tr("End Turn"), this);
+    nextTurnCommand->setCanExecute(true);
+    connect(nextTurnCommand, &Command::executed, this, &Game::endTurn);
+    commandBar.append(nextTurnCommand);
 
     createCommand = new Command("qrc:/img/swords.png", tr("Add Unit"), this);
     createCommand->setCanExecute(false);
@@ -33,16 +40,15 @@ Game::Game(QObject *parent)
     connect(magicAttackCommand, &Command::executed, this, &Game::magicAttackCommandClicked);
     commandBar.append(magicAttackCommand);
 
+    incrementAttackCommand = new Command("qrc:/img/level-up.png", tr("Power up"), this);
+    incrementAttackCommand->setCanExecute(false);
+    connect(incrementAttackCommand, &Command::executed, this, &Game::incrementAttackCommandClicked);
+    commandBar.append(incrementAttackCommand);
+
     healCommand = new Command("qrc:/img/heart.png", tr("Heal"), this);
     healCommand->setCanExecute(false);
     connect(healCommand, &Command::executed, this, &Game::healCommandClicked);
     commandBar.append(healCommand);
-
-    nextTurnCommand = new Command("qrc:/img/check.png", tr("End Turn"), this);
-    nextTurnCommand->setCanExecute(true);
-    connect(nextTurnCommand, &Command::executed, this, &Game::endTurn);
-    commandBar.append(nextTurnCommand);
-
 }
 
 Game & Game::getInstance()
@@ -51,22 +57,36 @@ Game & Game::getInstance()
     return instance;
 }
 
+Game::~Game()
+{
+    qDebug() << "Deleting Singleton Game!";
+}
+
+/*!
+ * \brief Initialize the game creating the map with the given \p width and \p height,
+ */
 void Game::initGame(int width, int heigth)
 {
     mapHeigth = heigth;
     mapWidth = width;
 
     map = new Map(mapWidth, mapHeigth, this);
-
     connect(map, &Map::winner, this, &Game::endGame);
 
     emit mapHasChanged();
 }
 
+/*!
+ * \brief Send the signal that there is a winner and deletes the map.
+ * \details There is no need to check if the map has already been deeleted,
+ * because the signal to this slot is sent from the map object, so it must
+ * be available.
+ */
 void Game::endGame(int winner)
 {
     emit gameFinished(winner);
 
+    /* delete the map and all its childs */
     delete map;
 }
 
@@ -91,6 +111,22 @@ QQmlListProperty<Command> Game::getCommandBar()
 }
 
 /*!
+ * \brief Set the selected character to the QmlEngine.
+ * \details Dynamic Cast is used at runtime to check if the type can be converted to a
+ * specific type. In this case, it's easier than typeId, because I don't want to know
+ * the current type (Swordsman, Archer, ...) but I want to know if it can be converted to
+ * Character (that is an abstract class).
+ */
+Character *Game::getSelectedCharacter() const
+{
+    Character *character = dynamic_cast<Character*>(selectedEntity.data());
+    if (character)
+        return character;
+
+    return nullptr;
+}
+
+/*!
  * \brief End turn and initialization of properties for the next one.
  */
 void Game::endTurn()
@@ -104,8 +140,13 @@ void Game::endTurn()
     moveCommand->setCanExecute(false);
     attackCommand->setCanExecute(false);
     healCommand->setCanExecute(false);
+    createCommand->setCanExecute(false);
+    magicAttackCommand->setCanExecute(false);
+    incrementAttackCommand->setCanExecute(false);
 
     nextPlayer();
+
+    emit selectedCharacterChanged();
 }
 
 /*!
@@ -142,20 +183,19 @@ void Game::nextPlayer()
         }
     }
 
-
     emit roundPlayerChanged();
 }
-
 
 /*!
  * \brief Create command clicked.
  */
 void Game::createCommandClicked()
 {
-    qDebug() << "Create Command Clicked";
     if (selectedEntity) {
         Castle *castle = dynamic_cast<Castle*>(selectedEntity.data());
-        emit createUnitClicked(castle->getNumStars());
+
+        if (castle)
+            emit createUnitClicked(castle->getNumStars());
     }
 }
 
@@ -170,7 +210,8 @@ void Game::moveCommandClicked()
         status = Move;
 
         Character *character = dynamic_cast<Character*>(selectedEntity.data());
-        map->availableTileToMoveOn(character);
+        if (character)
+            map->availableTileToMoveOn(*character);
     }
 }
 
@@ -184,22 +225,23 @@ void Game::attackCommandClicked() {
         status = Attack;
 
         Character *character = dynamic_cast<Character*>(selectedEntity.data());
-        map->availableCharacterToAttack(*character);
+        if (character)
+            map->availableCharacterToAttack(*character);
     }
 }
 
 /*!
  * \brief  Special attack that can only be executed by Magicians.
- * \details All enemies loose 2 lifepoints.
+ * \details All enemies loose 2 lifepoints, but not Magician (and derived classes).
  */
 void Game::magicAttackCommandClicked()
 {
     map->resetTiles();
     if (selectedEntity) {
-
         foreach (Character *character, map->getCharacters()) {
             if (character->getPlayerOwner() != selectedEntity->getPlayerOwner()) {
-                character->inflictDamage(2);
+                if (!dynamic_cast<Magician*>(character))
+                    character->inflictDamage(2);
             }
         }
 
@@ -211,11 +253,28 @@ void Game::magicAttackCommandClicked()
     checkPermittedActions();
 }
 
-void Game::healCommandClicked() {
-    qDebug() << "Heal command clicked!";
+/*!
+ * \brief The selectedEntity increase its attack points.
+ * \details Can be done only with Knight (and derived classes).
+ */
+void Game::incrementAttackCommandClicked()
+{
+    map->resetTiles();
+    if (selectedEntity) {
+        Knight *knight = dynamic_cast<Knight*>(selectedEntity.data());
+        if (knight)
+            knight->incrementAttackPoints();
+    }
+
+    checkPermittedActions();
+}
+
+void Game::healCommandClicked()
+{
     if (selectedEntity) {
         Character *character = dynamic_cast<Character*>(selectedEntity.data());
-        character->heal();
+        if (character)
+            character->heal();
     }
 
     checkPermittedActions();
@@ -230,6 +289,7 @@ void Game::castleClicked(Castle *castle)
 
     if (castle->getPlayerOwner() == roundPlayer) {
         selectedEntity = castle;
+        emit selectedCharacterChanged();
     }
 
     status = Idle;
@@ -239,10 +299,6 @@ void Game::castleClicked(Castle *castle)
 
 /*!
  * \brief Handling of the click on a character.
- * \param x     x of the character clicked
- * \param y     y of the character clicked
- * \details x and y are useful properties to get a reference to the
- * character clicked.
  */
 void Game::characterClicked(Character *character)
 {
@@ -291,16 +347,16 @@ void Game::onIdleState(Character *character)
     if (character == nullptr) {
         selectedEntity = nullptr;
         map->resetTiles();
+        emit selectedCharacterChanged();
         return;
     }
 
     if (character->getPlayerOwner() != roundPlayer) {
-        qDebug() << "Entity owner:" << character->getPlayerOwner()
-                 << " Round Player:" << roundPlayer;
         return;
     }
 
     selectedEntity = character;
+    emit selectedCharacterChanged();
 }
 
 /*!
@@ -311,6 +367,8 @@ void Game::onIdleState(Tile *tile)
     Q_UNUSED(tile)
     selectedEntity = nullptr;
     map->resetTiles();
+
+    emit selectedCharacterChanged();
 }
 
 void Game::onMoveState(Character *character)
@@ -318,6 +376,8 @@ void Game::onMoveState(Character *character)
     Q_UNUSED(character)
     map->resetTiles();
     status = Idle;
+
+    onIdleState(character);
 }
 
 /*!
@@ -327,13 +387,17 @@ void Game::onMoveState(Tile *tile)
 {
     if (tile->isFree()) {
         Character *character = dynamic_cast<Character*>(selectedEntity.data());
-        map->moveCharacterToTile(tile, character);
+        if (character)
+            map->moveCharacterToTile(tile, character);
     }
 
     map->resetTiles();
     status = Idle;
 }
 
+/*!
+ * \brief Handling of the Attack command.
+ */
 void Game::onAttackState(Character *character)
 {
     int x = character->getX();
@@ -360,7 +424,9 @@ void Game::onAttackState(Tile *tile)
 }
 
 /*!
- * \brief Game::checkPermittedActions
+ * \brief Check which actions the selectedEntity can perform.
+ * \details For the same reasons of \p getSelectedCharacter() I used
+ * dynamic casts.
  */
 void Game::checkPermittedActions()
 {
@@ -369,13 +435,13 @@ void Game::checkPermittedActions()
     healCommand->setCanExecute(false);
     magicAttackCommand->setCanExecute(false);
     createCommand->setCanExecute(false);
+    incrementAttackCommand->setCanExecute(false);
 
     if (!selectedEntity)
         return;
 
-    if (dynamic_cast<Character*>(selectedEntity.data())) {
-        Character *character = dynamic_cast<Character*>(selectedEntity.data());
-
+    Character * character = dynamic_cast<Character*>(selectedEntity.data());
+    if (character) {
         attackCommand->setCanExecute(false);
         if (character->canAttack()) {
             if (map->canAttackSomebody(*character)) {
@@ -390,7 +456,6 @@ void Game::checkPermittedActions()
         } else
             moveCommand->setCanExecute(false);
 
-
         if (character->canHeal()) {
             healCommand->setCanExecute(true);
         } else
@@ -398,17 +463,26 @@ void Game::checkPermittedActions()
 
         magicAttackCommand->setCanExecute(false);
         /* check if the selected character is a magician */
-        if (dynamic_cast<Magician*>(selectedEntity.data())) {
-            Magician *magician = dynamic_cast<Magician*>(selectedEntity.data());
+        Magician *magician = dynamic_cast<Magician*>(selectedEntity.data());
+        if (magician) {
 
-            if (magician->canAttack()) {
-                if (map->canAttackSomebody(*character)) {
-                    magicAttackCommand->setCanExecute(true);
-                } else
-                    magicAttackCommand->setCanExecute(false);
+            if (magician->canMagicAttack()) {
+                magicAttackCommand->setCanExecute(true);
             } else
                 magicAttackCommand->setCanExecute(false);
         }
+
+        /* check if the selected character is a knight */
+        Knight *knight = dynamic_cast<Knight*>(selectedEntity.data());
+        if (knight) {
+
+            if (knight->canIncrementAttackPoints()) {
+                incrementAttackCommand->setCanExecute(true);
+            } else {
+                incrementAttackCommand->setCanExecute(false);
+            }
+        }
+
     } else if (dynamic_cast<Castle*>(selectedEntity.data())) {
         Castle *castle = dynamic_cast<Castle*>(selectedEntity.data());
         if (castle->getNumStars() > 0) {

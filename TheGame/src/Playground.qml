@@ -6,8 +6,6 @@ import assets 1.0
 import panels 1.0
 
 Item {
-
-
     Connections {
         target: game
 

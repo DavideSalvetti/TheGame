@@ -7,15 +7,12 @@ class Magician : public virtual Character
 {
 public:
     explicit Magician(QObject *parent = nullptr);
-    ~Magician();
+    virtual ~Magician();
 
-    bool magicAttack(Character *enemy);
-
+    bool canMagicAttack() const;
     int getMaxLifePoints() const;
     void resetProperties();
 
-private:
-    int magicPoints;
 };
 
 #endif // MAGICIAN_H

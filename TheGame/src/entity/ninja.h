@@ -8,6 +8,7 @@ class Ninja : public Magician, public Knight
 {
 public:
     explicit Ninja(QObject *parent = nullptr);
+    ~Ninja();
 
     int getMaxLifePoints() const;
     void resetProperties();

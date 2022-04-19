@@ -23,28 +23,28 @@ Window {
 
             Rectangle {
                 id: backgroundRectangle
-                anchors.fill: parent
-
 
                 Rectangle {
+                    id: garden
                     anchors {
                         bottom: parent.bottom
                         left: parent.left
                         right: parent.right
                     }
 
-                    height: parent.width / 3
+                    height: parent.height / 3
                     color:  "#00FF00"
                 }
 
                 Rectangle {
+                    id: sky
                     anchors {
                         top: parent.top
                         left: parent.left
                         right: parent.right
                     }
 
-                    height: parent.width / 3 * 2
+                    height: parent.height / 3 * 2
                     gradient: Gradient.LightBlue
                 }
 
@@ -75,25 +75,74 @@ Window {
 
 
                 Image {
+                    id: mountain
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: - 20
                     anchors.horizontalCenter: parent.horizontalCenter
                     source: "qrc:/img/mountain.png"
                     height: 512
                     width: 512
+
+                    Image {
+                        id: magician
+                        anchors {
+                            top: parent.top
+                            horizontalCenter: parent.horizontalCenter
+                            topMargin:  - 10
+                        }
+
+                        width: 128
+                        height: 128
+
+                        source: "qrc:/img/wizard.png"
+                    }
+
+                    Image {
+                        id: ninja
+                        anchors {
+                            bottom: parent.bottom
+                            horizontalCenter: parent.horizontalCenter
+                            horizontalCenterOffset:  - 20
+                            bottomMargin:  - 10
+                        }
+
+                        width: 128
+                        height: 128
+                        rotation: 20
+
+                        source: "qrc:/img/ninja.png"
+                    }
                 }
 
                 Image {
                     id: swordsman
-                    x: 0
-                    y: parent.height - height
+                    anchors {
+                        left: parent.left
+                        bottom: sky.bottom
+                        leftMargin: 10
+                        bottomMargin:  - 10
+                    }
 
-                    width: 64
-                    height: 64
+                    width: 128
+                    height: 128
 
                     source: "qrc:/img/swordsman.png"
                 }
 
+                Image {
+                    id: archer
+                    anchors {
+                        right: parent.right
+                        bottom: sky.bottom
+                        rightMargin: 10
+                        bottomMargin:  - 10
+                    }
+
+                    width: 128
+                    height: 128
+
+                    source: "qrc:/img/bow.png"
+                }
 
                 Rectangle {
                     anchors {
@@ -105,23 +154,43 @@ Window {
                         rightMargin: parent.width / 5
                     }
 
-                    height: parent.height / 4
+                    height: columnId.implicitHeight + 10
 
                     color: "#aaffffff"
                     radius: 10
 
                     Column {
+                        id: columnId
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.horizontalCenter: parent.horizontalCenter
                         width: parent.width
-                        spacing: 10
+                        spacing: 5
+
+                        Image {
+                            y: -5
+                            source: "qrc:/img/crown.png"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            height: 104
+                            width: 104
+
+                            Label {
+                                text: "The Game"
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                anchors.bottom: parent.bottom
+                                anchors.bottomMargin: -5
+                                font {
+                                    bold: true
+                                    pointSize: 18
+                                }
+                            }
+                        }
 
                         Label {
                             text: qsTr("Choose the size of the map:")
                             anchors.horizontalCenter: parent.horizontalCenter
                             font {
-                                bold: true
-                                pointSize: 16
+                                bold: false
+                                pointSize: 10
                             }
                         }
 

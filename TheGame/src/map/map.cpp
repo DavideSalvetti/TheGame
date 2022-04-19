@@ -38,6 +38,7 @@ Map::~Map()
 {
     qDebug() << "Deleting map object.";
 
+    /* delete all the characters inside the list using iterators and Qt library functions */
     qDeleteAll(characters.begin(), characters.end());
 }
 /*!
@@ -163,15 +164,12 @@ QList<Castle *> Map::getCastles()
 /*!
  * \brief Set the color of the available tiles the character can move on to blue.
  */
-void Map::availableTileToMoveOn(Character *character)
+void Map::availableTileToMoveOn(const Character &character)
 {
-    if (!character)
-        return;
+    int x = character.getX();
+    int y = character.getY();
 
-    int x = character->getX();
-    int y = character->getY();
-
-    int maxRange = character->getMoveRange();
+    int maxRange = character.getMoveRange();
     for (int i = x - maxRange; i <= x + maxRange; i++) {
         for (int j = y - maxRange; j <= y + maxRange; j++) {
 
@@ -192,7 +190,7 @@ void Map::availableTileToMoveOn(Character *character)
 }
 
 /*!
- * \brief Search for enemy that the passed character can attack and set
+ * \brief Search for enemy that the \p character can attack and set
  *  the tile to underAttack.
  */
 void Map::availableCharacterToAttack(const Character &character)
@@ -241,8 +239,7 @@ void Map::availableCharacterToAttack(const Character &character)
     }
 }
 /*!
- * \brief Map::canAttackSomebody
- * \param character
+ * \brief Search for enemy that \p character can attack on the map.
  * \return True if there is at least one enemy to attack, false otherwise
  */
 bool Map::canAttackSomebody(const Character &character)
@@ -285,13 +282,17 @@ bool Map::canAttackSomebody(const Character &character)
     return canAttack;
 }
 
+/*!
+ * \brief Check is the tile at \p x \p y is under attack or not.
+ * \return True if the tile is under attack.
+ */
 bool Map::isTileUnderAttack(int x, int y) const
 {
     return tilesMatrix[y][x]->isUnderAttack();
 }
 
 /*!
- * \brief Reset the tile color to green.
+ * \brief Reset the tile color to normal.
  */
 void Map::resetTiles()
 {
@@ -313,8 +314,7 @@ void Map::moveCharacterToTile(Tile *tile, Character *character) {
     int oldX = character->getX();
     int oldY = character->getY();
 
-    character->setX(tile->getX());
-    character->setY(tile->getY());
+    character->move(tile->getX(), tile->getY());
     tilesMatrix[oldY][oldX]->setEntityPresent(false);
     tile->setEntityPresent(true);
 

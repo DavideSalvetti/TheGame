@@ -5,10 +5,17 @@
 #include "knight.h"
 #include "ninja.h"
 
+#include <QDebug>
+
 CharacterFactory & CharacterFactory::getInstance()
 {
     static CharacterFactory instance;
     return instance;
+}
+
+CharacterFactory::~CharacterFactory()
+{
+    qDebug() << "Destroying CharacterFactory!";
 }
 
 Character *CharacterFactory::createSwordsman()
@@ -39,5 +46,5 @@ Character *CharacterFactory::createNinja()
 
 CharacterFactory::CharacterFactory()
 {
-
+    qDebug() << "Creating CharacterFactory!";
 }
