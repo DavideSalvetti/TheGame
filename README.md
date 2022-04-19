@@ -1,6 +1,19 @@
 # TheGame
 
 
+<img src="/TheGame/src/img/crown.png" widht=100 height=100>
+<h1> Simple C++ Game made with Qt Creator </h1>
+
+The Game is a simple turn based game developed using Qt Creator and Qt Quick libraries. Qt is a cross-platform framework to develop application from a single code-base, so The Game can be deployed to Desktop or Mobile devices.
+
+<br>
+
+
+
+<h2>Icon used inside this project</h2>
+
+Inside this project, I used icons from <a href="https://www.flaticon.com/">Flaticon</a>. The following are all the attributions to the authors of the icons added to The Game:
+<br>
 <a href="https://www.flaticon.com/free-icons/treasure" title="treasure icons">Treasure icons created by Smashicons - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/wizard" title="wizard icons">Wizard icons created by max.icons - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/knight" title="knight icons">Knight icons created by max.icons - Flaticon</a>
