@@ -26,6 +26,7 @@ void Knight::incrementAttackPoints()
     attackPoints++;
     numAttacksAvailable = 0;
     numMovesAvailable = 0;
+    emit attackPointsChanged();
 }
 
 int Knight::getMaxLifePoints() const

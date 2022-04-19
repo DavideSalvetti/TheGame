@@ -9,7 +9,7 @@ class Character : public DynamicEntity
     Q_PROPERTY(QString imageSrc READ getImageSrc CONSTANT)
     Q_PROPERTY(int lifePoints READ getLifePoints NOTIFY lifePointsChanged)
     Q_PROPERTY(int maxLifePoints READ getMaxLifePoints CONSTANT)
-    Q_PROPERTY(int attackPoints READ getAttackPoints CONSTANT)
+    Q_PROPERTY(int attackPoints READ getAttackPoints NOTIFY attackPointsChanged)
     Q_PROPERTY(int defPoints READ getDefPoints CONSTANT)
 public:
     explicit Character(QObject *parent = nullptr);
@@ -44,6 +44,7 @@ public:
 signals:
     void lifePointsChanged();
     void characterDestroyed(int x, int y);
+    void attackPointsChanged();
 
 
 protected:

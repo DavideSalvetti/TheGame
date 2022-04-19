@@ -238,16 +238,18 @@ void Game::magicAttackCommandClicked()
 {
     map->resetTiles();
     if (selectedEntity) {
+        Character *character = dynamic_cast<Character*>(selectedEntity.data());
+        if (character) {
+            character->decreaseAttackAvailable();
+            character->decreaseMovesAvailable();
+        }
+
         foreach (Character *character, map->getCharacters()) {
             if (character->getPlayerOwner() != selectedEntity->getPlayerOwner()) {
                 if (!dynamic_cast<Magician*>(character))
                     character->inflictDamage(2);
             }
         }
-
-        Character *character = dynamic_cast<Character*>(selectedEntity.data());
-        character->decreaseAttackAvailable();
-        character->decreaseMovesAvailable();
     }
 
     checkPermittedActions();

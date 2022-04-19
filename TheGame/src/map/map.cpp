@@ -361,6 +361,9 @@ void Map::addCharacter(int x, int y, Owner player, int itemSelected)
         character->decreaseMovesAvailable();
         character->decreaseAttackAvailable();
         characters.append(character);
+
+        connect(character, &Character::characterDestroyed, this,
+                &Map::removeCharacter);
     }
 
     emit characterListChanged();
