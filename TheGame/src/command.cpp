@@ -1,6 +1,6 @@
 #include "command.h"
 
-Command::Command(const QString &icon, const QString &description, QObject *parent)
+Command::Command(const QString icon, const QString description, QObject *parent)
     : QObject{parent},
       icon(icon),
       description(description),
@@ -14,12 +14,12 @@ Command::~Command()
 
 }
 
-QString& Command::getIcon()
+QString Command::getIcon()
 {
     return icon;
 }
 
-QString& Command::getDescription()
+QString Command::getDescription()
 {
     return description;
 }

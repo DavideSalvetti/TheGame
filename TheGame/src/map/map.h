@@ -33,7 +33,6 @@ public:
     bool isTileUnderAttack(int x, int y) const;
 
     void resetTiles();
-    void resetCharactersProperties();
     void moveCharacterToTile(Tile *tile, Character *character);
     void resetProperties();
     void addCharacter(int x, int y, Owner player, int itemSelected);
@@ -51,7 +50,6 @@ signals:
 private slots:
     void removeCharacter(int x, int y);
 
-
 private:
     int width;
     int height;
@@ -59,13 +57,18 @@ private:
     int tileHeight;
 
     /* In this case, I used the parent-child relationship.
-     * When parent is deleted (Map), the children will be destroyed (Tile). */
+     * When parent is deleted (Map), the children will be destroyed (Tile).
+     * I used QVector (and not QList) because I do more direct access
+     * operation than insert/remove. In this case, QVector is more efficient. */
     QVector<QVector<Tile*>> tilesMatrix;
+
+    /* This is needed only to display the tile to the QMLEngine. I bet there
+     * is a better approach. */
     QList<Tile *> tilesList;
 
     QList<Character*> characters;
 
-    QList<Castle*> castleList;
+    QList<Castle*> castles;
 
 
     void populateMap();

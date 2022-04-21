@@ -10,8 +10,8 @@ public:
     virtual ~Magician();
 
     bool canMagicAttack() const;
-    int getMaxLifePoints() const;
-    void resetProperties();
+    virtual int getMaxLifePoints() const;
+    virtual void resetProperties();
 
 };
 

@@ -105,11 +105,11 @@ void Map::populateMap()
     Castle *castle_player1 = new Castle(getMapWidth() - 1, 0, this);
     castle_player1->setPlayerOwner(PLAYER_1);
     castle_player1->incrementNumStars();
-    castleList.append(castle_player1);
+    castles.append(castle_player1);
 
     Castle *castle_player2 = new Castle(0, getMapWidth() - 1, this);
     castle_player2->setPlayerOwner(PLAYER_2);
-    castleList.append(castle_player2);
+    castles.append(castle_player2);
 
     /* Select some solid tiles to display based on the size of the map */
     int numSolidTiles = 0;
@@ -148,7 +148,7 @@ QQmlListProperty<Character> Map::getCharactersList()
 
 QQmlListProperty<Castle> Map::getCastlesList()
 {
-    return QQmlListProperty<Castle>(this, &castleList);
+    return QQmlListProperty<Castle>(this, &castles);
 }
 
 QList<Character*> Map::getCharacters()
@@ -158,7 +158,7 @@ QList<Character*> Map::getCharacters()
 
 QList<Castle *> Map::getCastles()
 {
-    return castleList;
+    return castles;
 }
 
 /*!

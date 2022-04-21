@@ -11,12 +11,12 @@ class Command : public QObject
     Q_PROPERTY( bool ui_canExecute READ getCanExecute NOTIFY canExecuteChanged )
 
 public:
-    explicit Command(const QString &icon = "", const QString &description = "",
+    explicit Command(const QString icon = "", const QString description = "",
                      QObject *parent = nullptr);
     ~Command();
 
-    QString& getIcon();
-    QString& getDescription();
+    QString getIcon();
+    QString getDescription();
     bool getCanExecute() const;
 
     void setCanExecute(const bool canExecute);

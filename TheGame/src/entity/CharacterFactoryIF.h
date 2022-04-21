@@ -11,7 +11,6 @@ public:
     virtual Character * createMagician() = 0;
     virtual Character * createWarrior() = 0;
     virtual Character * createNinja() = 0;
-
 };
 
 #endif // CHARACTERFACTORYIF_H

@@ -10,8 +10,8 @@ public:
     virtual ~Knight();
 
 
-    int getMaxLifePoints() const;
-    void resetProperties();
+    virtual int getMaxLifePoints() const;
+    virtual void resetProperties();
 
     bool canIncrementAttackPoints();
     void incrementAttackPoints();

@@ -21,8 +21,14 @@ public:
     static Game& getInstance();
     ~Game();
 
-
     Q_INVOKABLE void initGame(int width, int heigth);
+    Q_INVOKABLE void tileClicked(Tile *tile);
+    Q_INVOKABLE void characterClicked(Character *character);
+    Q_INVOKABLE void castleClicked(Castle *castle);
+    Q_INVOKABLE void endTurn();
+    Q_INVOKABLE void addUnit(int itemSelected);
+
+    void nextPlayer();
 
     int getRoundNum() const;
     int getRoundPlayer() const;
@@ -30,22 +36,12 @@ public:
     QQmlListProperty<Command> getCommandBar();
     Character *getSelectedCharacter() const;
 
-    void nextPlayer();
-
-    Q_INVOKABLE void tileClicked(Tile *tile);
-    Q_INVOKABLE void characterClicked(Character *character);
-    Q_INVOKABLE void castleClicked(Castle *castle);
-    Q_INVOKABLE void endTurn();
-    Q_INVOKABLE void addUnit(int itemSelected);
-
-
     /* copy-constructor and copy-assigment operator must be
        deleted so that nobody can copy the singleton. Using
        delete, the default definitions of these operations
        are eliminated. */
     Game(Game const&) = delete;
     void operator=(Game const&) = delete;
-
 private slots:
     void moveCommandClicked();
     void attackCommandClicked();
