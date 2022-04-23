@@ -20,6 +20,11 @@ Character::~Character()
     qDebug() << "Character Destroyed";
 }
 
+void Character::setPlayerOwner(Owner owner)
+{
+    this->playerOwner = owner;
+}
+
 bool Character::attack(Character *enemy)
 {
     if (this == enemy)
@@ -43,10 +48,10 @@ bool Character::attack(Character *enemy)
 void Character::heal()
 {
     if (canHeal()) {
-        if (getLifePoints() + 3 > getMaxLifePoints())
+        if (getLifePoints() + 4 > getMaxLifePoints())
             lifePoints = getMaxLifePoints();
         else
-            lifePoints += 3;
+            lifePoints += 4;
 
         emit lifePointsChanged();
 

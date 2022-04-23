@@ -7,7 +7,7 @@ Knight::Knight(QObject *parent)
     : Character{parent}
 {
     lifePoints = MAX_KNIGHT_LIFEPOINTS;
-    attackPoints = 2;
+    attackPoints = 3;
     defPoints = 4;
     moveRange = 2;
     attackRange = 1;

@@ -19,7 +19,7 @@ public:
     explicit Entity(QObject *parent = nullptr);
     virtual ~Entity();
 
-    virtual void setPlayerOwner(Owner owner);
+    virtual void setPlayerOwner(Owner owner) = 0;
 
     Owner getPlayerOwner() const;
     int getX() const;

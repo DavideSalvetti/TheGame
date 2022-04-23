@@ -8,7 +8,7 @@ Ninja::Ninja(QObject *parent)
       Knight{parent}
 {
     lifePoints = MAX_NINJA_LIFEPOINTS;
-    attackPoints = 2;
+    attackPoints = 4;
     defPoints = 3;
     moveRange = 3;
     attackRange = 1;
@@ -19,7 +19,7 @@ Ninja::Ninja(QObject *parent)
 
 Ninja::~Ninja()
 {
-    qDebug() << "Magician Destroyed";
+    qDebug() << "Ninja Destroyed";
 }
 
 int Ninja::getMaxLifePoints() const

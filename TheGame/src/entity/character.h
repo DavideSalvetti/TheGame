@@ -15,6 +15,8 @@ public:
     explicit Character(QObject *parent = nullptr);
     virtual ~Character();
 
+    void setPlayerOwner(Owner owner);
+
     bool attack(Character *enemy);
     void heal();
 

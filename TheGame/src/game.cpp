@@ -244,10 +244,13 @@ void Game::magicAttackCommandClicked()
             character->decreaseMovesAvailable();
         }
 
-        foreach (Character *character, map->getCharacters()) {
-            if (character->getPlayerOwner() != selectedEntity->getPlayerOwner()) {
-                if (!dynamic_cast<Magician*>(character))
-                    character->inflictDamage(2);
+        // STL-Style iterators used for learning purposes
+        QList<Character*> charactersList = map->getCharacters();
+        QList<Character*>::iterator enemy;
+        for (enemy = charactersList.begin(); enemy != charactersList.end(); ++enemy) {
+            if ((*enemy)->getPlayerOwner() != selectedEntity->getPlayerOwner()) {
+                if (!dynamic_cast<Magician*>(*enemy))
+                    (*enemy)->inflictDamage(2);
             }
         }
     }
