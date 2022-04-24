@@ -1,13 +1,21 @@
 # TheGame
 
 
-<img src="/TheGame/src/img/crown.png" widht=100 height=100>
+
+
+<p align="center">
+  <img src="/TheGame/src/img/crown.png" widht=100 height=100>
+</p>
+
 <h1> Simple C++ Game made with Qt Creator </h1>
 
 The Game is a simple turn based game developed using Qt Creator and Qt Quick libraries. Qt is a cross-platform framework to develop application from a single code-base, so The Game can be deployed to Desktop or Mobile devices.
 
 <br>
 
+<p align="center">
+  <img src="/TheGame/src/img/screen.png" widht=400 height=400>
+</p>
 
 
 <h2>Icon used inside this project</h2>
