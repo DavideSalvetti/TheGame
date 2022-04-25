@@ -1,9 +1,9 @@
 #ifndef CHARACTERFACTORY_H
 #define CHARACTERFACTORY_H
 
-#include "CharacterFactoryIF.h"
+#include "character.h"
 
-class CharacterFactory : public CharacterFactoryIF
+class CharacterFactory
 {
 public:
     static CharacterFactory &getInstance();

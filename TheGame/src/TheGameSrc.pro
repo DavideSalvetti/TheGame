@@ -45,7 +45,6 @@ SUBDIRS += \
 
 HEADERS += \
     command.h \
-    entity/CharacterFactoryIF.h \
     entity/archer.h \
     entity/castle.h \
     entity/character.h \
