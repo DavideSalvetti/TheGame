@@ -3,6 +3,10 @@
 
 #define MAX_ARCHER_LIFEPOINTS 10
 
+namespace game {
+namespace entity {
+
+
 Archer::Archer(QObject *parent)
     : Character{parent}
 {
@@ -30,4 +34,7 @@ void Archer::resetProperties()
 {
     numAttacksAvailable = 1;
     numMovesAvailable = 1;
+}
+
+}
 }

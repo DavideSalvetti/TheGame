@@ -8,23 +8,27 @@
 #include "entity/magician.h"
 #include "entity/knight.h"
 
+
+
+namespace game {
+
 class Game : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY (Map *map_ui READ getMap NOTIFY mapHasChanged)
+    Q_PROPERTY (game::map::Map *map_ui READ getMap NOTIFY mapHasChanged)
     Q_PROPERTY (int roundNum READ getRoundNum NOTIFY roundNumChanged)
     Q_PROPERTY (int roundPlayer READ getRoundPlayer NOTIFY roundPlayerChanged)
-    Q_PROPERTY (QQmlListProperty<Command> commandBar READ getCommandBar CONSTANT)
-    Q_PROPERTY (Character *selectedCharacter READ getSelectedCharacter NOTIFY selectedCharacterChanged)
+    Q_PROPERTY (QQmlListProperty<game::Command> commandBar READ getCommandBar CONSTANT)
+    Q_PROPERTY (game::entity::Character *selectedCharacter READ getSelectedCharacter NOTIFY selectedCharacterChanged)
 
 public:
     static Game& getInstance();
     ~Game();
 
     Q_INVOKABLE void initGame(int width, int heigth);
-    Q_INVOKABLE void tileClicked(Tile *tile);
-    Q_INVOKABLE void characterClicked(Character *character);
-    Q_INVOKABLE void castleClicked(Castle *castle);
+    Q_INVOKABLE void tileClicked(game::map::Tile *tile);
+    Q_INVOKABLE void characterClicked(game::entity::Character *character);
+    Q_INVOKABLE void castleClicked(game::entity::Castle *castle);
     Q_INVOKABLE void endTurn();
     Q_INVOKABLE void addUnit(int itemSelected);
 
@@ -32,9 +36,9 @@ public:
 
     int getRoundNum() const;
     int getRoundPlayer() const;
-    Map *getMap() const;
+    map::Map *getMap() const;
     QQmlListProperty<Command> getCommandBar();
-    Character *getSelectedCharacter() const;
+    entity::Character *getSelectedCharacter() const;
 
     /* copy-constructor and copy-assigment operator must be
        deleted so that nobody can copy the singleton. Using
@@ -74,12 +78,12 @@ private:
     int roundPlayer;
     Action status {Idle};
 
-    Map *map {nullptr};
+    map::Map *map {nullptr};
 
     /* QPointer is a guarder pointer, so it never becomes a dangling pointer
        because when the reference object is destroyed, it is autmatically
        cleared (set to nullptr). I used it here for learning purposes. */
-    QPointer<Entity> selectedEntity {nullptr};
+    QPointer<entity::Entity> selectedEntity {nullptr};
 
     /* List of commands */
     Command *nextTurnCommand {nullptr};
@@ -92,15 +96,16 @@ private:
 
     QList<Command*> commandBar;
 
-    void onIdleState(Tile *tile);
-    void onMoveState(Tile *tile);
-    void onAttackState(Tile *tile);
+    void onIdleState(map::Tile *tile);
+    void onMoveState(map::Tile *tile);
+    void onAttackState(map::Tile *tile);
 
-    void onIdleState(Character *character);
-    void onMoveState(Character *character);
-    void onAttackState(Character *character);
+    void onIdleState(entity::Character *character);
+    void onMoveState(entity::Character *character);
+    void onAttackState(entity::Character *character);
 
     void checkPermittedActions();
 };
+}
 
 #endif // GAME_H

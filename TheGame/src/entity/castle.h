@@ -3,6 +3,9 @@
 
 #include "staticentity.h"
 
+namespace game {
+namespace entity {
+
 class Castle : public StaticEntity
 {
     Q_OBJECT
@@ -27,5 +30,8 @@ private:
     QString imageSrc = "";
     int numStars = 0;
 };
+
+}
+}
 
 #endif // CASTLE_H

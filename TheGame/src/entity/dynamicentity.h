@@ -11,6 +11,9 @@
  * and they can move on the map.
  */
 
+namespace game {
+namespace entity {
+
 class DynamicEntity : public Entity
 {
     Q_OBJECT
@@ -23,5 +26,8 @@ public:
     virtual void setY(int y) = 0;
 
 };
+
+}
+}
 
 #endif // DYNAMICENTITY_H

@@ -3,6 +3,9 @@
 
 #include "character.h"
 
+namespace game {
+namespace entity {
+
 class Magician : virtual public Character
 {
 public:
@@ -14,5 +17,7 @@ public:
     virtual void resetProperties();
 
 };
+}
+}
 
 #endif // MAGICIAN_H

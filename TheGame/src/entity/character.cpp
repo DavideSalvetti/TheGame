@@ -9,6 +9,9 @@
  * are pure virtual, so that the subclass must implement it.
  */
 
+namespace game {
+namespace entity {
+
 Character::Character(QObject *parent)
     : DynamicEntity{parent}
 {
@@ -149,6 +152,9 @@ void Character::move(int x, int y)
 {
     setX(x);
     setY(y);
+}
+
+}
 }
 
 

@@ -19,22 +19,22 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
 
-    Game::getInstance();
+    game::Game::getInstance();
 
     QQmlApplicationEngine engine;
 
     engine.addImportPath("qrc:/");
 
-    engine.rootContext()->setContextProperty("game", &Game::getInstance());
+    engine.rootContext()->setContextProperty("game", &game::Game::getInstance());
 
-    qmlRegisterUncreatableType<Map>("com.thegame.map", 1, 0, "Map", "Cannot create this object.");
-    qmlRegisterUncreatableType<Character>("com.thegame.character", 1, 0, "Character", "Cannot create this object.");
-    qmlRegisterUncreatableType<Castle>("com.thegame.castle", 1, 0, "Castle", "Cannot create this object.");
+    qmlRegisterUncreatableType<game::map::Map>("com.thegame.map", 1, 0, "Map", "Cannot create this object.");
+    qmlRegisterUncreatableType<game::entity::Character>("com.thegame.character", 1, 0, "Character", "Cannot create this object.");
+    qmlRegisterUncreatableType<game::entity::Castle>("com.thegame.castle", 1, 0, "Castle", "Cannot create this object.");
 
-    qmlRegisterType<Tile>("com.thegame.tile", 1, 0, "Tile");
-    qmlRegisterType<Command>("com.thegame.command", 1, 0, "Command");
+    qmlRegisterType<game::map::Tile>("com.thegame.tile", 1, 0, "Tile");
+    qmlRegisterType<game::Command>("com.thegame.command", 1, 0, "Command");
 
-    qRegisterMetaType<Character*>("Character*");
+    qRegisterMetaType<game::entity::Character*>("Character*");
 
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));

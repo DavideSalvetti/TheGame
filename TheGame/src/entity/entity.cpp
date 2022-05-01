@@ -1,6 +1,9 @@
 #include "entity.h"
 #include <QDebug>
 
+namespace game {
+namespace entity {
+
 Entity::Entity(QObject *parent)
     : QObject{parent},
       playerOwner(NONE)
@@ -26,4 +29,7 @@ int Entity::getX() const
 int Entity::getY() const
 {
     return y;
+}
+
+}
 }

@@ -8,6 +8,9 @@
  * \details Verify also the correct implementation of the Singleton Pattern,
  * verifying that the object pointed by the two variables is the same in the memory.
  */
+
+using namespace game;
+
 void TestGame::initGame()
 {
     Game &game = Game::getInstance();

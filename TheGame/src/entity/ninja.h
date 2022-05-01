@@ -4,6 +4,9 @@
 #include "magician.h"
 #include "knight.h"
 
+namespace game {
+namespace entity {
+
 class Ninja : public Magician, public Knight
 {
 public:
@@ -14,4 +17,6 @@ public:
     void resetProperties();
 };
 
+}
+}
 #endif // NINJA_H

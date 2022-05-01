@@ -3,6 +3,8 @@
 
 #include "../src/entity/swordsman.h"
 
+using namespace game::entity;
+
 void TestCharacter::swordsmanAttack()
 {
     QScopedPointer<Character> swordsman1(new Swordsman());

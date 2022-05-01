@@ -3,6 +3,9 @@
 
 #include "character.h"
 
+namespace game {
+namespace entity {
+
 class CharacterFactory
 {
 public:
@@ -21,4 +24,6 @@ private:
     CharacterFactory();
 };
 
+}
+}
 #endif // CHARACTERFACTORY_H

@@ -3,6 +3,9 @@
 
 #define MAX_NINJA_LIFEPOINTS 12
 
+namespace game {
+namespace entity {
+
 Ninja::Ninja(QObject *parent)
     : Magician{parent},
       Knight{parent}
@@ -30,4 +33,7 @@ int Ninja::getMaxLifePoints() const
 void Ninja::resetProperties()
 {
     Knight::resetProperties();
+}
+
+}
 }

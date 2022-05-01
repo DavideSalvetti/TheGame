@@ -4,6 +4,9 @@
 
 #define MAX_SWORDSMAN_LIFEPOINTS 10
 
+namespace game {
+namespace entity {
+
 Swordsman::Swordsman(QObject *parent)
     : Character{parent}
 {
@@ -31,4 +34,7 @@ void Swordsman::resetProperties()
 {
     numAttacksAvailable = 1;
     numMovesAvailable = 1;
+}
+
+}
 }

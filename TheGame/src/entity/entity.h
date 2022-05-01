@@ -3,6 +3,9 @@
 
 #include <QObject>
 
+namespace game {
+namespace entity {
+
 enum Owner{
     NONE = 0,
     PLAYER_1,
@@ -35,5 +38,8 @@ protected:
     Owner playerOwner;
 
 };
+
+}
+}
 
 #endif // ENTITY_H

@@ -3,6 +3,9 @@
 
 #include "character.h"
 
+namespace game {
+namespace entity {
+
 class Knight : virtual public Character
 {
 public:
@@ -17,4 +20,6 @@ public:
     void incrementAttackPoints();
 };
 
+}
+}
 #endif // KNIGHT_H

@@ -4,6 +4,9 @@
 
 #define MAX_MAGICIAN_LIFEPOINTS 6
 
+namespace game {
+namespace entity {
+
 Magician::Magician(QObject *parent)
     : Character{parent}
 {
@@ -36,4 +39,7 @@ void Magician::resetProperties()
 {
     numAttacksAvailable = 1;
     numMovesAvailable = 1;
+}
+
+}
 }

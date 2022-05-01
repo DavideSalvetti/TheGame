@@ -5,6 +5,11 @@
 #include "../entity/characterfactory.h"
 #include <random>
 
+namespace game {
+namespace map {
+
+using namespace entity;
+
 Map::Map(int width, int height, QObject *parent)
     : QObject{parent},
       width(width),
@@ -432,6 +437,9 @@ void Map::removeCharacter(int x, int y)
 bool Map::isCharacterOnTile(int x, int y)  const
 {
     return tilesMatrix[y][x]->isEntityPresent();
+}
+
+}
 }
 
 

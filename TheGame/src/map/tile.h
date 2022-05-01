@@ -5,6 +5,8 @@
 #include <QPointer>
 #include "../entity/character.h"
 
+namespace game {
+namespace map {
 
 class Tile : public QObject
 {
@@ -43,4 +45,6 @@ private:
     int y {-1};
 };
 
+}
+}
 #endif // TILE_H

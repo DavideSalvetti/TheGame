@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+namespace game {
+
 class Command : public QObject
 {
     Q_OBJECT
@@ -31,5 +33,5 @@ private:
     bool canExecute;
 
 };
-
+}
 #endif // COMMAND_H

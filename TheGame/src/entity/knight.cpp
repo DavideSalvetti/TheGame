@@ -3,6 +3,9 @@
 
 #define MAX_KNIGHT_LIFEPOINTS 15
 
+namespace game {
+namespace entity {
+
 Knight::Knight(QObject *parent)
     : Character{parent}
 {
@@ -44,4 +47,6 @@ bool Knight::canIncrementAttackPoints()
 {
     return numAttacksAvailable > 0 && numMovesAvailable > 0
             && attackPoints < 10;
+}
+}
 }

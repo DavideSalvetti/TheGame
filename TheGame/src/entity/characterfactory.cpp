@@ -7,6 +7,9 @@
 
 #include <QDebug>
 
+namespace game {
+namespace entity {
+
 CharacterFactory & CharacterFactory::getInstance()
 {
     static CharacterFactory instance;
@@ -47,4 +50,7 @@ Character *CharacterFactory::createNinja()
 CharacterFactory::CharacterFactory()
 {
     qDebug() << "Creating CharacterFactory!";
+}
+
+}
 }

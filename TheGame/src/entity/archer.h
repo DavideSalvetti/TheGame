@@ -3,6 +3,9 @@
 
 #include "character.h"
 
+namespace game {
+namespace entity {
+
 class Archer : public Character
 {
 public:
@@ -13,4 +16,6 @@ public:
     void resetProperties();
 };
 
+}
+}
 #endif // ARCHER_H

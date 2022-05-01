@@ -2,6 +2,8 @@
 #include <QtTest>
 #include "../src/map/tile.h"
 
+using namespace game::map;
+
 void TestTile::canMoveWhenFree()
 {
     QScopedPointer<Tile> tile(new Tile(1, 1));

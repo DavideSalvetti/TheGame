@@ -1,5 +1,7 @@
 #include "command.h"
 
+namespace game {
+
 Command::Command(const QString icon, const QString description, QObject *parent)
     : QObject{parent},
       icon(icon),
@@ -36,4 +38,5 @@ void Command::setCanExecute(const bool canExecute)
 
     this->canExecute = canExecute;
     emit canExecuteChanged();
+}
 }

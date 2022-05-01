@@ -3,6 +3,9 @@
 
 #include "character.h"
 
+namespace game {
+namespace entity {
+
 class Swordsman : public Character
 {
 public:
@@ -12,5 +15,7 @@ public:
     int getMaxLifePoints() const;
     void resetProperties();
 };
+}
+}
 
 #endif // SWORDSMAN_H

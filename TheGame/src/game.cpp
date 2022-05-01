@@ -7,6 +7,11 @@
  * \details Singleton for the management of the game.
  */
 
+namespace game {
+
+using namespace map;
+using namespace entity;
+
 Game::Game(QObject *parent)
     : QObject{parent},
       roundNum(1),
@@ -496,4 +501,6 @@ void Game::checkPermittedActions()
             }
         }
     }
+}
+
 }

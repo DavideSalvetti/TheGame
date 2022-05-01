@@ -7,6 +7,9 @@
 #include "../entity/character.h"
 #include "../entity/castle.h"
 
+namespace game {
+namespace map {
+
 class Map : public QObject
 {
     Q_OBJECT
@@ -14,28 +17,28 @@ class Map : public QObject
     Q_PROPERTY (int mapHeight READ getMapHeight CONSTANT)
     Q_PROPERTY (int tileWidth READ getTileWidth CONSTANT)
     Q_PROPERTY (int tileHeight READ getTileHeight CONSTANT)
-    Q_PROPERTY (QQmlListProperty<Tile> tiles READ getTiles CONSTANT)
-    Q_PROPERTY (QQmlListProperty<Character> charactersList READ getCharactersList NOTIFY characterListChanged)
-    Q_PROPERTY (QQmlListProperty<Castle> castleList READ getCastlesList CONSTANT)
+    Q_PROPERTY (QQmlListProperty<game::map::Tile> tiles READ getTiles CONSTANT)
+    Q_PROPERTY (QQmlListProperty<game::entity::Character> charactersList READ getCharactersList NOTIFY characterListChanged)
+    Q_PROPERTY (QQmlListProperty<game::entity::Castle> castleList READ getCastlesList CONSTANT)
 public:
     explicit Map(int width, int height, QObject *parent = nullptr);
     ~Map();
 
     QQmlListProperty<Tile> getTiles();
-    QQmlListProperty<Character> getCharactersList();
-    QQmlListProperty<Castle> getCastlesList();
-    QList<Character *> getCharacters();
-    QList<Castle *> getCastles();
+    QQmlListProperty<game::entity::Character> getCharactersList();
+    QQmlListProperty<game::entity::Castle> getCastlesList();
+    QList<game::entity::Character *> getCharacters();
+    QList<game::entity::Castle *> getCastles();
 
-    void availableTileToMoveOn(const Character &character);
-    void availableCharacterToAttack(const Character &character);
-    bool canAttackSomebody(const Character &character);
+    void availableTileToMoveOn(const entity::Character &character);
+    void availableCharacterToAttack(const entity::Character &character);
+    bool canAttackSomebody(const entity::Character &character);
     bool isTileUnderAttack(int x, int y) const;
 
     void resetTiles();
-    void moveCharacterToTile(Tile *tile, Character *character);
+    void moveCharacterToTile(Tile *tile, entity::Character *character);
     void resetProperties();
-    void addCharacter(int x, int y, Owner player, int itemSelected);
+    void addCharacter(int x, int y, entity::Owner player, int itemSelected);
 
     int getMapWidth() const;
     int getMapHeight() const;
@@ -66,12 +69,15 @@ private:
      * is a better approach. */
     QList<Tile *> tilesList;
 
-    QList<Character*> characters;
+    QList<entity::Character*> characters;
 
-    QList<Castle*> castles;
+    QList<entity::Castle*> castles;
 
 
     void populateMap();
 };
+
+}
+}
 
 #endif // MAP_H

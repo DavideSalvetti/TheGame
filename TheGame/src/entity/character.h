@@ -3,6 +3,9 @@
 
 #include "dynamicentity.h"
 
+namespace game {
+namespace entity {
+
 class Character : public DynamicEntity
 {
     Q_OBJECT
@@ -59,5 +62,8 @@ protected:
     int numMovesAvailable;
     QString imageSrc = "";
 };
+
+}
+}
 
 #endif // CHARACTER_H

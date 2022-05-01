@@ -1,6 +1,9 @@
 #include "castle.h"
 #include <QDebug>
 
+namespace game {
+namespace entity {
+
 Castle::Castle(int x, int y, QObject *parent)
     : StaticEntity{x, y, parent}
 {
@@ -53,4 +56,7 @@ QString Castle::getImageSrc() const
 int Castle::getNumStars() const
 {
     return numStars;
+}
+
+}
 }

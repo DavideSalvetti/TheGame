@@ -3,6 +3,9 @@
 
 #include "entity.h"
 
+namespace game {
+namespace entity {
+
 class StaticEntity : public Entity
 {
 public:
@@ -10,5 +13,8 @@ public:
     virtual ~StaticEntity();
 
 };
+
+}
+}
 
 #endif // STATICENTITY_H

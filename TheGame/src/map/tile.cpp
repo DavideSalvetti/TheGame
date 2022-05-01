@@ -1,6 +1,10 @@
 #include "tile.h"
 #include <QDebug>
 
+
+namespace game {
+namespace map {
+
 Tile::Tile(int x, int y, QObject *parent)
     : QObject{parent},
       x(x),
@@ -79,4 +83,7 @@ void Tile::setEntityPresent(const bool entityPresent)
         return;
 
     this->entityPresent = entityPresent;
+}
+
+}
 }
