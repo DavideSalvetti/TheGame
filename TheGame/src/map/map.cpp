@@ -15,6 +15,7 @@ Map::Map(int width, int height, QObject *parent)
       width(width),
       height(height)
 {
+    // base on the width and height, choose the size of the tiles
     if (width == 8) {
         tileWidth = 64;
         tileHeight = 64;
@@ -26,6 +27,7 @@ Map::Map(int width, int height, QObject *parent)
         tileHeight = 48;
     }
 
+    // create the tile objects
     for (int i = 0; i < this->width; i++) {
         QVector<Tile*> tempVector;
         for (int j = 0; j < this->height; j++) {
@@ -109,7 +111,7 @@ void Map::populateMap()
     /* add castles to the map */
     Castle *castle_player1 = new Castle(getMapWidth() - 1, 0, this);
     castle_player1->setPlayerOwner(PLAYER_1);
-    castle_player1->incrementNumStars();
+    castle_player1->incrementNumStars(); // increment the stars because its teh first turn
     castles.append(castle_player1);
 
     Castle *castle_player2 = new Castle(0, getMapWidth() - 1, this);
@@ -436,6 +438,9 @@ void Map::removeCharacter(int x, int y)
 
 bool Map::isCharacterOnTile(int x, int y)  const
 {
+    if (x > getMapWidth() || y > getMapHeight())
+        return false;
+
     return tilesMatrix[y][x]->isEntityPresent();
 }
 

@@ -21,6 +21,7 @@ public:
     void setPlayerOwner(Owner owner);
 
     bool attack(Character *enemy);
+    void inflictDamage(int damage);
     void heal();
 
     bool canAttack() const;
@@ -38,7 +39,6 @@ public:
     int getMoveRange() const;
     int getAttackRange() const;
 
-    void inflictDamage(int damage);
 
     void decreaseMovesAvailable();
     void decreaseAttackAvailable();
@@ -60,7 +60,7 @@ protected:
     int attackRange;
     int numAttacksAvailable;
     int numMovesAvailable;
-    QString imageSrc = "";
+    QString imageSrc;
 };
 
 }

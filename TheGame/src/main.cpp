@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 
     game::Game::getInstance();
 
+    // create the qml context and added all the bindings needed from c++.
     QQmlApplicationEngine engine;
 
     engine.addImportPath("qrc:/");

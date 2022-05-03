@@ -28,6 +28,13 @@ void Character::setPlayerOwner(Owner owner)
     this->playerOwner = owner;
 }
 
+/*!
+ * \brief Attack a given \p Character
+ * \param enemy The character to attack
+ * \return bool
+ *      True - the attack has been done correctly
+ *      False - the attack hasn't been done correctly
+ */
 bool Character::attack(Character *enemy)
 {
     if (this == enemy)
@@ -47,7 +54,9 @@ bool Character::attack(Character *enemy)
 
     return true;
 }
-
+/*!
+ * \brief If the character has lost some lifepoints, give him some lifepoints
+ */
 void Character::heal()
 {
     if (canHeal()) {
@@ -121,6 +130,12 @@ int Character::getAttackRange() const
     return attackRange;
 }
 
+/*!
+ * \brief Inflict a given damage to this Character
+ * \details If the Character remains with 0 lifepoints,
+ * emit the signal that communicate that has been destroyed.
+ * \param damage The damage to remove from lifepoints
+ */
 void Character::inflictDamage(int damage)
 {
     if (lifePoints - damage <= 0) {

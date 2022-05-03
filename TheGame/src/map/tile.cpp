@@ -68,6 +68,10 @@ void Tile::setFree(const bool free)
     emit freeChanged();
 }
 
+/*!
+ * \brief Set if the current tile can be attacked, so we can assign
+ * a red color.
+ */
 void Tile::setUnderAttack(const bool underAttack)
 {
     if (this->underAttack == underAttack)
@@ -77,6 +81,9 @@ void Tile::setUnderAttack(const bool underAttack)
     emit underAttackChanged();
 }
 
+/*!
+ * \brief Set that an entity is present on the current Tile.
+ */
 void Tile::setEntityPresent(const bool entityPresent)
 {
     if (this->entityPresent == entityPresent)

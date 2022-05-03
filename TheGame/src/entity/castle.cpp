@@ -15,6 +15,12 @@ Castle::~Castle()
     qDebug() << "Castle destructor";
 }
 
+/*!
+ * \brief This method is the implementation of the pure virtual
+ * \p setPlayerOwner() inside \p Entity.
+ * \details Checks for which player owns the castle to choose the
+ *  correct image.
+ */
 void Castle::setPlayerOwner(Owner owner)
 {
     this->playerOwner = owner;
@@ -30,6 +36,14 @@ void Castle::incrementNumStars()
     emit numStarsChanged();
 }
 
+/*!
+ * \brief Based on the item created, it reduces the \p numStars of
+ * the castle.
+ * \todo It is better to implement an enum for item created, so
+ * it is more clear the association between the number of stars and
+ * the item.
+ * \param itemCreated The item that has been created.
+ */
 void Castle::reduceNumStars(int itemCreated)
 {
     if (itemCreated == 1)
